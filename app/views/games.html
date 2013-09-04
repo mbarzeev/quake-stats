@@ -1,0 +1,44 @@
+<h1>{{game.name}}  - Red:{{game.score.1}} / Blue:{{game.score.2}}</h1>
+
+<h4>Players Stats</h4>
+<div class="row-fluid">
+  	<div>
+	  	<table class="table table-bordered">
+			<thead>
+				<tr>				
+					<th width="80">Name</th>
+					<th width="80">Team</th>
+					<th width="80">Fetches</th>
+					<th width="80">Scores</th>
+					<th width="80">Restores</th>
+					<th width="80">Rebounds</th>
+				</tr>					
+			</thead>
+			<tbody>
+				<tr ng-repeat="player in game.players|orderBy:'team'">
+					<td width="80">{{player.name}}</td>
+					<td width="80">{{player.team | ColorFilter}}</td>
+					<td width="80">{{player.fetchedFlags}}</td>
+					<td width="80">{{player.scoredFlags}}</td>
+					<td width="80">{{player.restoredFlags}}</td>
+					<td width="80">{{player.reboundedFlags}}</td>
+				</tr>					
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<h4>Flags Timeline</h4>
+<div class="row-fluid">
+  	<div>
+	  	<table class="table table-bordered">	  			
+			<tbody>
+				<tr ng-repeat="flag in game.flags" >
+					<td width="20" ng-class="{blue: flag.color==2, red: flag.color==1}"></td>
+					<td class="blueas" ng-switch on="flag.action == 'scored!'"><i>{{flag.player.name}}</i> {{flag.action}} <span ng-switch-when="false">the {{flag.color | ColorFilter}} flag</span></td>
+				</tr>					
+			</tbody>
+		</table>
+	</div>
+</div>
+

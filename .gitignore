@@ -1,0 +1,6 @@
+node_modules
+dist
+.tmp
+.sass-cache
+games.log
+app/bower_components

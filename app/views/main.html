@@ -1,0 +1,29 @@
+ <h1>Games</h1>	
+	<div class="row-fluid">
+  	<div>
+	  	<table class="table table-bordered table-striped">
+			<thead>
+				<tr>				
+					<th width="120">Name</th>
+					<th width="120">Red Score</th>
+					<th width="120">Blue Score</th>
+					<th width="120">Best Scorer</th>
+					<th width="120">Best Fetcher</th>					
+					<th width="120">Best Rebounder</th>
+					<th width="120">Best Restorer</th>
+				</tr>					
+			</thead>
+			<tbody>
+				<tr ng-repeat="game in games">
+					<td width="120"><a href="/#/games/{{game.recordIndex}}">{{game.name}}</a></td>
+					<td width="120">{{game.score.1}}</td>
+					<td width="120">{{game.score.2}}</td>
+					<td width="120">{{game.bestScorer.name}} ({{game.bestScorer.scoredFlags}})</td>
+					<td width="120">{{game.bestFetcher.name}} ({{game.bestScorer.fetchedFlags}})</td>
+					<td width="120">{{game.bestRebounder.name}} ({{game.bestScorer.reboundedFlags}})</td>
+					<td width="120">{{game.bestRestorer.name}} ({{game.bestScorer.restoredFlags}})</td>
+				</tr>					
+			</tbody>
+		</table>
+	</div>
+</div>
