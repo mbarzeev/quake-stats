@@ -26,6 +26,7 @@ angular.module('quakeStatsApp')
  	this.loglines = null;
  	this.blueFlagStatus = Constants.FLAG_STATUS_IN_BASE;
  	this.redFlagStatus = Constants.FLAG_STATUS_IN_BASE;
+    this.games = [];
  	var me = this;
 
  	this.loadLog = function() {
@@ -48,7 +49,6 @@ angular.module('quakeStatsApp')
 
     this.getAllGames = function() {
     	var line;
-    	var games = [];
     	// FIXME: Remove and use Route Resolve instead
     	if (me.loglines ==  null) {
     		this.loadLog().then(function() {
@@ -56,19 +56,13 @@ angular.module('quakeStatsApp')
     			for (var index in me.loglines) {
 					line = me.loglines[index];
 					if (line.indexOf('InitGame:') !== -1) {
-                        games.push(me.getGame(index));
+                        me.games.push(me.getGame(index));
 					}			
 		    	}
-		    	return games;
+		    	return me.games;
     		})
     	}
-    	for (var index in me.loglines) {
-			line = me.loglines[index];
-			if (line.indexOf('InitGame:') !== -1) {
-				games.push(me.getGame(index));	
-			}			
-    	}
-    	return games;
+    	return me.games;
     }
 
     this.getGame = function(index) {
