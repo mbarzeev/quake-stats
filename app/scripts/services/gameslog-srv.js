@@ -90,7 +90,7 @@ angular.module('quakeStatsApp')
                 game.recordIndex = me.getGameObject(record, index).index;
     		}
 
-			if (record.indexOf('ClientUserinfoChanged') !== -1) {
+			if (record.indexOf(Constants.PLAYER_INFO_KEY) !== -1) {
 				players[me.getPlayerObject(record).id] = me.getPlayerObject(record); 
 			}
 
