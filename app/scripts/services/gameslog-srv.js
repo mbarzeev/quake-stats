@@ -36,17 +36,6 @@ angular.module('quakeStatsApp')
 	    });
  	}
 
- 	this.getGameObject = function(line, index) {
-    	var startIndex = line.indexOf(Constants.MAP_NAME_KEY) + Constants.MAP_NAME_KEY.length,
-    		endIndex =   line.indexOf(Constants.BACKSLASH_KEY, startIndex),
-    		key = line.slice(startIndex, endIndex).toLowerCase(),
-    		mapname = me.getGameName(key);
-    	return {
-    		"index" : index,
-    		"mapname" : mapname
-    	}
-    } 
-
     this.getAllGames = function() {
     	var line;
     	// FIXME: Remove and use Route Resolve instead
@@ -85,9 +74,12 @@ angular.module('quakeStatsApp')
 
     	for (var i = index; i < me.loglines.length; i++) {
     		record = me.loglines[i];
-    		if (i === index) {
-    			game.name = me.getGameObject(record, index).mapname;
-                game.recordIndex = me.getGameObject(record, index).index;
+    		if (i === index) {     
+                var startIndex = record.indexOf(Constants.MAP_NAME_KEY) + Constants.MAP_NAME_KEY.length,
+                    endIndex =   record.indexOf(Constants.BACKSLASH_KEY, startIndex),          
+                    key = record.slice(startIndex, endIndex);
+                game.name = me.getGameName(key.toLowerCase());    			
+                game.recordIndex = index;
     		}
 
 			if (record.indexOf(Constants.PLAYER_INFO_KEY) !== -1) {
