@@ -1,4 +1,29 @@
- <h1>Games</h1>	
+ <h1>Games</h1>
+
+ <div class="row-fluid">
+     <div>
+         <table class="table table-bordered">
+             <thead>
+             <tr>
+                 <th width="120">Stats name</th>
+                 <th width="120">Red Score</th>
+                 <th width="120">Blue Score</th>
+                 <th width="120">Tie</th>
+                 <th width="120">Winner</th>
+             </tr>
+             </thead>
+             <tbody>
+             <tr ng-repeat="stat in crossGamesStats">
+                 <td width="120">{{ stat.name }}</a></td>
+                 <td width="120">{{ stat.value.score[Constants.RED] }}</td>
+                 <td width="120">{{ stat.value.score[Constants.BLUE] }}</td>
+                 <td width="120">{{ stat.value.score[Constants.TIE] }}</td>
+                 <td width="120" class="{{ stat.value.winner | ColorFilter | lowercase }}">{{ stat.value.winner | ColorFilter }}</td>
+             </tr>
+             </tbody>
+         </table>
+     </div>
+
 	<div class="row-fluid">
   	<div>
 	  	<table class="table table-bordered table-striped">
@@ -15,7 +40,7 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="game in games">
-					<td width="120"><a href="/#/games/{{game.recordIndex}}">{{game.name}}</a></td>
+					<td width="120"><a href="/#/games/{{$index}}">{{game.name}}</a></td>
 					<td width="120">{{game.score.1}}</td>
 					<td width="120">{{game.score.2}}</td>
 					<td width="120">{{game.bestScorer.name}} ({{game.bestScorer.scoredFlags}})</td>

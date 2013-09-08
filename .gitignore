@@ -4,3 +4,5 @@ dist
 .sass-cache
 games.log
 app/bower_components
+.idea/
+*.iml
