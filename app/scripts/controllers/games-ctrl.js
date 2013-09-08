@@ -1,6 +1,8 @@
 'use strict';
 
 angular.module('quakeStatsApp')
-  .controller('GamesCtrl',  ['$scope', 'GameslogService', '$routeParams', function ($scope, GameslogService, $routeParams) {
-  	$scope.game = GameslogService.getGame($routeParams.index);
-  }]);
+    .controller('GamesCtrl', ['$scope', '$routeParams', 'Constants', 'stats', function ($scope, $routeParams, Constants, stats) {
+        console.log($routeParams);
+        $scope.game = stats;
+        $scope.Constants = Constants;
+    }]);

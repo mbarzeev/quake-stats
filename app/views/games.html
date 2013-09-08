@@ -1,5 +1,7 @@
 <h1>{{game.name}}  - Red:{{game.score.1}} / Blue:{{game.score.2}}</h1>
 
+<h2>The winning team is {{ game.winner | ColorFilter }}</h2>
+
 <h4>Players Stats</h4>
 <div class="row-fluid">
   	<div>
