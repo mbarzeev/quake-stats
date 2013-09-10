@@ -29,13 +29,7 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
                 record = null,
                 players = {},
                 flags = [],
-//            redTeam = [],
-//            blueTeam = [],
                 score = {};
-//            bestScorer = null,
-//            bestFetcher = null,
-//            bestRebounder = null,
-//            bestRestorer = null;
 
             score[Constants.RED] = 0;
             score[Constants.BLUE] = 0;
