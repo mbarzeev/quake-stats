@@ -6,17 +6,22 @@ describe('Controller: MainCtrl', function () {
   beforeEach(module('quakeStatsApp'));
 
   var MainCtrl,
-    scope;
+    scope,
+    mockStats = {
+      gamesStats: []
+    };
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
     MainCtrl = $controller('MainCtrl', {
-      $scope: scope
+      $scope: scope,
+      Constants: {},
+      stats: mockStats
     });
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(scope.awesomeThings.length).toBe(3);
+  it('should attach a list of games to the scope', function () {
+    expect(scope.games).toBeDefined();
   });
 });
