@@ -6,10 +6,9 @@ module.exports = function(config) {
 
 		// list of files / patterns to load in the browser
 		files : [
-		  JASMINE,
-		  JASMINE_ADAPTER,
 		  'app/bower_components/angular/angular.js',
 		  'app/bower_components/angular-mocks/angular-mocks.js',
+		  'app/bower_components/angular-resource/angular-resource.js',
 		  'app/scripts/*.js',
 		  'app/scripts/**/*.js',
 		  'test/mock/**/*.js',
@@ -37,7 +36,7 @@ module.exports = function(config) {
 
 		// level of logging
 		// possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
-		logLevel : LOG_INFO,
+		logLevel : config.LOG_INFO,
 
 		// enable / disable watching file and executing tests whenever any file changes
 		autoWatch : false,
