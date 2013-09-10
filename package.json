@@ -29,7 +29,8 @@
     "time-grunt": "~0.1.0",
     "express":"latest",
     "grunt-express": "latest",
-    "grunt-connect-proxy":"latest"
+    "grunt-connect-proxy":"latest",
+    "grunt-karma":"latest"
   },
   "engines": {
     "node": ">=0.8.0"
