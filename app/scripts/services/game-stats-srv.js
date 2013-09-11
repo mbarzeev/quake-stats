@@ -9,7 +9,7 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
         this.blueFlagStatus = Constants.FLAG_STATUS_IN_BASE;
         this.redFlagStatus = Constants.FLAG_STATUS_IN_BASE;
         this.playerHoldingRedFlagID = -1;
-        this.playerHoldingBlueFlagID = -1
+        this.playerHoldingBlueFlagID = -1;
         this.games = [];
         var me = this;
 
@@ -34,7 +34,7 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
                 score = {};
 
             // Reset the game states
-            me.resetFlagsStates()
+            me.resetFlagsStates();
 
             score[Constants.RED] = 0;
             score[Constants.BLUE] = 0;
@@ -49,7 +49,7 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
                         key = record.slice(startIndex, endIndex);
                     game.name = me.getGameName(key.toLowerCase());
                     game.recordIndex = index;
-                    console.log(game.name)
+                    console.log(game.name);
                 }
 
                 if (record.indexOf(Constants.PLAYER_INFO_KEY) !== -1) {
@@ -66,7 +66,7 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
                 }
 
                 // Exit
-                if (record.indexOf('Exit:') !== -1) {                   
+                if (record.indexOf('Exit:') !== -1) {
                     // The next line states the score of this game. Let's parse it...
                     me.getGameScore(log[i + 1]);
                     // if the game end due to time limit, and the scores don't match it is a sudden death
@@ -77,14 +77,14 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
                 // TODO: Needs some serous refactoring since it is coded like... crap
                 if (record.indexOf('Kill:') !== -1 && record.indexOf(' 20: ') !== -1) {
                     // If the player holding the flag committed suicide, then the flag returns to his enemy's base
-                    var playerID = parseInt(record.slice(record.indexOf('Kill:') + 'Kill:'.length, record.indexOf(' 20: ')));
+                    var playerID = parseInt(record.slice(record.indexOf('Kill:') + 'Kill:'.length, record.indexOf(' 20: ')), 10);
                     if (playerID === me.playerHoldingBlueFlagID) {
                         me.playerHoldingBlueFlagID = -1;
-                        me.blueFlagStatus = Constants.FLAG_STATUS_IN_BASE; 
-                    } 
+                        me.blueFlagStatus = Constants.FLAG_STATUS_IN_BASE;
+                    }
                     if (playerID === me.playerHoldingRedFlagID) {
                         me.playerHoldingRedFlagID = -1;
-                        me.redFlagStatus = Constants.FLAG_STATUS_IN_BASE; 
+                        me.redFlagStatus = Constants.FLAG_STATUS_IN_BASE;
                     }
                 }
 
@@ -266,7 +266,7 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
             if (record) {
                 var redScore = record.substr(record.indexOf(Constants.RED_SCORE_KEY) , 7),
                     blueScore = record.substr(record.indexOf(Constants.BLUE_SCORE_KEY) , 7);
-                    console.log(redScore, blueScore);
+                console.log(redScore, blueScore);
             }
         };
 
@@ -275,5 +275,5 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
             me.playerHoldingBlueFlagID = -1;
             me.redFlagStatus = Constants.FLAG_STATUS_IN_BASE;
             me.blueFlagStatus = Constants.FLAG_STATUS_IN_BASE;
-        }
+        };
     }]);
