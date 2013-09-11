@@ -12,5 +12,6 @@ angular.module('quakeStatsApp')
         'PLAYER_INFO_KEY': 'ClientUserinfoChanged:',
         'FLAG_STATUS_IN_BASE': 'inBase',
         'FLAG_STATUS_FETCHED': 'fetched',
-        'FLAG_STATUS_REBOUNDED': 'rebounded'
+        'RED_SCORE_KEY': 'red:',
+        'BLUE_SCORE_KEY': 'blue:'
     });

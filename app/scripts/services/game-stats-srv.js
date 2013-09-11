@@ -8,13 +8,15 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
     function ($http, Constants, MapConstants, UtilitiesService) {
         this.blueFlagStatus = Constants.FLAG_STATUS_IN_BASE;
         this.redFlagStatus = Constants.FLAG_STATUS_IN_BASE;
+        this.playerHoldingRedFlagID = -1;
+        this.playerHoldingBlueFlagID = -1
         this.games = [];
         var me = this;
 
         this.getAllGames = function (log) {
             var line;
             this.games = [];
-            // FIXME: Remove suplicated loop (below)
+            
             for (var index in log) {
                 line = log[index];
                 if (line.indexOf('InitGame:') !== -1) {
@@ -29,13 +31,10 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
                 record = null,
                 players = {},
                 flags = [],
-//            redTeam = [],
-//            blueTeam = [],
                 score = {};
-//            bestScorer = null,
-//            bestFetcher = null,
-//            bestRebounder = null,
-//            bestRestorer = null;
+
+            // Reset the game states
+            me.resetFlagsStates()
 
             score[Constants.RED] = 0;
             score[Constants.BLUE] = 0;
@@ -50,6 +49,7 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
                         key = record.slice(startIndex, endIndex);
                     game.name = me.getGameName(key.toLowerCase());
                     game.recordIndex = index;
+                    console.log(game.name)
                 }
 
                 if (record.indexOf(Constants.PLAYER_INFO_KEY) !== -1) {
@@ -60,15 +60,69 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
                 if (record.indexOf('team_CTF_') !== -1) {
                     var flag = me.getFlagObject(record, players);
                     if (flag.action === 'scored!') {
-                        if (flag.color === Constants.RED) {
-                            score[Constants.RED] += 1;
-                        }
-                        if (flag.color === Constants.BLUE) {
-                            score[Constants.BLUE] += 1;
-                        }
+                        score[flag.color] += 1;
                     }
                     flags.push(flag);
                 }
+
+                // Exit
+                if (record.indexOf('Exit:') !== -1) {                   
+                    // The next line states the score of this game. Let's parse it...
+                    me.getGameScore(log[i + 1]);
+                    // if the game end due to time limit, and the scores don't match it is a sudden death
+                    // Resolve the winning team and give credit to the last player who fetched the flag for 
+                }
+
+                // MOD_SUICIDE
+                // TODO: Needs some serous refactoring since it is coded like... crap
+                if (record.indexOf('Kill:') !== -1 && record.indexOf(' 20: ') !== -1) {
+                    // If the player holding the flag committed suicide, then the flag returns to his enemy's base
+                    var playerID = parseInt(record.slice(record.indexOf('Kill:') + 'Kill:'.length, record.indexOf(' 20: ')));
+                    if (playerID === me.playerHoldingBlueFlagID) {
+                        me.playerHoldingBlueFlagID = -1;
+                        me.blueFlagStatus = Constants.FLAG_STATUS_IN_BASE; 
+                    } 
+                    if (playerID === me.playerHoldingRedFlagID) {
+                        me.playerHoldingRedFlagID = -1;
+                        me.redFlagStatus = Constants.FLAG_STATUS_IN_BASE; 
+                    }
+                }
+
+                // MOD_TRIGGER_HURT
+                // TODO: Needs some serous refactoring since it is coded like... crap
+                /*if (record.indexOf('Kill:') !== -1 && record.indexOf(' 22: ') !== -1) {
+                    // If the player holding the flag was killed by the world, then the flag returns to his enemy's base
+                    var playerID = parseInt(record.slice(record.indexOf('Kill: 1022 ') + 'Kill: 1022 '.length, record.indexOf(' 22: ')));
+
+                    if (playerID === me.playerHoldingBlueFlagID) {
+                        console.log('world killed Blue carrier', playerID)
+                        me.playerHoldingBlueFlagID = -1;
+                        me.blueFlagStatus = Constants.FLAG_STATUS_IN_BASE; 
+                    }
+                    if (playerID === me.playerHoldingRedFlagID) {
+                        console.log('world killed Red carrier', playerID)
+                        me.playerHoldingRedFlagID = -1;
+                        me.redFlagStatus = Constants.FLAG_STATUS_IN_BASE; 
+                    }
+                }*/
+
+                // MOD_FALLING
+                // TODO: Needs some serous refactoring since it is coded like... crap
+                /*if (record.indexOf('Kill:') !== -1 && record.indexOf(' 19: ') !== -1) {
+                    // If the player holding the flag was killed by the world, then the flag returns to his enemy's base
+                    var playerID = parseInt(record.slice(record.indexOf('Kill: 1022 ') + 'Kill: 1022 '.length, record.indexOf(' 19: ')));
+
+                    if (playerID === me.playerHoldingBlueFlagID) {
+                        console.log('world killed Blue carrier', playerID)
+                        me.playerHoldingBlueFlagID = -1;
+                        me.blueFlagStatus = Constants.FLAG_STATUS_IN_BASE; 
+                    } 
+                    if (playerID === me.playerHoldingRedFlagID) {
+                        console.log('world killed Red carrier', playerID)
+                        me.playerHoldingRedFlagID = -1;
+                        me.redFlagStatus = Constants.FLAG_STATUS_IN_BASE; 
+                    }
+                }*/
 
                 // ShutdownGame
                 if (record.indexOf('ShutdownGame') !== -1) {
@@ -92,19 +146,19 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
         };
 
         this.getBest = function (players, prop) {
-            var bestScorer = null,
+            var best = null,
                 player = null;
             for (var item in players) {
                 player = players[item];
-                if (bestScorer === null) {
-                    bestScorer = player;
+                if (best === null) {
+                    best = player;
                     continue;
                 }
-                if (player[prop] > bestScorer[prop]) {
-                    bestScorer = player;
+                if (player[prop] > best[prop]) {
+                    best = player;
                 }
             }
-            return bestScorer;
+            return best;
         };
 
         this.getPlayerObject = function (record) {
@@ -148,22 +202,24 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
             if (player.team === 2) {
                 if (me.redFlagStatus === Constants.FLAG_STATUS_IN_BASE) {
                     me.redFlagStatus = Constants.FLAG_STATUS_FETCHED;
+                    me.playerHoldingRedFlagID = player.id;
                     player.fetchedFlags += 1;
                     return 'fetched';
                 }
-                if (me.redFlagStatus === Constants.FLAG_STATUS_FETCHED || me.redFlagStatus === Constants.FLAG_STATUS_REBOUNDED) {
-                    me.redFlagStatus = Constants.FLAG_STATUS_REBOUNDED;
+                if (me.redFlagStatus === Constants.FLAG_STATUS_FETCHED) {
                     player.reboundedFlags += 1;
+                    me.playerHoldingRedFlagID = player.id;
                     return 'rebounded';
                 }
             } else if (player.team === 1) {
                 if (me.redFlagStatus === Constants.FLAG_STATUS_IN_BASE) {
-                    me.blueFlagStatus = Constants.FLAG_STATUS_IN_BASE;
+                    me.resetFlagsStates();
                     player.scoredFlags += 1;
                     return 'scored!';
                 }
-                if (me.redFlagStatus === Constants.FLAG_STATUS_FETCHED || me.redFlagStatus === Constants.FLAG_STATUS_REBOUNDED) {
+                if (me.redFlagStatus === Constants.FLAG_STATUS_FETCHED) {
                     me.redFlagStatus = Constants.FLAG_STATUS_IN_BASE;
+                    me.playerHoldingRedFlagID = -1;
                     player.restoredFlags += 1;
                     return 'restored';
                 }
@@ -174,22 +230,24 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
             if (player.team === 1) {
                 if (me.blueFlagStatus === Constants.FLAG_STATUS_IN_BASE) {
                     me.blueFlagStatus = Constants.FLAG_STATUS_FETCHED;
+                    me.playerHoldingBlueFlagID = player.id;
                     player.fetchedFlags += 1;
                     return 'fetched';
                 }
-                if (me.blueFlagStatus === Constants.FLAG_STATUS_FETCHED || me.blueFlagStatus === Constants.FLAG_STATUS_REBOUNDED) {
-                    me.blueFlagStatus = Constants.FLAG_STATUS_REBOUNDED;
+                if (me.blueFlagStatus === Constants.FLAG_STATUS_FETCHED) {
+                    me.playerHoldingBlueFlagID = player.id;
                     player.reboundedFlags += 1;
                     return 'Rebounded';
                 }
             } else if (player.team === 2) {
                 if (me.blueFlagStatus === Constants.FLAG_STATUS_IN_BASE) {
-                    me.redFlagStatus = Constants.FLAG_STATUS_IN_BASE;
+                    me.resetFlagsStates();
                     player.scoredFlags += 1;
                     return 'scored!';
                 }
-                if (me.blueFlagStatus === Constants.FLAG_STATUS_FETCHED || me.blueFlagStatus === Constants.FLAG_STATUS_REBOUNDED) {
+                if (me.blueFlagStatus === Constants.FLAG_STATUS_FETCHED) {
                     me.blueFlagStatus = Constants.FLAG_STATUS_IN_BASE;
+                    me.playerHoldingBlueFlagID = -1;
                     player.restoredFlags += 1;
                     return 'Restored';
                 }
@@ -203,4 +261,19 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
             }
             return name;
         };
+
+        this.getGameScore = function(record) {
+            if (record) {
+                var redScore = record.substr(record.indexOf(Constants.RED_SCORE_KEY) , 7),
+                    blueScore = record.substr(record.indexOf(Constants.BLUE_SCORE_KEY) , 7);
+                    console.log(redScore, blueScore);
+            }
+        };
+
+        this.resetFlagsStates = function() {
+            me.playerHoldingRedFlagID = -1;
+            me.playerHoldingBlueFlagID = -1;
+            me.redFlagStatus = Constants.FLAG_STATUS_IN_BASE;
+            me.blueFlagStatus = Constants.FLAG_STATUS_IN_BASE;
+        }
     }]);
