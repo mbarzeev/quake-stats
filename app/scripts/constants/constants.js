@@ -13,5 +13,6 @@ angular.module('quakeStatsApp')
         'FLAG_STATUS_IN_BASE': 'inBase',
         'FLAG_STATUS_FETCHED': 'fetched',
         'RED_SCORE_KEY': 'red:',
-        'BLUE_SCORE_KEY': 'blue:'
+        'BLUE_SCORE_KEY': 'blue:',
+        'FLAG_ABONDON_TIME_LIMIT': 30
     });
