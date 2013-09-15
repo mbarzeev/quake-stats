@@ -33,7 +33,8 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
                 record = null,
                 players = {},
                 flags = [],
-                score = {};
+                score = {},
+                recordTime;
 
             // Reset the game states
             me.resetAllFlags();
@@ -45,6 +46,7 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
 
             for (var i = index; i < log.length; i++) {
                 record = log[i];
+                recordTime = me.getRecordTime(record);
                 if (i === index) {
                     var startIndex = record.indexOf(Constants.MAP_NAME_KEY) + Constants.MAP_NAME_KEY.length,
                         endIndex = record.indexOf(Constants.BACKSLASH_KEY, startIndex),
@@ -60,12 +62,10 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
                 }
 
                 // Check for abandoned flags
-                if (me.blueFlagAbandonTime !== -1 && (me.getRecordTime(record) - me.blueFlagAbandonTime) >= Constants.FLAG_ABONDON_TIME_LIMIT) {
-                    console.log('reseting blue');
+                if (me.blueFlagAbandonTime !== -1 && (recordTime - me.blueFlagAbandonTime) >= Constants.FLAG_ABONDON_TIME_LIMIT) {
                     me.resetBlueFlag();
                 }
-                if (me.redFlagAbandonTime !== -1 && (me.getRecordTime(record) - me.redFlagAbandonTime) >= Constants.FLAG_ABONDON_TIME_LIMIT) {
-                    console.log('reseting red');
+                if (me.redFlagAbandonTime !== -1 && (recordTime - me.redFlagAbandonTime) >= Constants.FLAG_ABONDON_TIME_LIMIT) {
                     me.resetRedFlag();
                 }
 
@@ -161,11 +161,11 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
         this.handleOrdinaryKills = function(time, killerID, victimID) {
             if (victimID === me.playerHoldingBlueFlagID) {
                 me.blueFlagAbandonTime = time;
-                me.playerHoldingBlueFlagIDc = -1;
+                me.playerHoldingBlueFlagID = -1;
             }
             if (victimID === me.playerHoldingRedFlagID) {
                 me.redFlagAbandonTime = time;
-                me.playerHoldingRedFlagIDc = -1;
+                me.playerHoldingRedFlagID = -1;
             }
         };
 
@@ -216,7 +216,6 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
             if (player) {
                 flag.record = record;
                 flag.player = player;
-                flag.index = index + 1;
                 if (record.indexOf('redflag') !== -1) {
                     flag.color = Constants.RED;
                     flag.action = me.getRedFlagAction(record, player);
