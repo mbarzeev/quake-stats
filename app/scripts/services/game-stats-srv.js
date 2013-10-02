@@ -123,7 +123,9 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
                 time = me.getRecordTime(record);
 
             switch(killModeID) {
+            // MOD_SUICIDE
             case 20:
+            // MOD_TRIGGER_HURT
             case 22:
                 me.handleSuicide(victimID);
                 break;
@@ -142,20 +144,6 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
             if (victimID === me.playerHoldingRedFlagID) {
                 me.resetRedFlag();
             }
-            // LOOKUOT! These following log line indicate the player 5 fetched the
-            // Flag, but when he fell, the flag was probably not resotred to base.
-            /*
-            32:39 Item: 5 team_CTF_redflag
-            32:39 Item: 5 weapon_shotgun
-            32:40 Item: 0 item_health_large
-            32:40 Item: 3 weapon_railgun
-            32:42 Item: 0 item_health_large
-            32:43 Kill: 1022 6 22: <world> killed Casper by MOD_TRIGGER_HURT
-            32:44 Item: 0 item_armor_combat
-            32:44 Item: 4 item_armor_combat
-            32:45 Kill: 0 2 6: Federation killed Chernilb by MOD_ROCKET
-            32:45 Kill: 1022 5 22: <world> killed Yourself by MOD_TRIGGER_HURT
-            */
         };
 
         this.handleOrdinaryKills = function(time, killerID, victimID) {
@@ -207,7 +195,7 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
             return player;
         };
 
-        this.getFlagObject = function (record, players, index) {
+        this.getFlagObject = function (record, players) {
             var flag = {};
             var idStr = record.slice(record.indexOf('Item: ') + 6, record.indexOf('team_CTF_'));
             var playerId = parseInt(idStr, 10);
