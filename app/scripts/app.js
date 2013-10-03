@@ -5,7 +5,11 @@ angular.module('quakeStatsApp', ['ngResource'])
         $routeProvider
             .when('/', {
                 templateUrl: 'views/main.html',
-                controller: 'MainCtrl',
+                controller: 'MainCtrl'
+            })
+            .when('/flags', {
+                templateUrl: 'views/flags.html',
+                controller: 'FlagsCtrl',
                 resolve: {
                     qconsoleLog: ['$q', 'QConsoleService', function($q, QConsoleService) {
                         var dfd = $q.defer();
