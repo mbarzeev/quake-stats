@@ -123,6 +123,9 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
     };
 
     this.getFlagsStats = function(log) {
+        if (me.stats) {
+            return me.stats;
+        }
         var i,
             record,
             map,
