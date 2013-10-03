@@ -27,6 +27,18 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
+    <div class="navbar navbar-fixed-top" >
+      <div class="navbar-inner">
+        <div>
+          <ul class="nav">
+            <li ng-repeat="item in menu.items" ng-class="{active: $index==menu.selectedMenuItemIndex}">
+              <a href="/#/{{item.data}}" ng-click="onMenuItemClick($index)">{{item.label}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
     <div class="container" ng-view=""></div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
