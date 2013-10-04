@@ -4,8 +4,10 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
     this.stats = null;
     var me = this;
 
-    this.initMap = function(startIndex) {
+    this.initMap = function(record, startIndex) {
         var map = {};
+            
+        map.name = me.getMapKey(record); 
         map.timeline = [];
         map.startIndex = startIndex;
         map.fetches = {
@@ -30,6 +32,12 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
         map.topCarrierFragger = null;
         map.endReason = null;
         return map;
+    };
+
+    this.getMapKey = function(record) {
+        var startIndex = record.indexOf(Constants.MAP_NAME_KEY) + Constants.MAP_NAME_KEY.length,
+            endIndex = record.indexOf(Constants.BACKSLASH_KEY, startIndex);
+        return record.slice(startIndex, endIndex);
     };
 
     this.setGotFlag = function(record, map) {
@@ -139,48 +147,51 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
 
         for (i = 0; i < log.length; i++) {
             record = log[i];
-            // Should be replaced with 'Game Initialization'
-            if (record.indexOf('CL_InitCGame') !== -1) {
-                map = me.initMap(i);
+            if (record.indexOf('InitGame:') !== -1) {
+                map = me.initMap(record, i);
                 me.stats.maps.push(map);
             }
 
             // Flag Records
-            if (record.indexOf('RED') !== -1 || record.indexOf('BLUE') !== -1) {
-                // Register the player to the map
-                playerName = me.getPlayerName(record);
-                if (map.players[playerName] === undefined) {
-                    map.players[playerName] = {
-                        name:playerName,
-                        scores:0,
-                        fetches:0,
-                        carrierFrags:0,
-                        returns:0,
-                        rebounds:0
-                    };
-                }
-                //
-                if (record.indexOf('got') !== -1) {
-                    me.setGotFlag(record, map);
-                }
+            if (map && record.indexOf('broadcast: print "') !== -1) {
+                record = record.slice('broadcast: print "'.length, -3);
+                if (record.indexOf('RED') !== -1 || record.indexOf('BLUE') !== -1) {
 
-                if (record.indexOf('captured') !== -1) {
-                    me.setCapturedFlag(record, map);
-                }
+                    // Register the player to the map
+                    playerName = me.getPlayerName(record);
+                    if (playerName && map.players[playerName] === undefined) {
+                        map.players[playerName] = {
+                            name:playerName,
+                            scores:0,
+                            fetches:0,
+                            carrierFrags:0,
+                            returns:0,
+                            rebounds:0
+                        };
+                    }
+                    //
+                    if (record.indexOf('got') !== -1) {
+                        me.setGotFlag(record, map);
+                    }
 
-                if (record.indexOf('returned') !== -1) {
-                    me.setReturnedFlag(record, map);
-                }
+                    if (record.indexOf('captured') !== -1) {
+                        me.setCapturedFlag(record, map);
+                    }
 
-                if (record.indexOf('fragged') !== -1) {
-                    me.setFraggedFlagCarrier(record, map);
+                    if (record.indexOf('returned') !== -1) {
+                        me.setReturnedFlag(record, map);
+                    }
+
+                    if (record.indexOf('fragged') !== -1) {
+                        me.setFraggedFlagCarrier(record, map);
+                    }
+                    //
+                    map.timeline.push(record);
                 }
-                //
-                map.timeline.push(record);
             }
 
             // Map end
-            if (record.indexOf('hit') !== -1) {
+            if (map && record.indexOf('Exit:') !== -1) {
                 map.topScorer = me.getTopPlayer('scores', map);
                 map.topReturner = me.getTopPlayer('returns', map);
                 map.topCarrierFragger = me.getTopPlayer('carrierFrags', map);
