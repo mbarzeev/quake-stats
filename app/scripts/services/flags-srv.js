@@ -7,7 +7,7 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
     this.initMap = function(record, startIndex) {
         var map = {};
             
-        map.name = me.getMapKey(record); 
+        map.name = me.getMapKey(record);
         map.timeline = [];
         map.startIndex = startIndex;
         map.fetches = {
