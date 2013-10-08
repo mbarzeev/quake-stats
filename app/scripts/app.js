@@ -11,9 +11,9 @@ angular.module('quakeStatsApp', ['ngResource'])
                 templateUrl: 'views/flags.html',
                 controller: 'FlagsCtrl',
                 resolve: {
-                    qconsoleLog: ['$q', 'QConsoleService', function($q, QConsoleService) {
+                    qconsoleLog: ['$q', 'QConsoleLogService', function($q, QConsoleLogService) {
                         var dfd = $q.defer();
-                        QConsoleService.loadLog().then(
+                        QConsoleLogService.loadLog().then(
                             function(result) {
                                 dfd.resolve({
                                     success: true,
@@ -33,9 +33,9 @@ angular.module('quakeStatsApp', ['ngResource'])
                 templateUrl: 'views/maps.html',
                 controller: 'MapsCtrl',
                 resolve: {
-                    qconsoleLog: ['$q', 'QConsoleService', function($q, QConsoleService) {
+                    qconsoleLog: ['$q', 'QConsoleLogService', function($q, QConsoleLogService) {
                         var dfd = $q.defer();
-                        QConsoleService.loadLog().then(
+                        QConsoleLogService.loadLog().then(
                             function(result) {
                                 dfd.resolve({
                                     success: true,

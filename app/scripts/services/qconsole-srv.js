@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('quakeStatsApp').service('QConsoleService', ['$http', '$q', function ($http, $q) {
+angular.module('quakeStatsApp').service('QConsoleLogService', ['$http', '$q', function ($http, $q) {
     var me = this;
     this.qconsoleLog = null;
     this.loadLog = function () {

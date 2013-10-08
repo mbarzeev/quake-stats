@@ -11,13 +11,18 @@
 
 'use strict';
 
-angular.module('quakeStatsApp').service('LogService', ['$http', '$q', function ($http, $q) {
+angular.module('quakeStatsApp').service('GamesLogService', ['$http', '$q', function ($http, $q) {
+    var me = this;
+    this.gamesLog = null;
     this.loadLog = function () {
         var deferred = $q.defer();
+        if (me.gamesLog) {
+            deferred.resolve(me.gamesLog);
+        } else {
         $http.get('/rest/games/log')
             .success(function (data) {
-                var log = data.split('\n');
-                deferred.resolve(log);
+                me.gamesLog = data.split('\n');
+                deferred.resolve(me.gamesLog);
             })
             .error(deferred.reject);
 
