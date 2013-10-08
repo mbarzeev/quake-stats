@@ -25,7 +25,7 @@ angular.module('quakeStatsApp').service('GamesLogService', ['$http', '$q', funct
                 deferred.resolve(me.gamesLog);
             })
             .error(deferred.reject);
-
+        }
         return deferred.promise;
     };
 }]);
