@@ -51,15 +51,6 @@ angular.module('quakeStatsApp', ['ngResource'])
                     }]
                 }
             })
-            .when('/games/:index', {
-                templateUrl: 'views/games.html',
-                controller: 'GamesCtrl',
-                resolve: {
-                    stats: ['$route', 'StatsService', function ($route, StatsService) {
-                        return StatsService.getGameStats($route.current.params.index);
-                    }]
-                }
-            })
             .otherwise({
                 redirectTo: '/flags'
             });
