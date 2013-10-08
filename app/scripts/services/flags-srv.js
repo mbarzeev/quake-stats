@@ -119,8 +119,8 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
                 '1':0,
                 '2':0
             };
-        for (var i = 0; i < maps.length; i++) {
-            map = maps[i];
+        for (var mapIndex in maps) {
+            map = maps[mapIndex];
             if (map.score[Constants.RED] > map.score[Constants.BLUE]) {
                 wins[Constants.RED] += 1;
             } else if (map.score[Constants.RED] < map.score[Constants.BLUE]) {
@@ -143,13 +143,13 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
             '1':0,
             '2':0
         };
-        me.stats.maps = [];
+        me.stats.maps = {};
 
         for (i = 0; i < log.length; i++) {
             record = log[i];
             if (record.indexOf('InitGame:') !== -1) {
                 map = me.initMap(record, i);
-                me.stats.maps.push(map);
+                me.stats.maps[i] = map;
             }
 
             // Flag Records
