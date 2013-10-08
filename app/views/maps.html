@@ -1,0 +1,23 @@
+<h1>{{flagsMapStats.name | MapNameFilter}} 
+	(<strong style="color:red;">{{flagsMapStats.score.1}}</strong>:<strong style="color:blue;">{{flagsMapStats.score.2}}</strong>)
+</h1>
+
+<h3>Flags Timeline</h3>
+ <div class="row-fluid">
+	<div>
+         <table class="table table-bordered table-striped">
+             <thead>
+             <tr>
+                <th width="20">#</th>
+                <th>Record</th>
+             </tr>
+             </thead>
+             <tbody>
+             <tr ng-repeat="record in flagsMapStats.timeline">
+                <td width="20">{{$index}}</td>
+                <td>{{record}}</td>
+             </tr>
+             </tbody>
+         </table>
+     </div>
+</div>

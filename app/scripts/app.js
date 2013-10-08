@@ -26,10 +26,28 @@ angular.module('quakeStatsApp', ['ngResource'])
                                 });
                             });
                         return dfd.promise;
-                    }],
-                      
-                    stats: ['StatsService', function (StatsService) {
-                        return StatsService.getAllGamesStats();
+                    }]
+                }
+            })
+            .when('/maps/:flagsmapindex', {
+                templateUrl: 'views/maps.html',
+                controller: 'MapsCtrl',
+                resolve: {
+                    qconsoleLog: ['$q', 'QConsoleService', function($q, QConsoleService) {
+                        var dfd = $q.defer();
+                        QConsoleService.loadLog().then(
+                            function(result) {
+                                dfd.resolve({
+                                    success: true,
+                                    result : result
+                                });
+                            }, function(error) {
+                                dfd.resolve({
+                                    success : false,
+                                    reason : error
+                                });
+                            });
+                        return dfd.promise;
                     }]
                 }
             })
@@ -43,7 +61,7 @@ angular.module('quakeStatsApp', ['ngResource'])
                 }
             })
             .otherwise({
-                redirectTo: '/'
+                redirectTo: '/flags'
             });
 
         // TODO: resolve error handling
