@@ -19,7 +19,7 @@ angular.module('quakeStatsApp').service('GamesLogService', ['$http', '$q', funct
         if (me.gamesLog) {
             deferred.resolve(me.gamesLog);
         } else {
-        $http.get('/rest/games/log')
+            $http.get('/rest/games/log')
             .success(function (data) {
                 me.gamesLog = data.split('\n');
                 deferred.resolve(me.gamesLog);
