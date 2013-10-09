@@ -130,6 +130,30 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
         return wins;
     };
 
+    this.getOverallTopPlayer = function(prop, maps) {
+        var map,
+            players = {},
+            topPlayer;
+        for (var mapIndex in maps) {
+            map = maps[mapIndex];
+            for (var playerName in map.players) {
+                if (players[playerName] === undefined) {
+                    players[playerName] = 0;
+                }
+                players[playerName] += map.players[playerName][prop];
+                
+                if (topPlayer) {
+                    if (players[playerName] > topPlayer.value) {
+                        topPlayer = {name:playerName, value:players[playerName]};
+                    }
+                } else {
+                    topPlayer = {name:playerName, value:players[playerName]};
+                }
+            }
+        }
+        return topPlayer;
+    };
+
     this.getFlagsStats = function(log) {
         if (me.stats) {
             return me.stats;
@@ -201,6 +225,10 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
         }
 
         me.stats.wins = me.getWins(me.stats.maps);
+        me.stats.topOverallScorer = me.getOverallTopPlayer('scores', me.stats.maps);
+        me.stats.topOverallFetcher = me.getOverallTopPlayer('fetches', me.stats.maps);
+        me.stats.topOverallRetuner = me.getOverallTopPlayer('returns', me.stats.maps);
+        me.stats.topOverallCarrierFragger = me.getOverallTopPlayer('carrierFrags', me.stats.maps);
         return me.stats;
     };
 }]);
