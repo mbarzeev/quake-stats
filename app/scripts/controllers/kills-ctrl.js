@@ -9,6 +9,6 @@ angular.module('quakeStatsApp')
         if (gamesLog.success === false) {
             console.log('Cannot load games.log - you wil not be able to see kills stats');
         } else {
-            $scope.stakillStatsts = KillsService.getKillsStats(gamesLog.result);
+            $scope.killsStats = KillsService.getKillsStats(gamesLog.result);
         }
 	}]);

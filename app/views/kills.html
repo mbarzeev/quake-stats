@@ -1,1 +1,24 @@
 <h1>Kills</h1>
+<h4>Top Overall Killer - <strong>{{killsStats.topOverallKiller.name}} ({{killsStats.topOverallKiller.value}} kills)</strong></h4>
+<h4>Top Overall Victim - <strong>{{killsStats.topOverallVictim.name}} ({{killsStats.topOverallVictim.value}} deaths)</strong></h4>
+<h3>Maps</h3>
+<div class="row-fluid">
+	<div>
+         <table class="table table-bordered table-striped">
+             <thead>
+             <tr>
+                <th>Map Name</th>
+                <th>Top Killer</th>
+                <th>Top Victim</th>
+             </tr>
+             </thead>
+             <tbody>
+             <tr ng-repeat="map in killsStats.maps">
+                <td>{{ map.name | MapNameFilter}}</td>
+                <td>{{ map.topKiller.name}} ({{map.topKiller.kills.length}})</td>
+                <td>{{ map.topVictim.name}} ({{map.topVictim.kills.length}})</td>
+             </tr>
+             </tbody>
+         </table>
+     </div>
+</div>
