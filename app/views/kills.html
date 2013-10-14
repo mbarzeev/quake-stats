@@ -33,11 +33,11 @@
              		<td colspan="100" style="text-align:center;">VICTIMS</td>
              	</tr>
              	<tr>
-	            	<td ng-repeat="victim in killsStats.killers">{{victim.name}}</td>
+	            	<td ng-repeat="victim in killsStats.killers"><a href="/#/players/{{victim.player.id}}">{{victim.player.name}}</a></td>
              	</tr>
             	<tr ng-repeat="killer in killsStats.killers">
-	            	<td><b>{{killer.name}}</b></td>
-	            	<td ng-repeat="victim in killsStats.killers" style="text-align:center;">{{killer.victims[victim.name].deaths}}</td>
+	            	<td><b><a href="/#/players/{{killer.player.id}}">{{killer.player.name}}</a></b></td>
+	            	<td ng-repeat="victim in killsStats.killers" style="text-align:center;">{{killer.victims[victim.player.name].deaths}}</td>
 	            </tr>
              </tbody>
          </table>

@@ -104,13 +104,13 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
             var killerName = killerPlayer.name ? killerPlayer.name : killerPlayer.id;
             var victimName = victimPlayer.name ? victimPlayer.name : victimPlayer.id;
             if (me.stats.killers[killerName] === undefined) {
-                me.stats.killers[killerName] = {name:killerName};
+                me.stats.killers[killerName] = {player:killerPlayer};
             }
             if (me.stats.killers[killerName].victims === undefined) {
                 me.stats.killers[killerName].victims = {};
             }
             if (me.stats.killers[killerName].victims[victimName] === undefined) {
-                me.stats.killers[killerName].victims[victimName] = {name:victimName, deaths:0};
+                me.stats.killers[killerName].victims[victimName] = {player:victimPlayer, deaths:0};
             }
            
             me.stats.killers[killerName].victims[victimName].deaths += 1;
