@@ -21,15 +21,3 @@ body {
     line-height: 1;
     letter-spacing: -1px;
 }
-
-.table tbody td.blue{
-  background-color: #0000AA;
-  color: white;
-  opacity:0.7;
-}
-
-.table tbody td.red{
-  background-color: #AA0000;
-  color: white;
-  opacity:0.7;
-}
