@@ -88,12 +88,32 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
         var killerPlayer = map.players[kill.killer],
             victimPlayer = map.players[kill.victim];
         if (killerPlayer) {
-            if (kill.mode !== Constants.MOD_SUICIDE) {
+            // Do not register self kills
+            if (killerPlayer !== victimPlayer) {
                 killerPlayer.kills.push(kill);
             }
         }
         if (victimPlayer) {
             victimPlayer.deaths.push(kill);
+        }
+        me.calculatePlayerToPlayerKills(killerPlayer, victimPlayer);
+    };
+
+    this.calculatePlayerToPlayerKills = function(killerPlayer, victimPlayer) {
+        if (killerPlayer && victimPlayer) {
+            var killerName = killerPlayer.name ? killerPlayer.name : killerPlayer.id;
+            var victimName = victimPlayer.name ? victimPlayer.name : victimPlayer.id;
+            if (me.stats.killers[killerName] === undefined) {
+                me.stats.killers[killerName] = {name:killerName};
+            }
+            if (me.stats.killers[killerName].victims === undefined) {
+                me.stats.killers[killerName].victims = {};
+            }
+            if (me.stats.killers[killerName].victims[victimName] === undefined) {
+                me.stats.killers[killerName].victims[victimName] = {name:victimName, deaths:0};
+            }
+           
+            me.stats.killers[killerName].victims[victimName].deaths += 1;
         }
     };
 
@@ -108,6 +128,7 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
             player;
         me.stats = {};
         me.stats.maps = {};
+        me.stats.killers = {};
 
         for (i = 0; i < log.length; i++) {
             record = log[i];
@@ -117,7 +138,7 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
             }
             // Player
             if (record.indexOf(Constants.PLAYER_INFO_KEY) !== -1) {
-                var player = me.getPlayer(record);
+                player = me.getPlayer(record);
                 map.players[player.id] = player;
             }
             // Kill
@@ -134,7 +155,7 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
         }
         me.stats.topOverallKiller = me.getOverallTopPlayer('kills', me.stats.maps);
         me.stats.topOverallVictim = me.getOverallTopPlayer('deaths', me.stats.maps);
-        console.log(me.stats)
+        console.log(me.stats);
 		return me.stats;
 	};
 }]);

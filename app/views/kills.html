@@ -22,3 +22,24 @@
          </table>
      </div>
 </div>
+
+<h3>Killer/Victim</h3>
+<div class="row-fluid">
+	<div>
+         <table class="table table-bordered">
+             <tbody>
+             	<tr>
+             		<td rowspan="2"></td>
+             		<td colspan="100" style="text-align:center;">VICTIMS</td>
+             	</tr>
+             	<tr>
+	            	<td ng-repeat="victim in killsStats.killers">{{victim.name}}</td>
+             	</tr>
+            	<tr ng-repeat="killer in killsStats.killers">
+	            	<td><b>{{killer.name}}</b></td>
+	            	<td ng-repeat="victim in killsStats.killers" style="text-align:center;">{{killer.victims[victim.name].deaths}}</td>
+	            </tr>
+             </tbody>
+         </table>
+     </div>
+</div>
