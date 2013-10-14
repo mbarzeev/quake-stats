@@ -3,10 +3,6 @@
 angular.module('quakeStatsApp', ['ngResource'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
-            .when('/', {
-                templateUrl: 'views/main.html',
-                controller: 'MainCtrl'
-            })
             .when('/flags', {
                 templateUrl: 'views/flags.html',
                 controller: 'FlagsCtrl',
