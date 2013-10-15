@@ -69,6 +69,28 @@ angular.module('quakeStatsApp', ['ngResource'])
                     }]
                 }
             })
+            .when('/players', {
+                templateUrl: 'views/players.html',
+                controller: 'PlayersCtrl',
+                resolve: {
+                    gamesLog: ['$q', 'GamesLogService', function($q, GamesLogService) {
+                        var dfd = $q.defer();
+                        GamesLogService.loadLog().then(
+                            function(result) {
+                                dfd.resolve({
+                                    success: true,
+                                    result : result
+                                });
+                            }, function(error) {
+                                dfd.resolve({
+                                    success : false,
+                                    reason : error
+                                });
+                            });
+                        return dfd.promise;
+                    }]
+                }
+            })
             .when('/players/:id', {
                 templateUrl: 'views/player.html',
                 controller: 'PlayerCtrl',

@@ -1,14 +1,17 @@
 'use strict';
 
 angular.module('quakeStatsApp')
-    .controller('PlayerCtrl', ['$scope', 'gamesLog', 'KillsService',
-        function ($scope, gamesLog, KillsService) {
-        
+    .controller('PlayerCtrl', ['$scope', 'gamesLog', 'KillsService', '$routeParams',
+        function ($scope, gamesLog, KillsService, $routeParams) {
+        var playerID = $routeParams.id;
         $scope.killStats = {};
 
         if (gamesLog.success === false) {
             console.log('Cannot load games.log - you wil not be able to see kills stats');
-        } else {
-            $scope.killsStats = KillsService.getKillsStats(gamesLog.result);
+            return;
         }
+
+        $scope.killsStats = KillsService.getKillsStats(gamesLog.result);
+        var killStatsPlayer = $scope.killsStats.players[playerID];
+        $scope.playerName = killStatsPlayer.name;
 	}]);
