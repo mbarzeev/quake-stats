@@ -13,28 +13,28 @@ angular.module('quakeStatsApp')
 		$scope.killsStats = KillsService.getKillsStats(gamesLog.result);
 
 		var killByVictimFilter = function(element) {
-			return element.victim === this.victimID;
+			return element.victimName === this.victimName;
 		};
 
-		$scope.getTotalKillsByPlayers = function(killerID, victimID) {
-			var kills = $scope.killsStats.players[killerID].kills,
-				obj = {victimID:victimID};
+		$scope.getTotalKillsByPlayers = function(killerName, victimName) {
+			var kills = $scope.killsStats.players[killerName].kills,
+				obj = {victimName:victimName};
 			return kills.filter(killByVictimFilter, obj).length;
 		};
 
-		$scope.getTotalKills = function(killerID) {
-			return $scope.killsStats.players[killerID].kills.length;
+		$scope.getTotalKills = function(killerName) {
+			return $scope.killsStats.players[killerName].kills.length;
 		};
 
-		$scope.getTotalDeaths = function(victimID) {
-			return $scope.killsStats.players[victimID].deaths.length;
+		$scope.getTotalDeaths = function(victimName) {
+			return $scope.killsStats.players[victimName].deaths.length;
 		};
 
 		$scope.getTopKiller = function() {
 			var topPlayer = null,
 				player = null;
-			for (var playerID in $scope.killsStats.players) {
-				player = $scope.killsStats.players[playerID];
+			for (var playerName in $scope.killsStats.players) {
+				player = $scope.killsStats.players[playerName];
 				if (topPlayer) {
 					if (player.kills.length > topPlayer.kills.length) {
 						topPlayer = player;
@@ -49,8 +49,8 @@ angular.module('quakeStatsApp')
 		$scope.getTopVictim = function() {
 			var topPlayer = null,
 				player = null;
-			for (var playerID in $scope.killsStats.players) {
-				player = $scope.killsStats.players[playerID];
+			for (var playerName in $scope.killsStats.players) {
+				player = $scope.killsStats.players[playerName];
 				if (topPlayer) {
 					if (player.deaths.length > topPlayer.deaths.length) {
 						topPlayer = player;

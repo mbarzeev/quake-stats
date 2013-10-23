@@ -37,13 +37,13 @@
 	            	<td><b>Total Kills</b></td>
              	</tr>
             	<tr ng-repeat="killer in killsStats.players">
-	            	<td><b><a href="/#/players/{{killer.id}}">{{killer.name}}</a></b></td>
-	            	<td ng-repeat="victim in killsStats.players" style="text-align:center;">{{getTotalKillsByPlayers(killer.id, victim.id)}}</td>
-	            	<td style="text-align:center;"><b>{{getTotalKills(killer.id)}}</b></td>
+	            	<td><b><a href="/#/players/{{killer.name}}">{{killer.name}}</a></b></td>
+	            	<td ng-repeat="victim in killsStats.players" style="text-align:center;">{{getTotalKillsByPlayers(killer.name, victim.name)}}</td>
+	            	<td style="text-align:center;"><b>{{getTotalKills(killer.name)}}</b></td>
 	            </tr>
 	            <tr >
 	            	<td><b>Total Deaths</b></td>
-	            	<td ng-repeat="player in killsStats.players" style="text-align:center;"><b>{{getTotalDeaths(player.id)}}</b></td>
+	            	<td ng-repeat="player in killsStats.players" style="text-align:center;"><b>{{getTotalDeaths(player.name)}}</b></td>
 	            	<td></td>
 	            </tr>
              </tbody>
