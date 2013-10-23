@@ -4,8 +4,8 @@
 
 'use strict';
 
-angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants', 'MapConstants', 'UtilitiesService',
-    function ($http, Constants, MapConstants, UtilitiesService) {
+angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants', 'MapConstants',
+    function ($http, Constants, MapConstants) {
         this.blueFlagStatus = Constants.FLAG_STATUS_IN_BASE;
         this.redFlagStatus = Constants.FLAG_STATUS_IN_BASE;
         this.playerHoldingRedFlagID = -1;
@@ -99,7 +99,6 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
                     game.bestFetcher = me.getBest(players, 'fetchedFlags');
                     game.bestRebounder = me.getBest(players, 'reboundedFlags');
                     game.bestRestorer = me.getBest(players, 'restoredFlags');
-                    game.winner = me.getWinningTeam(game.score);
                     return game;
                 }
             }
@@ -155,12 +154,6 @@ angular.module('quakeStatsApp').service('GameStatsService', ['$http', 'Constants
                 me.redFlagAbandonTime = time;
                 me.playerHoldingRedFlagID = -1;
             }
-        };
-
-        this.getWinningTeam = function (gameScore) {
-            var redScore = gameScore[Constants.RED];
-            var blueScore = gameScore[Constants.BLUE];
-            return UtilitiesService.getWinner(redScore, blueScore);
         };
 
         this.getBest = function (players, prop) {
