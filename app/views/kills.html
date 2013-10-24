@@ -16,7 +16,7 @@
              <tr ng-repeat="map in killsStats.maps">
                 <td>{{ map.name | MapNameFilter}}</td>
                 <td>{{ map.topKiller.name}} ({{map.topKiller.kills.length}})</td>
-                <td>{{ map.topVictim.name}} ({{map.topVictim.kills.length}})</td>
+                <td>{{ map.topVictim.name}} ({{map.topVictim.deaths.length}})</td>
              </tr>
              </tbody>
          </table>
