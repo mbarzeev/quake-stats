@@ -3,30 +3,27 @@
 <h4>Top Victim - <strong>{{getTopVictim().name}} ({{getTopVictim().deaths.length}} deaths)</strong></h4>
 <h3>Maps</h3>
 <div class="row-fluid">
-	<div>
-         <table class="table table-bordered table-striped">
-             <thead>
-             <tr>
-                <th>Map Name</th>
-                <th>Top Killer</th>
-                <th>Top Victim</th>
-             </tr>
-             </thead>
-             <tbody>
-             <tr ng-repeat="map in killsStats.maps">
-                <td>{{ map.name | MapNameFilter}}</td>
-                <td>{{ map.topKiller.name}} ({{map.topKiller.kills.length}})</td>
-                <td>{{ map.topVictim.name}} ({{map.topVictim.deaths.length}})</td>
-             </tr>
-             </tbody>
-         </table>
-     </div>
+     <table class="table table-bordered table-striped">
+         <thead>
+         <tr>
+            <th>Map Name</th>
+            <th>Top Killer</th>
+            <th>Top Victim</th>
+         </tr>
+         </thead>
+         <tbody>
+         <tr ng-repeat="map in killsStats.maps">
+            <td>{{ map.name | MapNameFilter}}</td>
+            <td>{{ map.topKiller.name}} ({{map.topKiller.kills.length}})</td>
+            <td>{{ map.topVictim.name}} ({{map.topVictim.deaths.length}})</td>
+         </tr>
+         </tbody>
+     </table>
 </div>
 
 <h3>Killer/Victim</h3>
 <div class="row-fluid">
-	<div>
-         <table class="table table-bordered">
+         <table class="table table-bordered table-striped">
              <tbody>
              	<tr>
              		<td rowspan="2"></td>
@@ -38,15 +35,14 @@
              	</tr>
             	<tr ng-repeat="killer in killsStats.players">
 	            	<td><b><a href="/#/players/{{killer.name}}">{{killer.name}}</a></b></td>
-	            	<td ng-repeat="victim in killsStats.players" style="text-align:center;">{{getTotalKillsByPlayers(killer.name, victim.name)}}</td>
+	            	<td ng-repeat="victim in killsStats.players" style="text-align:center;" ng-class="{danger: killer.name==victim.name}">{{getTotalKillsByPlayers(killer.name, victim.name)}}</td>
 	            	<td style="text-align:center;"><b>{{getTotalKills(killer.name)}}</b></td>
 	            </tr>
-	            <tr >
+	            <tr>
 	            	<td><b>Total Deaths</b></td>
 	            	<td ng-repeat="player in killsStats.players" style="text-align:center;"><b>{{getTotalDeaths(player.name)}}</b></td>
 	            	<td></td>
 	            </tr>
              </tbody>
          </table>
-     </div>
 </div>
