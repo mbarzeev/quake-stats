@@ -14,4 +14,5 @@ angular.module('quakeStatsApp')
         $scope.killsStats = KillsService.getKillsStats(gamesLog.result);
         var killStatsPlayer = $scope.killsStats.players[playerID];
         $scope.playerName = killStatsPlayer.name;
+        $scope.playerKillsModes = KillsService.getPlayerKillsModes(killStatsPlayer);
 	}]);

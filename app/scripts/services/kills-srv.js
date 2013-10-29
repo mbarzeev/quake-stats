@@ -147,4 +147,25 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
         console.log(me.stats);
 		return me.stats;
 	};
+
+    this.getPlayerKillsModes = function(player) {
+        var modes=  {},
+            result = [],
+            killMode;
+        if (player) {
+            for (var kill in player.kills) {
+                killMode = player.kills[kill].mode;
+                if (modes[killMode] === undefined) {
+                    modes[killMode] = {id:killMode, kills:0};
+                    continue;
+                } else {
+                    modes[killMode].kills += 1;
+                }
+            }
+            for (var mode in modes) {
+                result.push(modes[mode]);
+            }
+        }
+        return result;
+    };
 }]);
