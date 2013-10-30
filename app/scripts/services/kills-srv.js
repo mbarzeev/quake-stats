@@ -28,6 +28,7 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
         player.team = parseInt(teamStr, 10);
         player.kills = [];
         player.deaths = [];
+        player.humiliations = [];
         return player;
     };
 
@@ -88,6 +89,9 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
         if (killerPlayer && victimPlayer) {
             killerPlayer.kills.push(kill);
             victimPlayer.deaths.push(kill);
+            if (kill.mode === 2) {
+                killerPlayer.humiliations.push(kill);
+            }
         }
     };
 
@@ -148,20 +152,31 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
 		return me.stats;
 	};
 
-    this.getPlayerKillsModes = function(player) {
+    this.getPlayerWeaponsStats = function(player) {
         var modes=  {},
             result = [],
-            killMode;
+            killMode,
+            deathMode;
         if (player) {
             for (var kill in player.kills) {
                 killMode = player.kills[kill].mode;
                 if (modes[killMode] === undefined) {
-                    modes[killMode] = {id:killMode, kills:0};
+                    modes[killMode] = {id:killMode, kills:0, deaths:0};
                     continue;
                 } else {
                     modes[killMode].kills += 1;
                 }
             }
+            for (var death in player.deaths) {
+                deathMode = player.deaths[death].mode;
+                if (modes[deathMode] === undefined) {
+                    modes[deathMode] = {id:deathMode, kills:0, deaths:0};
+                    continue;
+                } else {
+                    modes[deathMode].deaths += 1;
+                }
+            }
+
             for (var mode in modes) {
                 result.push(modes[mode]);
             }

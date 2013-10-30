@@ -61,4 +61,8 @@ angular.module('quakeStatsApp')
 			}
 			return topPlayer;
 		};
+
+		$scope.greaterThanNum = function(item) {
+			return item.humliations.length > 0;
+		};
 	}]);

@@ -1,24 +1,43 @@
 <h1>Kills</h1>
 <h4>Top Killer - <strong>{{getTopKiller().name}} ({{getTopKiller().kills.length}} kills)</strong></h4>
 <h4>Top Victim - <strong>{{getTopVictim().name}} ({{getTopVictim().deaths.length}} deaths)</strong></h4>
-<h3>Maps</h3>
-<div class="row-fluid">
-     <table class="table table-bordered table-striped">
-         <thead>
-         <tr>
-            <th>Map Name</th>
-            <th>Top Killer</th>
-            <th>Top Victim</th>
-         </tr>
-         </thead>
-         <tbody>
-         <tr ng-repeat="map in killsStats.maps">
-            <td>{{ map.name | MapNameFilter}}</td>
-            <td>{{ map.topKiller.name}} ({{map.topKiller.kills.length}})</td>
-            <td>{{ map.topVictim.name}} ({{map.topVictim.deaths.length}})</td>
-         </tr>
-         </tbody>
-     </table>
+<div class="row">
+    <div class="col-md-6">
+        <h3>Maps</h3>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Map Name</th>
+                    <th>Top Killer</th>
+                    <th>Top Victim</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="map in killsStats.maps">
+                    <td>{{ map.name | MapNameFilter}}</td>
+                    <td>{{ map.topKiller.name}} ({{map.topKiller.kills.length}})</td>
+                    <td>{{ map.topVictim.name}} ({{map.topVictim.deaths.length}})</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <h3>Humilations</h3>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>Humiliations</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="killer in killsStats.players | filter:greaterThanNum">
+                    <td>{{killer.name}}</td>
+                    <td>{{killer.humiliations.length}}</td>
+                </tr>
+            </tbody>
+         </table>
+     </div>
 </div>
 
 <h3>Killer/Victim</h3>

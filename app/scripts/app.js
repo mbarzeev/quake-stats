@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('quakeStatsApp', ['ngResource'])
+angular.module('quakeStatsApp', ['ngResource', 'googlechart'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/flags', {

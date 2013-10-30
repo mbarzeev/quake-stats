@@ -1,18 +1,10 @@
 <h1>{{playerName}}</h1>
-<h3>Weapon Usage</h3>
-<div class="row-fluid">
-     <table class="table table-bordered table-striped">
-         <thead>
-         <tr>
-            <th>Weapon</th>
-            <th>Kills</th>
-         </tr>
-         </thead>
-         <tbody>
-         <tr ng-repeat="weapon in playerKillsModes | orderBy:'-kills'">
-            <td width="200">{{weapon.id | WeaponsFilter}}</td>
-            <td>{{weapon.kills}}</td>
-         </tr>
-         </tbody>
-     </table>
+<h3>Weapon</h3>
+<div class="row">
+	<div class="col-md-6">
+		<div google-chart chart="killsChart" style="{{chart.cssStyle}}" ></div>
+	</div>
+	<div class="col-md-6">
+		<div google-chart chart="deathsChart" style="{{chart.cssStyle}}" ></div>
+	</div>
 </div>
