@@ -148,7 +148,6 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
                 map.topVictim = me.getTopPlayer('deaths', map);
             }
         }
-        console.log(me.stats);
 		return me.stats;
 	};
 
