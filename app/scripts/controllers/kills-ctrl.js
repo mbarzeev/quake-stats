@@ -11,6 +11,7 @@ angular.module('quakeStatsApp')
 		}
 
 		$scope.killsStats = KillsService.getKillsStats(gamesLog.result);
+		$scope.players = $scope.killsStats.players;
 
 		var killByVictimFilter = function(element) {
 			return element.victimName === this.victimName;
@@ -62,7 +63,13 @@ angular.module('quakeStatsApp')
 			return topPlayer;
 		};
 
-		$scope.greaterThanNum = function(item) {
-			return item.humliations.length > 0;
-		};
+		$scope.filterSecId = function(items) {
+		    var result = {};
+		    angular.forEach(items, function(value, key) {
+		        if (value.humiliations.length > 0) {
+		            result[key] = value;
+		        }
+		    });
+		    return result;
+		}
 	}]);

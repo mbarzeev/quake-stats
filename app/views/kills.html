@@ -31,9 +31,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="killer in killsStats.players | filter:greaterThanNum">
-                    <td>{{killer.name}}</td>
-                    <td>{{killer.humiliations.length}}</td>
+                <tr ng-repeat="player in filterSecId(players)">
+                    <td>{{player.name}}</td>
+                    <td>{{player.humiliations.length}}</td>
                 </tr>
             </tbody>
          </table>
