@@ -63,7 +63,7 @@ angular.module('quakeStatsApp')
 			return topPlayer;
 		};
 
-		$scope.filterSecId = function(items) {
+		$scope.filterHumiliators = function(items) {
 		    var result = {};
 		    angular.forEach(items, function(value, key) {
 		        if (value.humiliations.length > 0) {
