@@ -110,6 +110,48 @@ angular.module('quakeStatsApp')
             return rows;
         };
 
+        this.getDeathsKillsOverMapsCols = function() {
+            return [
+                {
+                    'id': 'map',
+                    'label': 'Map',
+                    'type': 'string'
+                },
+                {
+                    'id': 'kills',
+                    'label': 'Kills',
+                    'type': 'number'
+                },
+                {
+                    'id': 'deaths',
+                    'label': 'Deaths',
+                    'type': 'number'
+                }
+            ];
+        };
+
+        this.getDeathsKillsOverMapsRows = function(data) {
+            var map,
+                rows = [];
+            for (var item in data.maps) {
+                map = data.maps[item];
+                rows.push({
+                    'c':[
+                        {
+                            'v': $filter('MapNameFilter')(map.name)
+                        },
+                        {
+                            'v': map.players[playerID].kills.length
+                        },
+                        {
+                            'v': map.players[playerID].deaths.length
+                        }
+                    ]
+                });
+            }
+            return rows;
+        };
+
         $scope.killsChart = {
             'type': 'PieChart',
             'displayed': true,
@@ -131,11 +173,27 @@ angular.module('quakeStatsApp')
             'displayed': true,
             'cssStyle': 'height:500px; width:100%;',
             'data': {
-                'cols': me.getDeathsByWeaponCols(),
+                'cols': me.getDeathsByWeaponCols($scope.playerWeaponsStats),
                 'rows': me.getDeathsByWeaponRows($scope.playerWeaponsStats)
             },
             'options': {
                 'title': 'Deaths by Weapon',
+                'is3D':true,
+                'displayExactValues': true
+            },
+            'formatters': {}
+        };
+
+        $scope.deathsKillsOverMapsChart = {
+            'type': 'LineChart',
+            'displayed': true,
+            'cssStyle': 'height:300px; width:100%;',
+            'data': {
+                'cols': me.getDeathsKillsOverMapsCols(),
+                'rows': me.getDeathsKillsOverMapsRows($scope.killsStats)
+            },
+            'options': {
+                'title': 'Kills & Deaths across maps',
                 'is3D':true,
                 'displayExactValues': true
             },

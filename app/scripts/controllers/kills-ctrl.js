@@ -71,5 +71,5 @@ angular.module('quakeStatsApp')
 		        }
 		    });
 		    return result;
-		}
+		};
 	}]);
