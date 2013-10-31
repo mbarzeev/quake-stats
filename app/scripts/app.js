@@ -110,6 +110,22 @@ angular.module('quakeStatsApp', ['ngResource', 'googlechart'])
                                 });
                             });
                         return dfd.promise;
+                    }],
+                    qconsoleLog: ['$q', 'QConsoleLogService', function($q, QConsoleLogService) {
+                        var dfd = $q.defer();
+                        QConsoleLogService.loadLog().then(
+                            function(result) {
+                                dfd.resolve({
+                                    success: true,
+                                    result : result
+                                });
+                            }, function(error) {
+                                dfd.resolve({
+                                    success : false,
+                                    reason : error
+                                });
+                            });
+                        return dfd.promise;
                     }]
                 }
             })
