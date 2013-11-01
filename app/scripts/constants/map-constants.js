@@ -7,10 +7,11 @@
 angular.module('quakeStatsApp')
     .constant('MapConstants', {
         'q3ctf1': 'Dueling Keeps',
+        'q3ctf2': 'Troubled Waters',
         'q3ctf3': 'The Stronghold',
         'q3ctf4': 'Space CTF',
+        'sq3ctf1': 'Spacial',
         'speedyctf': 'Speedy',
-        'q3ctf2': 'Troubled Waters',
         'ump3ctf1': 'Breakdown',
         'ump3ctf2': 'Hydrophobia',
         'ump3ctf3': 'Got Wood',
