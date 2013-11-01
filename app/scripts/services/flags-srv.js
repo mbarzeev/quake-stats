@@ -214,13 +214,19 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
                 }
             }
 
-            // Map end
             if (map && record.indexOf('Exit:') !== -1) {
+                map.endReason = record;
+            }
+
+            // Map end
+            // FIXME:   It used to be "exit:" but it might not register the 
+            //          game ending correctly. Perhaps "ShutdownGame:" is
+            //          better
+            if (map && record.indexOf('ShutdownGame:') !== -1) {
                 map.topScorer = me.getTopPlayer('scores', map);
                 map.topReturner = me.getTopPlayer('returns', map);
                 map.topCarrierFragger = me.getTopPlayer('carrierFrags', map);
                 map.topFetcher = me.getTopPlayer('fetches', map);
-                map.endReason = record;
             }
         }
 
