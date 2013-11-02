@@ -1,20 +1,25 @@
 <div class="row">
 	<div class="col-md-6" style="height:150px;">
-		<h1>Score <strong style="color:red;">{{flagsStats.wins.1}}</strong>:<strong style="color:blue;">{{flagsStats.wins.2}}</strong></h4>
+		<h1>Score <strong style="color:red;">{{flagsStats.wins.1}}</strong>:<strong style="color:blue;">{{flagsStats.wins.2}}</strong></h1>
 		</strong></h1>
 	</div>
 	<div class="col-md-6" style="height:150px;">
-		<h1>Top Killer <strong style="color:Grey;">{{killsStats.topKiller.name}}</strong></h4>
+		<h1>Top Killer <strong><a href="/#/players/{{killsStats.topKiller.name}}">{{killsStats.topKiller.name}}</a></strong></h1>
+		<h3>{{killsStats.topKiller.kills.length}}</h3>
+	</div>
+	<div class="col-md-6" style="height:150px;">
+		<h1>Top Scorer <strong><a href="/#/players/{{flagsStats.topOverallScorer.name}}">{{flagsStats.topOverallScorer.name}}</a></strong></h1>
+		<h3>{{flagsStats.topOverallScorer.value}}</h3>
 		</strong></h1>
 	</div>
 	<div class="col-md-6" style="height:150px;">
-	</div>
-	<div class="col-md-6" style="height:150px;">
-		<h1>Top Victim <strong style="color:Grey;">{{killsStats.topVictim.name}}</strong></h4>
+		<h1>Top Victim <strong><a href="/#/players/{{killsStats.topVictim.name}}">{{killsStats.topVictim.name}}</a></strong></h1>
+		<h3>{{killsStats.topVictim.deaths.length}}</h3>
 		</strong></h1>
 	</div>
 </div>
 <!-- 
+<div>Top Scorer</div>
 <div>Best Humilator</div>
 <div>Time played</div>
 <div>Total Players Num</div>
