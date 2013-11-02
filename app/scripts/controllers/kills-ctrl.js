@@ -12,6 +12,7 @@ angular.module('quakeStatsApp')
 
 		$scope.killsStats = KillsService.getKillsStats(gamesLog.result);
 		$scope.players = $scope.killsStats.players;
+		console.log($scope.killsStats);
 
 		var killByVictimFilter = function(element) {
 			return element.victimName === this.victimName;
@@ -29,38 +30,6 @@ angular.module('quakeStatsApp')
 
 		$scope.getTotalDeaths = function(victimName) {
 			return $scope.killsStats.players[victimName].deaths.length;
-		};
-
-		$scope.getTopKiller = function() {
-			var topPlayer = null,
-				player = null;
-			for (var playerName in $scope.killsStats.players) {
-				player = $scope.killsStats.players[playerName];
-				if (topPlayer) {
-					if (player.kills.length > topPlayer.kills.length) {
-						topPlayer = player;
-					}
-				} else {
-					topPlayer = player;
-				}
-			}
-			return topPlayer;
-		};
-
-		$scope.getTopVictim = function() {
-			var topPlayer = null,
-				player = null;
-			for (var playerName in $scope.killsStats.players) {
-				player = $scope.killsStats.players[playerName];
-				if (topPlayer) {
-					if (player.deaths.length > topPlayer.deaths.length) {
-						topPlayer = player;
-					}
-				} else {
-					topPlayer = player;
-				}
-			}
-			return topPlayer;
 		};
 
 		$scope.filterHumiliators = function(items) {

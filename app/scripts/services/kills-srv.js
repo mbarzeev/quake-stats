@@ -102,6 +102,40 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
         
     };
 
+    this.getTopKiller = function() {
+        var player,
+            topKiller;
+        for (var item in me.stats.players) {
+            player = me.stats.players[item]
+            if (topKiller) {
+                if (player.kills.length > topKiller.kills.length) {
+                    topKiller = player;
+                    continue;
+                }
+            } else {
+                topKiller = player;
+            }
+        }
+        return topKiller;
+    }
+
+    this.getTopVictim = function() {
+        var player,
+            topVictim;
+        for (var item in me.stats.players) {
+            player = me.stats.players[item]
+            if (topVictim) {
+                if (player.deaths.length > topVictim.deaths.length) {
+                    topVictim = player;
+                    continue;
+                }
+            } else {
+                topVictim = player;
+            }
+        }
+        return topVictim;
+    }
+
 	this.getKillsStats = function(log) {
 		if (me.stats) {
             return me.stats;
@@ -143,11 +177,13 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
                 }
             }
             // Exit
-            if (record.indexOf('Exit: ') !== -1) {
+            if (record.indexOf('ShutdownGame: ') !== -1) {
                 map.topKiller = me.getTopPlayer('kills', map);
                 map.topVictim = me.getTopPlayer('deaths', map);
             }
         }
+        me.stats.topKiller = me.getTopKiller();
+        me.stats.topVictim = me.getTopVictim();
 		return me.stats;
 	};
 
