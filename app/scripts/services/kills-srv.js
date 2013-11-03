@@ -57,11 +57,11 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
         };
     };
 
-    this.getTopPlayer = function(prop, map) {
+    this.getTopPlayer = function(prop, players) {
         var topPlayer = null,
             player = null;
-        for (var playerName in map.players) {
-            player = map.players[playerName];
+        for (var playerName in players) {
+            player = players[playerName];
             if (topPlayer) {
                 if (player[prop].length > topPlayer[prop].length) {
                     topPlayer = player;
@@ -101,40 +101,6 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
         }
         
     };
-
-    this.getTopKiller = function() {
-        var player,
-            topKiller;
-        for (var item in me.stats.players) {
-            player = me.stats.players[item]
-            if (topKiller) {
-                if (player.kills.length > topKiller.kills.length) {
-                    topKiller = player;
-                    continue;
-                }
-            } else {
-                topKiller = player;
-            }
-        }
-        return topKiller;
-    }
-
-    this.getTopVictim = function() {
-        var player,
-            topVictim;
-        for (var item in me.stats.players) {
-            player = me.stats.players[item]
-            if (topVictim) {
-                if (player.deaths.length > topVictim.deaths.length) {
-                    topVictim = player;
-                    continue;
-                }
-            } else {
-                topVictim = player;
-            }
-        }
-        return topVictim;
-    }
 
 	this.getKillsStats = function(log) {
 		if (me.stats) {
@@ -178,12 +144,12 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
             }
             // Exit
             if (record.indexOf('ShutdownGame:') !== -1) {
-                map.topKiller = me.getTopPlayer('kills', map);
-                map.topVictim = me.getTopPlayer('deaths', map);
+                map.topKiller = me.getTopPlayer('kills', map.players);
+                map.topVictim = me.getTopPlayer('deaths', map.players);
             }
         }
-        me.stats.topKiller = me.getTopKiller();
-        me.stats.topVictim = me.getTopVictim();
+        me.stats.topKiller = me.getTopPlayer('kills', me.stats.players);
+        me.stats.topVictim = me.getTopPlayer('deaths', me.stats.players);
 		return me.stats;
 	};
 
