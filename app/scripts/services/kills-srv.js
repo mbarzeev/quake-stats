@@ -177,7 +177,7 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
                 }
             }
             // Exit
-            if (record.indexOf('ShutdownGame: ') !== -1) {
+            if (record.indexOf('ShutdownGame:') !== -1) {
                 map.topKiller = me.getTopPlayer('kills', map);
                 map.topVictim = me.getTopPlayer('deaths', map);
             }
