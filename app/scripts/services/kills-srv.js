@@ -150,6 +150,7 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
         }
         me.stats.topKiller = me.getTopPlayer('kills', me.stats.players);
         me.stats.topVictim = me.getTopPlayer('deaths', me.stats.players);
+        me.stats.topHumilator = me.getTopPlayer('humiliations', me.stats.players);
 		return me.stats;
 	};
 
