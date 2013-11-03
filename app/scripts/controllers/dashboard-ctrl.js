@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('quakeStatsApp')
-    .controller('DashboardCtrl', ['$scope', 'gamesLog', 'qconsoleLog', 'KillsService', 'FlagsService','$routeParams', '$filter',
-        function ($scope, gamesLog, qconsoleLog, KillsService, FlagsService, $routeParams, $filter) {
+    .controller('DashboardCtrl', ['$scope', 'gamesLog', 'qconsoleLog', 'KillsService', 'FlagsService',
+        function ($scope, gamesLog, qconsoleLog, KillsService, FlagsService) {
 
         $scope.killStats = {};
         $scope.flagsStats = {};
@@ -19,4 +19,4 @@ angular.module('quakeStatsApp')
 
         $scope.killsStats = KillsService.getKillsStats(gamesLog.result);
         $scope.flagsStats = FlagsService.getFlagsStats(qconsoleLog.result);
-}]);
+	}]);
