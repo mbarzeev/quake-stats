@@ -1,10 +1,66 @@
 <h1>Flags</h1>
-<h4>Total Wins <strong style="color:red;">{{stats.wins.1}}</strong>:<strong style="color:blue;">{{stats.wins.2}}</strong></h4>
-<h4>Total Score <strong style="color:red;">{{stats.capturedFlags.1}}</strong>:<strong style="color:blue;">{{stats.capturedFlags.2}}</strong></h4>
-<h4>Top Overall Scorer - <strong>{{stats.topOverallScorer.name}} ({{stats.topOverallScorer.value}})</strong></h4>
-<h4>Top Overall Fetcher - <strong>{{stats.topOverallFetcher.name}} ({{stats.topOverallFetcher.value}})</strong></h4>
-<h4>Top Overall Returner - <strong>{{stats.topOverallRetuner.name}} ({{stats.topOverallRetuner.value}})</strong></h4>
-<h4>Top Overall Carrier Fragger - <strong>{{stats.topOverallCarrierFragger.name}} ({{stats.topOverallCarrierFragger.value}})</strong></h4>
+<div class="row">
+    <div class="col-md-2">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <strong>Total Wins</strong>
+            </div>
+            <div class="panel-footer">
+                <strong style="color:red;">{{stats.wins.1}}</strong>:<strong style="color:blue;">{{stats.wins.2}}</strong>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <strong>Total Flags</strong>
+            </div>
+            <div class="panel-footer">
+                <strong style="color:red;">{{stats.capturedFlags.1}}</strong>:<strong style="color:blue;">{{stats.capturedFlags.2}}</strong>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <strong>Top Scorer</strong>
+            </div>
+            <div class="panel-footer">
+                <strong>{{stats.topOverallScorer.name}} ({{stats.topOverallScorer.value}})</strong>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <strong>Top Fetcher</strong>
+            </div>
+            <div class="panel-footer">
+                <strong>{{stats.topOverallFetcher.name}} ({{stats.topOverallFetcher.value}})</strong>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <strong>Top Returner</strong>
+            </div>
+            <div class="panel-footer">
+                <strong>{{stats.topOverallRetuner.name}} ({{stats.topOverallRetuner.value}})</strong>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <strong>Top Carrier Killer</strong>
+            </div>
+            <div class="panel-footer">
+                <strong>{{stats.topOverallCarrierFragger.name}} ({{stats.topOverallCarrierFragger.value}})</strong>
+            </div>
+        </div>
+    </div>
+</div>
 <h3>Maps</h3>
 <div class="row-fluid">
 	<div>
