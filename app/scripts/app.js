@@ -168,7 +168,7 @@ angular.module('quakeStatsApp', ['ngResource', 'googlechart'])
                 }
             })
             .otherwise({
-                redirectTo: '/flags'
+                redirectTo: '/dashboard'
             });
 
         // TODO: resolve error handling
