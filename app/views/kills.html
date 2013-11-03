@@ -31,7 +31,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="player in filterHumiliators(players)">
+                <tr ng-repeat="player in filterHumiliators(players) | orderBy:'-humiliations.length'">
                     <td>{{player.name}}</td>
                     <td>{{player.humiliations.length}}</td>
                 </tr>

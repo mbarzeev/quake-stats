@@ -33,10 +33,10 @@ angular.module('quakeStatsApp')
 		};
 
 		$scope.filterHumiliators = function(items) {
-		    var result = {};
-		    angular.forEach(items, function(value, key) {
+		    var result = [];
+		    angular.forEach(items, function(value) {
 		        if (value.humiliations.length > 0) {
-		            result[key] = value;
+		            result.push(value);
 		        }
 		    });
 		    return result;
