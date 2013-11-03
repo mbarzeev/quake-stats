@@ -1,29 +1,79 @@
 <div class="row">
 	<div class="col-md-6" style="height:150px;">
-		<h1>Score <strong style="color:red;">{{flagsStats.wins.1}}</strong>:<strong style="color:blue;">{{flagsStats.wins.2}}</strong></h1>
-		</strong></h1>
+		<div class="panel panel-primary">
+			<div class="panel-body">
+				<strong>Score</strong>
+			</div>
+			<div class="panel-footer">
+				<h1>
+					<strong style="color:red;">{{flagsStats.wins.1}}</strong>:<strong style="color:blue;">{{flagsStats.wins.2}}</strong>
+				</h1>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6" style="height:150px;">
+		<div class="panel panel-primary">
+			<div class="panel-body">
+				<strong>Top Killer</strong>
+			</div>
+			<div class="panel-footer">
+				<h1>
+					<strong><a href="/#/players/{{killsStats.topKiller.name}}">{{killsStats.topKiller.name}}</a> ({{killsStats.topKiller.kills.length}})</strong>
+				</h1>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6" style="height:150px;">
+		<div class="panel panel-primary">
+			<div class="panel-body">
+				<strong>Top Scorer</strong>
+			</div>
+			<div class="panel-footer">
+				<h1>
+					<strong><a href="/#/players/{{flagsStats.topOverallScorer.name}}">{{flagsStats.topOverallScorer.name}}</a> ({{flagsStats.topOverallScorer.value}})</strong>
+				</h1>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6" style="height:150px;">
+		<div class="panel panel-primary">
+			<div class="panel-body">
+				<strong>Top Victim</strong>
+			</div>
+			<div class="panel-footer">
+				<h1>
+					<strong><a href="/#/players/{{killsStats.topVictim.name}}">{{killsStats.topVictim.name}}</a> ({{killsStats.topVictim.deaths.length}})</strong>
+				</h1>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6" style="height:150px;">
+		<div class="panel panel-primary">
+			<div class="panel-body">
+				<strong>Top Humilator</strong>
+			</div>
+			<div class="panel-footer">
+				<h1>
+					<strong><a href="/#/players/{{killsStats.topHumilator.name}}">{{killsStats.topHumilator.name}}</a> ({{killsStats.topHumilator.humiliations.length}})</strong>
+				</h1>
+			</div>
+		</div>
 	</div>
 	<div class="col-md-6" style="height:150px;">
-		<h1>Top Killer <strong><a href="/#/players/{{killsStats.topKiller.name}}">{{killsStats.topKiller.name}}</a></strong></h1>
-		<h3>{{killsStats.topKiller.kills.length}}</h3>
-	</div>
-	<div class="col-md-6" style="height:150px;">
-		<h1>Top Scorer <strong><a href="/#/players/{{flagsStats.topOverallScorer.name}}">{{flagsStats.topOverallScorer.name}}</a></strong></h1>
-		<h3>{{flagsStats.topOverallScorer.value}}</h3>
-		</strong></h1>
-	</div>
-	<div class="col-md-6" style="height:150px;">
-		<h1>Top Victim <strong><a href="/#/players/{{killsStats.topVictim.name}}">{{killsStats.topVictim.name}}</a></strong></h1>
-		<h3>{{killsStats.topVictim.deaths.length}}</h3>
-		</strong></h1>
-	</div>
-	<div class="col-md-6" style="height:150px;">
-		<h1>Top Humilator <strong><a href="/#/players/{{killsStats.topHumilator.name}}">{{killsStats.topHumilator.name}}</a></strong></h1>
-		<h3>{{killsStats.topHumilator.humiliations.length}}</h3>
-		</strong></h1>
+		<div class="panel panel-primary">
+			<div class="panel-body">
+				<strong>Total Players</strong>
+			</div>
+			<div class="panel-footer">
+				<strong ng-repeat="player in killsStats.players">{{$index + 1}}. <a href="/#/players/{{player.name}}">{{player.name}}</a></br></strong>
+			</div>
+		</div>
 	</div>
 </div>
 <!-- 
 <div>Time played</div>
-<div>Total Players Num</div>
  -->
