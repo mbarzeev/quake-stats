@@ -27,6 +27,7 @@
                 <div class="panel panel-success" ng-repeat="player in filterHumiliators(players) | orderBy:'-humiliations.length'">
                     <div class="panel-heading">
                         <h4 class="panel-title">
+                            <img src="/resources/images/gauntlet.png" height="30" width="30"/>
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{player.id}}">
                             {{player.name}} ({{player.humiliations.length}})
                             </a>
