@@ -7,6 +7,7 @@ angular.module('quakeStatsApp').
 			2: 'GAUNTLET',
 			3: 'MACHINEGUN',
 			4: 'GRENADE',
+			5: 'GRENADE SPLASH',
 			6: 'ROCKET',
 			7: 'ROCKET SPLASH',
 			8: 'PLASMA',
