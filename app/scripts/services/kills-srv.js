@@ -93,7 +93,7 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
             if (kill.mode === 2) {
                 killerPlayer.humiliations.push(kill);
             }
-        }        
+        }
         if (killerPlayer.team === victimPlayer.team) {
             killerPlayer.teammatesKills.push(kill);
         }
