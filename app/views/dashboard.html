@@ -15,7 +15,7 @@
 	<div class="col-md-6" style="height:150px;">
 		<div class="panel panel-primary">
 			<div class="panel-body">
-				<strong>Top Killer</strong>
+				<img src="/resources/images/medal_frags.png" height="20"/>&nbsp;&nbsp;<strong>Top Killer</strong>
 			</div>
 			<div class="panel-footer">
 				<h1>
@@ -54,7 +54,7 @@
 	<div class="col-md-6" style="height:150px;">
 		<div class="panel panel-primary">
 			<div class="panel-body">
-				<strong>Top Humiliator</strong>
+				<img src="/resources/images/gauntlet.png" height="20"/>&nbsp;&nbsp;<strong>Top Humiliator</strong>
 			</div>
 			<div class="panel-footer">
 				<h1>
@@ -63,6 +63,7 @@
 			</div>
 		</div>
 	</div>
+	
 	<div class="col-md-6" style="height:150px;">
 		<div class="panel panel-primary">
 			<div class="panel-body">
@@ -70,6 +71,19 @@
 			</div>
 			<div class="panel-footer">
 				<strong ng-repeat="player in killsStats.players">{{$index + 1}}. <a href="/#/players/{{player.name}}">{{player.name}}</a></br></strong>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6" style="height:150px;">
+		<div class="panel panel-primary">
+			<div class="panel-body">
+				<strong>Top Fifth Column</strong>
+			</div>
+			<div class="panel-footer">
+				<h1>
+					<strong><a href="/#/players/{{killsStats.topFifthColumn.name}}">{{killsStats.topFifthColumn.name}}</a> ({{killsStats.topFifthColumn.teammatesKills.length}})</strong>
+				</h1>
 			</div>
 		</div>
 	</div>

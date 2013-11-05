@@ -21,13 +21,13 @@
             </tbody>
         </table>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-3">
         <h3>Humilators</h3>
             <div class="panel-group" id="accordion" >
-                <div class="panel panel-success" ng-repeat="player in filterHumiliators(players) | orderBy:'-humiliations.length'">
+                <div class="panel panel-success" ng-repeat="player in filterPropArrayLength(players, 'humiliations') | orderBy:'-humiliations.length'">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <img src="/resources/images/gauntlet.png" height="30" width="30"/>
+                            <img src="/resources/images/gauntlet.png" height="30"/>&nbsp;&nbsp;
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{player.id}}">
                             {{player.name}} ({{player.humiliations.length}})
                             </a>
@@ -41,10 +41,28 @@
                 </div>
             </div>
      </div>
+     <div class="col-md-3">
+         <h3>Friendly Fire</h3>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>Teammate Kills</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="player in filterPropArrayLength(players, 'teammatesKills') | orderBy:'-teammatesKills.length'">
+                    <td>{{ player.name}}</td>
+                    <td>{{ player.teammatesKills.length}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <h3>Killer/Victim</h3>
-<div class="row-fluid">
+<div class="row">
+    <div class="col-md-12">
          <table class="table table-bordered table-striped">
              <tbody>
              	<tr>
@@ -67,4 +85,5 @@
 	            </tr>
              </tbody>
          </table>
+    </div>
 </div>

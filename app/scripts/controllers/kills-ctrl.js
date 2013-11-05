@@ -12,7 +12,6 @@ angular.module('quakeStatsApp')
 
 		$scope.killsStats = KillsService.getKillsStats(gamesLog.result);
 		$scope.players = $scope.killsStats.players;
-		console.log($scope.killsStats);
 
 		var killByVictimFilter = function(element) {
 			return element.victimName === this.victimName;
@@ -32,10 +31,10 @@ angular.module('quakeStatsApp')
 			return $scope.killsStats.players[victimName].deaths.length;
 		};
 
-		$scope.filterHumiliators = function(items) {
+		$scope.filterPropArrayLength = function(items, prop) {
 		    var result = [];
 		    angular.forEach(items, function(value) {
-		        if (value.humiliations.length > 0) {
+		        if (value[prop].length > 0) {
 		            result.push(value);
 		        }
 		    });

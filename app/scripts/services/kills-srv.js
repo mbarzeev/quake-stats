@@ -29,6 +29,7 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
         player.kills = [];
         player.deaths = [];
         player.humiliations = [];
+        player.teammatesKills = [];
         return player;
     };
 
@@ -92,6 +93,9 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
             if (kill.mode === 2) {
                 killerPlayer.humiliations.push(kill);
             }
+        }        
+        if (killerPlayer.team === victimPlayer.team) {
+            killerPlayer.teammatesKills.push(kill);
         }
     };
 
@@ -99,7 +103,9 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
         if (!me.stats.players[player.name]) {
             me.stats.players[player.name] = player;
         }
-        
+        if (me.stats.players[player.name].team !== player.team) {
+            me.stats.players[player.name].team = player.team;
+        }
     };
 
 	this.getKillsStats = function(log) {
@@ -151,6 +157,7 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
         me.stats.topKiller = me.getTopPlayer('kills', me.stats.players);
         me.stats.topVictim = me.getTopPlayer('deaths', me.stats.players);
         me.stats.topHumilator = me.getTopPlayer('humiliations', me.stats.players);
+        me.stats.topFifthColumn = me.getTopPlayer('teammatesKills', me.stats.players);
 		return me.stats;
 	};
 
