@@ -27,13 +27,12 @@
                 <div class="panel panel-success" ng-repeat="player in filterPropArrayLength(players, 'humiliations') | orderBy:'-humiliations.length'">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <img src="/resources/images/gauntlet.png" height="30"/>&nbsp;&nbsp;
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{player.id}}">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseHumilators{{player.id}}">
                             {{player.name}} ({{player.humiliations.length}})
                             </a>
                         </h4>
                     </div>
-                    <div id="collapse{{player.id}}" class="panel-collapse collapse">
+                    <div id="collapseHumilators{{player.id}}" class="panel-collapse collapse">
                         <div class="panel-body">
                             <span ng-repeat="humilation in player.humiliations">{{humilation.victimName}}<span ng-show=" ! $last ">, </span></span>
                         </div>
@@ -41,23 +40,26 @@
                 </div>
             </div>
      </div>
+
      <div class="col-md-3">
-         <h3>Friendly Fire</h3>
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Player</th>
-                    <th>Teammate Kills</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="player in filterPropArrayLength(players, 'teammatesKills') | orderBy:'-teammatesKills.length'">
-                    <td>{{ player.name}}</td>
-                    <td>{{ player.teammatesKills.length}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+     <h3>Fifth Column</h3>
+            <div class="panel-group" id="accordion" >
+                <div class="panel panel-warning" ng-repeat="player in filterPropArrayLength(players, 'teammatesKills') | orderBy:'-teammatesKills.length'">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFifthColumn{{player.id}}">
+                            {{player.name}} ({{player.teammatesKills.length}})
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseFifthColumn{{player.id}}" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <span ng-repeat="teammatekill in player.teammatesKills">{{teammatekill.victimName}}<span ng-show=" ! $last ">, </span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+     </div>
 </div>
 
 <h3>Killer/Victim</h3>
