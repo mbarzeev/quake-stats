@@ -25,6 +25,7 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
 
         player.id = me.getPlayerID(record);
         player.name = me.getPlayerName(record);
+        player.nameId = me.getPlayerName(record).replace(' ', '').toLowerCase();
         player.team = parseInt(teamStr, 10);
         player.kills = [];
         player.deaths = [];
