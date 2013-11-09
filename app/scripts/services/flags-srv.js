@@ -49,6 +49,7 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
                 map.fetches[Constants.RED] += 1;
             }
             map.players[playerName].fetches += 1;
+            map.players[playerName].fetchToScoreRatio = getFetchToCaptureRatio(map.players[playerName]);
         }
     };
 
@@ -63,8 +64,17 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
                 me.stats.capturedFlags[Constants.RED] += 1;
             }
             map.players[playerName].scores += 1;
+            map.players[playerName].fetchToScoreRatio = getFetchToCaptureRatio(map.players[playerName]);
         }
     };
+
+    function getFetchToCaptureRatio(player) {
+        var result = 0;
+        if (player.scores !== 0) {
+            result = player.scores / player.fetches ;
+        }
+        return result;
+    }
 
     this.setReturnedFlag = function(record, map) {
         var playerName = me.getPlayerName(record);
@@ -154,6 +164,29 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
         return topPlayer;
     };
 
+    this.getPlayerCaptureRatio = function(player) {
+        var map,
+            participatingmMapCount = 0,
+            mapPlayer,
+            totalRatio = 0,
+            result = 0;
+        for (var mapIndex in me.stats.maps) {
+            map = me.stats.maps[mapIndex];
+            mapPlayer = map.players[player.name];
+            if (mapPlayer) {
+                participatingmMapCount++;
+                if (mapPlayer.fetches !== 0 && mapPlayer.fetches !== 0) {
+                    totalRatio += mapPlayer.scores / mapPlayer.fetches;
+                }
+                
+            }
+        }
+        if (totalRatio !== 0) {
+            result = totalRatio / participatingmMapCount;
+        }
+        return result;
+    };
+
     this.getFlagsStats = function(log) {
         if (me.stats) {
             return me.stats;
@@ -161,7 +194,8 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
         var i,
             record,
             map,
-            playerName;
+            playerName,
+            mapCount = 0;
         me.stats = {};
         me.stats.capturedFlags = {
             '1':0,
@@ -174,6 +208,7 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
             if (record.indexOf('InitGame:') !== -1) {
                 map = me.initMap(record, i);
                 me.stats.maps[i] = map;
+                mapCount++;
             }
 
             // Flag Records
@@ -232,6 +267,9 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
         me.stats.topOverallFetcher = me.getOverallTopPlayer('fetches', me.stats.maps);
         me.stats.topOverallRetuner = me.getOverallTopPlayer('returns', me.stats.maps);
         me.stats.topOverallCarrierFragger = me.getOverallTopPlayer('carrierFrags', me.stats.maps);
+        var topOverallFetchToCaptureRatioPlayer = me.getOverallTopPlayer('fetchToScoreRatio', me.stats.maps);
+        topOverallFetchToCaptureRatioPlayer.value = topOverallFetchToCaptureRatioPlayer.value / mapCount;
+        me.stats.topOverallFetchToCaptureRatioPlayer = topOverallFetchToCaptureRatioPlayer;
         return me.stats;
     };
 }]);

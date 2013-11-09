@@ -24,6 +24,10 @@ angular.module('quakeStatsApp')
         $scope.playerWeaponsStats = KillsService.getPlayerWeaponsStats(killStatsPlayer);
         $scope.flagsStats = FlagsService.getFlagsStats(qconsoleLog.result);
 
+        $scope.getPlayerCaptureRatio = function() {
+            return FlagsService.getPlayerCaptureRatio(killStatsPlayer);
+        };
+
         this.getWeaponsChartData = function(rawData) {
             var data = {
                     'cols': [

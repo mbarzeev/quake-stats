@@ -1,5 +1,17 @@
 <h1>{{playerName}}</h1>
 <div class="row">
+    <div class="col-md-3">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                Fetch to Capture Ratio
+            </div>
+            <div class="panel-footer">
+                <strong>{{getPlayerCaptureRatio({name: 'SHAFFUN'}) | number:2}}</strong>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
 	<div class="col-md-12">
 		<div google-chart chart="flagsOverMapsChart" style="{{chart.cssStyle}}" ></div>
 	</div>
