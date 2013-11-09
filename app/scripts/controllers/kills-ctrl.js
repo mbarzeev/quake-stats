@@ -40,4 +40,12 @@ angular.module('quakeStatsApp')
 		    });
 		    return result;
 		};
+
+		$scope.objectToArray = function(items) {
+		    var result = [];
+		    angular.forEach(items, function(value) {
+		        result.push(value);
+		    });
+		    return result;
+		};
 	}]);

@@ -11,4 +11,12 @@ angular.module('quakeStatsApp')
         } else {
             $scope.stats = FlagsService.getFlagsStats(qconsoleLog.result);
         }
+
+        $scope.objectToArray = function(items) {
+		    var result = [];
+		    angular.forEach(items, function(value) {
+		        result.push(value);
+		    });
+		    return result;
+		};
     }]);

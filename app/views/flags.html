@@ -78,7 +78,7 @@
              </tr>
              </thead>
              <tbody>
-             <tr ng-repeat="map in stats.maps">
+             <tr ng-repeat="map in objectToArray(stats.maps)">
                 <td><a href="/#/maps/{{map.startIndex}}">{{ map.name | MapNameFilter}}</a></td>
                 <td>{{ map.score.1 }}</td>
                 <td>{{ map.score.2 }}</td>

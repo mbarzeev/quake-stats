@@ -11,7 +11,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="map in killsStats.maps">
+                <tr ng-repeat="map in objectToArray(killsStats.maps)">
                     <td>{{ map.name | MapNameFilter}}</td>
                     <td>{{ map.topKiller.name}} ({{map.topKiller.kills.length}})</td>
                     <td>{{ map.topVictim.name}} ({{map.topVictim.deaths.length}})</td>

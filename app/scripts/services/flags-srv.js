@@ -4,12 +4,13 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
     this.stats = null;
     var me = this;
 
-    this.initMap = function(record, startIndex) {
+    this.initMap = function(record, startIndex, index) {
         var map = {};
             
         map.name = me.getMapKey(record);
         map.timeline = [];
-        map.startIndex = startIndex;
+        map.logStartIndex = startIndex;
+        map.index = index;
         map.fetches = {
             '1':0,
             '2':0
@@ -206,9 +207,8 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
         for (i = 0; i < log.length; i++) {
             record = log[i];
             if (record.indexOf('InitGame:') !== -1) {
-                map = me.initMap(record, i);
+                map = me.initMap(record, i, mapCount++);
                 me.stats.maps[i] = map;
-                mapCount++;
             }
 
             // Flag Records
