@@ -49,7 +49,7 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
             killerID = parseInt(idsArr[0], 10),
             victimID = parseInt(idsArr[1], 10),
             killModeID = parseInt(idsArr[2], 10),
-            killerName = record.slice(record.lastIndexOf(': ') + ': '.length, record.indexOf(' killed')),
+            killerName = record.slice(record.indexOf(killStr + ': ') + (killStr + ': ').length, record.indexOf(' killed')),
             victimName = record.slice(record.indexOf('killed ') + 'killed '.length, record.indexOf(' by'));
         return {killer: killerID,
             killerName:killerName,
