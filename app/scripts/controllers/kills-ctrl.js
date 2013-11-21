@@ -55,7 +55,7 @@ angular.module('quakeStatsApp')
 					result[value.victimName] = result[value.victimName] || {};
 					result[value.victimName].name = value.victimName;
 					result[value.victimName].count = result[value.victimName].count + 1 || 1;
-			});
+				});
 			return result;
 		};
 	}]);
