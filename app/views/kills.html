@@ -32,7 +32,9 @@
                     </div>
                     <div id="collapseHumilators{{player.nameId}}" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <span ng-repeat="humilation in player.humiliations">{{humilation.victimName}}<span ng-show=" ! $last ">, </span></span>
+                            <ul class="list-group"></ul>
+                                <li class="list-group-item" ng-repeat="humilation in countDuplicatesKills(player.humiliations)">{{humilation.name}}<span class="badge">{{humilation.count}}</span></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -52,7 +54,9 @@
                     </div>
                     <div id="collapseFifthColumn{{player.nameId}}" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <span ng-repeat="teammatekill in player.teammatesKills">{{teammatekill.victimName}}<span ng-show=" ! $last ">, </span></span>
+                            <ul class="list-group"></ul>
+                                <li class="list-group-item" ng-repeat="teammatekill in countDuplicatesKills(player.teammatesKills)">{{teammatekill.name}}<span class="badge">{{teammatekill.count}}</span></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
