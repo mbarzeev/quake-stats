@@ -50,12 +50,21 @@ angular.module('quakeStatsApp')
 		};
 
 		$scope.countDuplicatesKills = function(items) {
-			var result = {};
-			angular.forEach(items, function(value) {
-					result[value.victimName] = result[value.victimName] || {};
-					result[value.victimName].name = value.victimName;
-					result[value.victimName].count = result[value.victimName].count + 1 || 1;
-				});
-			return result;
+			var result = {},
+				item;
+			for (item in items) {
+				var value = angular.copy(items[item]),
+					victimName = value.victimName;
+				if (result[victimName]) {
+					result[victimName].count +=1;
+					continue;
+				} else {
+					result[victimName] = {
+						name: victimName,
+						count: 1
+					};
+				}
+			}
+			return this.objectToArray(result);
 		};
 	}]);
