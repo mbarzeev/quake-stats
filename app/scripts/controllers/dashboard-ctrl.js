@@ -19,4 +19,5 @@ angular.module('quakeStatsApp')
 
         $scope.killsStats = KillsService.getKillsStats(gamesLog.result);
         $scope.flagsStats = FlagsService.getFlagsStats(qconsoleLog.result);
+        $scope.playersCount = Object.keys($scope.killsStats.players).length;
 	}]);
