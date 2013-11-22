@@ -27,17 +27,7 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <!-- Brand and toggle get grouped for better mobile display -->
-  <a class="navbar-brand"><img src="/resources/images/gauntlet.png" height="20"/></a>
-  <ul class="nav navbar-nav">
-      <li ng-repeat="item in menu.items"><a href="/#/{{item.data}}">{{item.label}}</a></li>
-  </ul>
-  <!-- <div class="navbar-header">
-    <a ng-repeat="item in menu.items" class="navbar-brand" href="/#/{{item.data}}" ng-click="onMenuItemClick($index)">{{item.label}}</a>
-  </div> -->
-  
-</nav>
+    <div ng-include="'views/navigation.html'"></div>
 
     <div class="container" ng-view=""></div>
 
@@ -77,6 +67,7 @@
         <script src="scripts/controllers/kills-ctrl.js"></script>
         <script src="scripts/controllers/player-ctrl.js"></script>
         <script src="scripts/controllers/dashboard-ctrl.js"></script>
+        <script src="scripts/controllers/navigation-ctrl.js"></script>
         <script src="scripts/services/log-srv.js"></script>
         <script src="scripts/services/qconsole-srv.js"></script>
         <script src="scripts/services/flags-srv.js"></script>
