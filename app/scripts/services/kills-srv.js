@@ -159,6 +159,8 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
         me.stats.topVictim = me.getTopPlayer('deaths', me.stats.players);
         me.stats.topHumilator = me.getTopPlayer('humiliations', me.stats.players);
         me.stats.topFifthColumn = me.getTopPlayer('teammatesKills', me.stats.players);
+        me.stats.humiliations = getAggragatedArraysByProp('humiliations', me.stats.players);
+        me.stats.teammatesKills = getAggragatedArraysByProp('teammatesKills', me.stats.players);
 		return me.stats;
 	};
 
@@ -193,4 +195,42 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
         }
         return result;
     };
+
+    function getAggragatedArraysByProp(prop, players) {
+        var result = [],
+            player,
+            killer,
+            kill,
+            aggregator;
+        for (var item in players) {
+            aggregator = {};
+            player = players[item];
+            if (player[prop].length > 0) {
+                killer = {
+                    name: player.name,
+                    nameId: player.nameId,
+                    count: player[prop].length,
+                    victims: []
+                };
+                for (var i = 0; i < player[prop].length; i++) {
+                    kill = player[prop][i];
+                    if (!aggregator[kill.victimName]) {
+                        aggregator[kill.victimName] = {name:kill.victimName, count:0};
+                    }
+                    aggregator[kill.victimName].count++;
+                }
+                killer.victims = objectToArray(aggregator);
+                result.push(killer);
+            }
+        }
+        return result;
+    }
+
+    function objectToArray(items) {
+        var result = [];
+        angular.forEach(items, function(value) {
+            result.push(value);
+        });
+        return result;
+    }
 }]);

@@ -22,18 +22,18 @@
     <div class="col-md-3">
         <h3>Humilators</h3>
             <div class="panel-group" id="accordion" >
-                <div class="panel panel-success" ng-repeat="player in filterPropArrayLength(players, 'humiliations') | orderBy:'-humiliations.length'">
+                <div class="panel panel-success" ng-repeat="player in killsStats.humiliations | orderBy:'-count'">
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapseHumilators{{player.nameId}}">
-                            {{player.name}} ({{player.humiliations.length}})
+                            {{player.name}} ({{player.count}})
                             </a>
                         </h4>
                     </div>
                     <div id="collapseHumilators{{player.nameId}}" class="panel-collapse collapse">
                         <div class="panel-body">
                             <ul class="list-group"></ul>
-                                <li class="list-group-item" ng-repeat="humilation in countDuplicatesKills(player.humiliations) | orderBy:'-count'">{{humilation.name}}<span class="badge">{{humilation.count}}</span></li>
+                                <li class="list-group-item" ng-repeat="victim in player.victims | orderBy:'-count'">{{victim.name}}<span class="badge">{{victim.count}}</span></li>
                             </ul>
                         </div>
                     </div>
@@ -44,18 +44,18 @@
      <div class="col-md-3">
      <h3>Fifth Column</h3>
             <div class="panel-group" id="accordion" >
-                <div class="panel panel-warning" ng-repeat="player in filterPropArrayLength(players, 'teammatesKills') | orderBy:'-teammatesKills.length'">
+                <div class="panel panel-warning" ng-repeat="player in killsStats.teammatesKills | orderBy:'-count'">
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapseFifthColumn{{player.nameId}}">
-                            {{player.name}} ({{player.teammatesKills.length}})
+                            {{player.name}} ({{player.count}})
                             </a>
                         </h4>
                     </div>
                     <div id="collapseFifthColumn{{player.nameId}}" class="panel-collapse collapse">
                         <div class="panel-body">
                             <ul class="list-group"></ul>
-                                <li class="list-group-item" ng-repeat="teammatekill in countDuplicatesKills(player.teammatesKills) | orderBy:'-count'">{{teammatekill.name}}<span class="badge">{{teammatekill.count}}</span></li>
+                                <li class="list-group-item" ng-repeat="victim in player.victims | orderBy:'-count'">{{victim.name}}<span class="badge">{{victim.count}}</span></li>
                             </ul>
                         </div>
                     </div>
