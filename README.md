@@ -20,7 +20,7 @@ Installing
 Your browser shoud open with the application launched.
 
 QConsole Log
--------------------------
+------------
 Flags statistics don't come that easy ;)
 The games.log file does give some indication of Flags cpatures etc. but it can be inaccurate.
 For accuracy you need the qconsole.log, which is a dump of the game console messages.
@@ -34,3 +34,11 @@ Either you do that, or add to the Quake shortcut path the following parameter:
 
 This will dump a qconsole.log file to the baseq3 directory.
 When you have this file, simply drop it into this projects root directory as you did for the games.log file.
+
+Running Protractor Automation Tests
+-----------------------------------
+This project support Protractor Automation tests. 
+Currently there aren't a lot of them, but the infrastructure is laid down for them to come.
+In order to launch the tests first make sure that you're localhost server is up and running and then open CMD on the project’s root directory and run this command:
+
+	node node_modules\protractor\bin\protractor test\automation\conf.js

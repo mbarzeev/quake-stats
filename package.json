@@ -30,7 +30,8 @@
     "express":"latest",
     "grunt-express": "latest",
     "grunt-connect-proxy":"latest",
-    "grunt-karma":"latest"
+    "grunt-karma":"latest",
+    "protractor":"latest"
   },
   "engines": {
     "node": ">=0.8.0"
