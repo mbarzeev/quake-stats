@@ -325,8 +325,14 @@ module.exports = function (grunt) {
         karma: {
             unit: {
                 configFile: 'karma.conf.js',
+                autoWatch: false,
                 singleRun: true
-            }
+            },
+            unit_auto: {
+                configFile: 'karma.conf.js',
+                autoWatch: true,
+                singleRun: false
+              },
         },
         cdnify: {
             dist: {
@@ -400,5 +406,10 @@ module.exports = function (grunt) {
         'jshint',
         'test',
         'build'
+    ]);
+
+    //autotest and watch tests
+    grunt.registerTask('autotest', [
+        'karma:unit_auto'
     ]);
 };
