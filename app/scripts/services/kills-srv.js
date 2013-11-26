@@ -81,24 +81,23 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
         if (killerPlayer && victimPlayer) {
             killerPlayer.kills.push(kill);
             victimPlayer.deaths.push(kill);
-            me.calculatePlayerToPlayerKills(kill);
+            if (killerPlayer.team === victimPlayer.team) {
+                me.stats.players[kill.killerName].teammatesKills.push(kill);
+            } else if (kill.mode === 2) {
+                me.stats.players[kill.killerName].humiliations.push(kill);
+            }
+            calculatePlayerToPlayerKills(kill);
         }
     };
 
-    this.calculatePlayerToPlayerKills = function(kill) {
+    function calculatePlayerToPlayerKills(kill) {
         var killerPlayer = me.stats.players[kill.killerName],
             victimPlayer = me.stats.players[kill.victimName];
         if (killerPlayer && victimPlayer) {
             killerPlayer.kills.push(kill);
             victimPlayer.deaths.push(kill);
-            if (kill.mode === 2) {
-                killerPlayer.humiliations.push(kill);
-            }
         }
-        if (killerPlayer.team === victimPlayer.team) {
-            killerPlayer.teammatesKills.push(kill);
-        }
-    };
+    }
 
     this.registerStatsPlayer = function(player) {
         if (!me.stats.players[player.name]) {
@@ -161,7 +160,7 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
         me.stats.topFifthColumn = me.getTopPlayer('teammatesKills', me.stats.players);
         me.stats.humiliations = getAggragatedArraysByProp('humiliations', me.stats.players);
         me.stats.teammatesKills = getAggragatedArraysByProp('teammatesKills', me.stats.players);
-		return me.stats;
+        return me.stats;
 	};
 
     this.getPlayerWeaponsStats = function(player) {
