@@ -11,8 +11,7 @@ prerequisites
 Installing
 ----------
 1. First of all - clone the repo.
-2. open CMD, go to the root directory of the project and run `npm install` 
-3. open CMD, go to the root directory of the project and run `bower install`.
+2. open CMD, go to the root directory of the project and run `npm install`
 3. Drop your Quake III Arena games.log file in the root directory of the project.
 4. If you want to have Flags statistics as well, you need to drop your Quake III arena qconsole.log file in the rot directory of the project. If you don't know how to get it, please read the QConsole Log section below.
 5. Run `grunt server` from the root directory of the project.
