@@ -112,11 +112,21 @@ module.exports = function (grunt) {
                         ];
                     }
                 }
+            },
+            coverage: {
+                options: {
+                    base: 'coverage/',
+                    port: 5555,
+                    keepalive: true
+                }
             }
         },
         open: {
             server: {
                 url: 'http://localhost:<%= connect.options.port %>'
+            },
+            coverage: {
+                path: 'http://localhost:5555'
             }
         },
         clean: {
@@ -339,11 +349,12 @@ module.exports = function (grunt) {
                 singleRun: true,
                 reporters: ['progress', 'coverage'],
                 preprocessors: {
-                  'app/scripts/*.js': ['coverage']
+                  'app/scripts/**/*.js': ['coverage']
                 },
                 coverageReporter: {
-                  type : 'html',
-                  dir : 'coverage/'
+                  type : 'cobertura',
+                  dir : 'coverage/',
+                  file : 'coverage.xml'
                 }
             }
         },
@@ -428,4 +439,5 @@ module.exports = function (grunt) {
 
     //coverage testing
     grunt.registerTask('test:coverage', ['karma:unit_coverage']);
+    grunt.registerTask('coverage', ['karma:unit_coverage','open:coverage','connect:coverage']);
 };

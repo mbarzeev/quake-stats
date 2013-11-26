@@ -9,6 +9,7 @@ module.exports = function(config) {
 		  'app/bower_components/angular/angular.js',
 		  'app/bower_components/angular-mocks/angular-mocks.js',
 		  'app/bower_components/angular-resource/angular-resource.js',
+		  'app/bower_components/angular-google-chart/ng-google-chart.js',
 		  'app/scripts/*.js',
 		  'app/scripts/**/*.js',
 		  'test/mock/**/*.js',
