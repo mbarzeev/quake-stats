@@ -40,7 +40,7 @@ exports.config = {
   // The address of a running selenium server. If specified, Protractor will
   // connect to an already running instance of selenium. This usually looks like
   // seleniumAddress: 'http://localhost:4444/wd/hub'
-  seleniumAddress: null,
+  seleniumAddress: 'http://localhost:4444/wd/hub',
 
   // The timeout for each script run on the browser. This should be longer
   // than the maximum time your application needs to stabilize between tasks.
@@ -50,7 +50,7 @@ exports.config = {
   //
   // Spec patterns are relative to the location of this config.
   specs: [
-    'spec/*_spec.js',
+    'spec/*_spec.js'
   ],
 
   // ----- Capabilities to be passed to the webdriver instance ----
@@ -112,30 +112,3 @@ exports.config = {
     defaultTimeoutInterval: 30000
   }
 };
-
-
-
-
-
-/*// An example configuration file.
-exports.config = {
-	// The address of a running selenium server.
-	seleniumAddress: 'http://localhost:4444/wd/hub',
-
-
-
-	// Capabilities to be passed to the webdriver instance.
-	capabilities: {
-		'browserName': 'chrome'
-	},
-
-	// Spec patterns are relative to the current working directly when
-	// protractor is called.
-	specs: ['spec/*_spec.js'],
-
-	// Options to be passed to Jasmine-node.
-	jasmineNodeOpts: {
-		showColors: true,
-		defaultTimeoutInterval: 30000
-	}
-};*/
