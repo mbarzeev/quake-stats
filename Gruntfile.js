@@ -332,7 +332,20 @@ module.exports = function (grunt) {
                 configFile: 'karma.conf.js',
                 autoWatch: true,
                 singleRun: false
-              },
+            },
+            unit_coverage: {
+                configFile: 'karma.conf.js',
+                autoWatch: false,
+                singleRun: true,
+                reporters: ['progress', 'coverage'],
+                preprocessors: {
+                  'app/scripts/*.js': ['coverage']
+                },
+                coverageReporter: {
+                  type : 'html',
+                  dir : 'coverage/'
+                }
+            }
         },
         cdnify: {
             dist: {
@@ -412,4 +425,7 @@ module.exports = function (grunt) {
     grunt.registerTask('autotest', [
         'karma:unit_auto'
     ]);
+
+    //coverage testing
+    grunt.registerTask('test:coverage', ['karma:unit_coverage']);
 };
