@@ -352,9 +352,8 @@ module.exports = function (grunt) {
                     'app/scripts/**/*.js': ['coverage']
                 },
                 coverageReporter: {
-                    type : 'cobertura',
-                    dir : 'coverage/',
-                    file : 'coverage.xml'
+                    type : 'html',
+                    dir : 'coverage/'
                 }
             }
         },
