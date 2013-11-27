@@ -38,10 +38,6 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
         return parseInt(idStr, 10);
     };
 
-    this.getPlayerName = function(record) {
-        return record.slice(record.indexOf(Constants.PLAYER_NAME_KEY) + Constants.PLAYER_NAME_KEY.length, record.indexOf(Constants.BACKSLASH_KEY, record.indexOf(Constants.PLAYER_NAME_KEY) + Constants.PLAYER_NAME_KEY.length));
-    };
-
     this.getKill = function(record) {
         var killStr = record.slice(record.indexOf('Kill: ') + 'Kill: '.length, record.indexOf(':', record.indexOf('Kill: ') + 'Kill: '.length)),
             idsArr = killStr.split(' '),
