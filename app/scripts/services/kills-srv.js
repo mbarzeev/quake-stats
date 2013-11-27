@@ -78,12 +78,16 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
         var killerPlayer = map.players[kill.killerName],
             victimPlayer = map.players[kill.victimName];
         if (killerPlayer && victimPlayer) {
-            killerPlayer.kills.push(kill);
-            victimPlayer.deaths.push(kill);
+            if (kill.killerName !== kill.victimName) {
+                victimPlayer.deaths.push(kill);
+            }
             if (killerPlayer.team === victimPlayer.team) {
                 me.stats.players[kill.killerName].teammatesKills.push(kill);
-            } else if (kill.mode === 2) {
-                me.stats.players[kill.killerName].humiliations.push(kill);
+            } else {
+                killerPlayer.kills.push(kill);
+                if (kill.mode === 2) {
+                    me.stats.players[kill.killerName].humiliations.push(kill);
+                }
             }
             calculatePlayerToPlayerKills(kill);
         }
@@ -93,8 +97,12 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
         var killerPlayer = me.stats.players[kill.killerName],
             victimPlayer = me.stats.players[kill.victimName];
         if (killerPlayer && victimPlayer) {
-            killerPlayer.kills.push(kill);
-            victimPlayer.deaths.push(kill);
+            if (kill.killerName !== kill.victimName) {
+                victimPlayer.deaths.push(kill);
+            }
+            if (killerPlayer.team !== victimPlayer.team) {
+                killerPlayer.kills.push(kill);
+            }
         }
     }
 
