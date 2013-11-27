@@ -338,23 +338,23 @@ module.exports = function (grunt) {
                 autoWatch: false,
                 singleRun: true
             },
-            unit_auto: {
+            unitAuto: {
                 configFile: 'karma.conf.js',
                 autoWatch: true,
                 singleRun: false
             },
-            unit_coverage: {
+            unitCoverage: {
                 configFile: 'karma.conf.js',
                 autoWatch: false,
                 singleRun: true,
                 reporters: ['progress', 'coverage'],
                 preprocessors: {
-                  'app/scripts/**/*.js': ['coverage']
+                    'app/scripts/**/*.js': ['coverage']
                 },
                 coverageReporter: {
-                  type : 'cobertura',
-                  dir : 'coverage/',
-                  file : 'coverage.xml'
+                    type : 'cobertura',
+                    dir : 'coverage/',
+                    file : 'coverage.xml'
                 }
             }
         },
@@ -428,7 +428,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', [
         'jshint',
-        'test',
+        'test:unit',
         'build'
     ]);
 
@@ -439,15 +439,15 @@ module.exports = function (grunt) {
 
     //autotest and watch tests
     grunt.registerTask('autotest', [
-        'karma:unit_auto'
+        'karma:unitAuto'
     ]);
 
     //coverage testing
     grunt.registerTask('test:coverage', [
-        'karma:unit_coverage'
-    ]);    
+        'karma:unitCoverage'
+    ]);
     grunt.registerTask('coverage', [
-        'karma:unit_coverage',
+        'karma:unitCoverage',
         'open:coverage',
         'connect:coverage'
     ]);

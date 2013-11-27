@@ -20,13 +20,12 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
     };
 
     this.getPlayer = function (record) {
-        var player = {},
-            teamStr = record.substr(record.indexOf(Constants.TEAM_NUM_KEY) + Constants.TEAM_NUM_KEY.length, 1);
+        var player = {};
 
         player.id = me.getPlayerID(record);
-        player.name = me.getPlayerName(record);
-        player.nameId = me.getPlayerName(record).replace(' ', '').toLowerCase();
-        player.team = parseInt(teamStr, 10);
+        player.name = GamesLogParserService.getPlayerName(record);
+        player.nameId = player.name.replace(' ', '').toLowerCase();
+        player.team = GamesLogParserService.getPlayerTeam(record);
         player.kills = [];
         player.deaths = [];
         player.humiliations = [];
@@ -123,12 +122,15 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
 
         for (i = 0; i < log.length; i++) {
             record = log[i];
+            if (!record) {
+                continue;
+            }
             if (GamesLogParserService.isMapStart(record)) {
                 map = me.initMap(record, i);
                 me.stats.maps[i] = map;
             }
             // Player
-            if (record.indexOf(Constants.PLAYER_INFO_KEY) !== -1) {
+            if (GamesLogParserService.isClientUserinfoChanged(record)) {
                 player = me.getPlayer(record);
 
                 for (var name in map.players) {
