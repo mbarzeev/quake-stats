@@ -34,6 +34,12 @@ Either you do that, or add to the Quake shortcut path the following parameter:
 This will dump a qconsole.log file to the baseq3 directory.
 When you have this file, simply drop it into this projects root directory as you did for the games.log file.
 
+Running Unit Testing
+--------------------
+
+#### Single run tests
+	grunt test:unit 
+
 Running Protractor Automation Tests
 -----------------------------------
 This project support Protractor Automation tests. 

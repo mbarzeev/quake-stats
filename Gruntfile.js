@@ -388,7 +388,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('server', function (target) {
         if (target === 'dist') {
-            return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
+            return grunt.task.run(['build', 'open:server', 'connect:dist:keepalive']);
         }
 
         grunt.task.run([
@@ -398,7 +398,7 @@ module.exports = function (grunt) {
             'autoprefixer',
             'connect:livereload',
             'express',
-            'open',
+            'open:server',
             'watch'
         ]);
     });
@@ -432,12 +432,23 @@ module.exports = function (grunt) {
         'build'
     ]);
 
+    // Single unit tests execution
+    grunt.registerTask('test:unit', [
+        'karma:unit'
+    ]);
+
     //autotest and watch tests
     grunt.registerTask('autotest', [
         'karma:unit_auto'
     ]);
 
     //coverage testing
-    grunt.registerTask('test:coverage', ['karma:unit_coverage']);
-    grunt.registerTask('coverage', ['karma:unit_coverage','open:coverage','connect:coverage']);
+    grunt.registerTask('test:coverage', [
+        'karma:unit_coverage'
+    ]);    
+    grunt.registerTask('coverage', [
+        'karma:unit_coverage',
+        'open:coverage',
+        'connect:coverage'
+    ]);
 };

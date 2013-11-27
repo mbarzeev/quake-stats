@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('quakeStatsApp').service('KillsService', ['Constants', function(Constants) {
+angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService', 'Constants', function(GamesLogParserService, Constants) {
 	this.stats = null;
     this.alainKills = 0;
 	var me = this;
@@ -123,7 +123,7 @@ angular.module('quakeStatsApp').service('KillsService', ['Constants', function(C
 
         for (i = 0; i < log.length; i++) {
             record = log[i];
-            if (record.indexOf('InitGame:') !== -1) {
+            if (GamesLogParserService.isMapStart(record)) {
                 map = me.initMap(record, i);
                 me.stats.maps[i] = map;
             }
