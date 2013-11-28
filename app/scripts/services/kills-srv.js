@@ -1,28 +1,22 @@
 'use strict';
 
-angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService', 'Constants', function(GamesLogParserService, Constants) {
+angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService', function(GamesLogParserService) {
 	this.stats = null;
     this.alainKills = 0;
 	var me = this;
 
     this.initMap = function(record, startIndex) {
         var map = {};
-        map.name = me.getMapKey(record);
+        map.name = GamesLogParserService.getMapId(record);
         map.startIndex = startIndex;
         map.players = {};
         return map;
     };
 
-    this.getMapKey = function(record) {
-        var startIndex = record.indexOf(Constants.MAP_NAME_KEY) + Constants.MAP_NAME_KEY.length,
-            endIndex = record.indexOf(Constants.BACKSLASH_KEY, startIndex);
-        return record.slice(startIndex, endIndex);
-    };
-
     this.getPlayer = function (record) {
         var player = {};
 
-        player.id = me.getPlayerID(record);
+        player.id = GamesLogParserService.getPlayerId(record);
         player.name = GamesLogParserService.getPlayerName(record);
         player.nameId = player.name.replace(' ', '').toLowerCase();
         player.team = GamesLogParserService.getPlayerTeam(record);
@@ -31,11 +25,6 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
         player.humiliations = [];
         player.teammatesKills = [];
         return player;
-    };
-
-    this.getPlayerID = function(record) {
-        var idStr = record.slice(record.indexOf(Constants.PLAYER_INFO_KEY) + Constants.PLAYER_INFO_KEY.length, record.indexOf(Constants.PLAYER_NAME_KEY));
-        return parseInt(idStr, 10);
     };
 
     this.getKill = function(record) {
