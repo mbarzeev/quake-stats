@@ -4,5 +4,9 @@ body {
 }
 
 .dashboard-panel {
-	height: 150px;
+	height: 200px;
+}
+
+.table-hover {
+    background-color: #dff0d8;
 }

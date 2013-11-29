@@ -43,20 +43,22 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
         };
     };
 
-    this.getTopPlayer = function(prop, players) {
-        var topPlayer = null,
+    this.getTopPlayers = function (prop, players) {
+        var topPlayers = [],
             player = null;
         for (var playerName in players) {
             player = players[playerName];
-            if (topPlayer) {
-                if (player[prop].length > topPlayer[prop].length) {
-                    topPlayer = player;
+            if (topPlayers.length > 0) {
+                if (player[prop].length > topPlayers[0][prop].length) {
+                    topPlayers = [player];
+                } else if (player[prop].length === topPlayers[0][prop].length) {
+                    topPlayers.push(player);
                 }
             } else {
-                topPlayer = player;
+                topPlayers = [player];
             }
         }
-        return topPlayer;
+        return topPlayers;
     };
 
     this.registerKill = function(kill, map) {
@@ -145,14 +147,14 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
             }
             // Exit
             if (record.indexOf('ShutdownGame:') !== -1) {
-                map.topKiller = me.getTopPlayer('kills', map.players);
-                map.topVictim = me.getTopPlayer('deaths', map.players);
+                map.topKillers = me.getTopPlayers('kills', map.players);
+                map.topVictims = me.getTopPlayers('deaths', map.players);
             }
         }
-        me.stats.topKiller = me.getTopPlayer('kills', me.stats.players);
-        me.stats.topVictim = me.getTopPlayer('deaths', me.stats.players);
-        me.stats.topHumilator = me.getTopPlayer('humiliations', me.stats.players);
-        me.stats.topFifthColumn = me.getTopPlayer('teammatesKills', me.stats.players);
+        me.stats.topKillers = me.getTopPlayers('kills', me.stats.players);
+        me.stats.topVictims = me.getTopPlayers('deaths', me.stats.players);
+        me.stats.topHumilators = me.getTopPlayers('humiliations', me.stats.players);
+        me.stats.topFifthColumns = me.getTopPlayers('teammatesKills', me.stats.players);
         me.stats.humiliations = getAggragatedArraysByProp('humiliations', me.stats.players);
         me.stats.teammatesKills = getAggragatedArraysByProp('teammatesKills', me.stats.players);
         return me.stats;
