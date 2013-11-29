@@ -93,7 +93,7 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
 
     this.registerStatsPlayer = function(player) {
         if (!me.stats.players[player.name]) {
-            me.stats.players[player.name] = player;
+            me.stats.players[player.name] = angular.copy(player);
         }
         if (me.stats.players[player.name].team !== player.team) {
             me.stats.players[player.name].team = player.team;
