@@ -6,3 +6,7 @@ body {
 .dashboard-panel {
 	height: 150px;
 }
+
+.table-hover {
+    background-color: #dff0d8;
+}

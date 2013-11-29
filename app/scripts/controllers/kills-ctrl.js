@@ -38,4 +38,9 @@ angular.module('quakeStatsApp')
 		    });
 		    return result;
 		};
+
+        $scope.onTableHover = function (row, col) {
+            $scope.hoveredColumn = col;
+            $scope.hoveredRow = row;
+        };
 	}]);

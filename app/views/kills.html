@@ -67,19 +67,21 @@
 <h3>Killer/Victim</h3>
 <div class="row">
     <div class="col-md-12">
-         <table class="table table-bordered table-striped">
+         <table class="table table-bordered">
+             <colgroup></colgroup>
+             <colgroup ng-repeat="killer in killsStats.players" ng-class="{'table-hover': hoveredColumn == $index}"></colgroup>
+             <colgroup></colgroup>
              <tbody>
              	<tr>
-             		<td rowspan="2"></td>
-             		<td colspan="100" style="text-align:center;">VICTIMS</td>
-             	</tr>
-             	<tr>
+                    <td>Killer/Victim</td>
 	            	<td ng-repeat="player in killsStats.players"><a href="/#/players/{{player.name}}">{{player.name}}</a></td>
 	            	<td><b>Total Kills</b></td>
              	</tr>
-            	<tr ng-repeat="killer in killsStats.players">
+            	<tr ng-repeat="killer in killsStats.players"
+                    ng-class="{'table-hover': hoveredRow == $index}">
 	            	<td><b><a href="/#/players/{{killer.name}}">{{killer.name}}</a></b></td>
-	            	<td ng-repeat="victim in killsStats.players" style="text-align:center;" ng-class="{danger: killer.name==victim.name}">{{getTotalKillsByPlayers(killer.name, victim.name)}}</td>
+	            	<td ng-repeat="victim in killsStats.players" style="text-align:center;" ng-class="{danger: killer.name==victim.name}"
+                        ng-mouseover="onTableHover($parent.$index, $index)">{{getTotalKillsByPlayers(killer.name, victim.name)}}</td>
 	            	<td style="text-align:center;"><b>{{getTotalKills(killer.name)}}</b></td>
 	            </tr>
 	            <tr>
