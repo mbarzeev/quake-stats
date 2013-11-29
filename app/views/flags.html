@@ -26,7 +26,10 @@
                 Top Scorer
             </div>
             <div class="panel-footer">
-                <strong>{{stats.topOverallScorer.name}} ({{stats.topOverallScorer.value}})</strong>
+                <strong ng-repeat="topOverallScorer in stats.topOverallScorers">
+                    {{topOverallScorer.name}} ({{topOverallScorer.value}})
+                    <br>
+                </strong>
             </div>
         </div>
     </div>
@@ -36,7 +39,10 @@
                 Top Fetcher
             </div>
             <div class="panel-footer">
-                <strong>{{stats.topOverallFetcher.name}} ({{stats.topOverallFetcher.value}})</strong>
+                <strong ng-repeat="topOverallFetcher in stats.topOverallFetchers">
+                    {{topOverallFetcher.name}} ({{topOverallFetcher.value}})
+                    <br>
+                </strong>
             </div>
         </div>
     </div>
@@ -46,7 +52,10 @@
                 Top Returner
             </div>
             <div class="panel-footer">
-                <strong>{{stats.topOverallRetuner.name}} ({{stats.topOverallRetuner.value}})</strong>
+                <strong ng-repeat="topOverallRetuner in stats.topOverallRetuners">
+                    {{topOverallRetuner.name}} ({{topOverallRetuner.value}})
+                    <br>
+                </strong>
             </div>
         </div>
     </div>
@@ -56,7 +65,10 @@
                 Top Carrier Killer
             </div>
             <div class="panel-footer">
-                <strong>{{stats.topOverallCarrierFragger.name}} ({{stats.topOverallCarrierFragger.value}})</strong>
+                <strong ng-repeat="topOverallCarrierFragger in stats.topOverallCarrierFraggers">
+                    {{topOverallCarrierFragger.name}} ({{topOverallCarrierFragger.value}})
+                    <br>
+                </strong>
             </div>
         </div>
     </div>
@@ -71,7 +83,7 @@
                	<th>Red Score</th>
                	<th>Blue Score</th>
                 <th>Top Scorer</th>
-               	<th>Top Retuner</th>
+               	<th>Top Returner</th>
                 <th>Top Carrier Killer</th>
                 <th>Top fetcher</th>
                 <th>End Reason</th>
@@ -82,10 +94,26 @@
                 <td><a href="/#/maps/{{map.logStartIndex}}">{{ map.name | MapNameFilter}}</a></td>
                 <td>{{ map.score.1 }}</td>
                 <td>{{ map.score.2 }}</td>
-                <td>{{ map.topScorer.name }} ({{map.topScorer.scores}})</td>
-                <td>{{ map.topReturner.name }} ({{map.topReturner.returns}})</td>
-                <td>{{ map.topCarrierFragger.name }} ({{map.topCarrierFragger.carrierFrags}})</td>
-                <td>{{ map.topFetcher.name }} ({{map.topFetcher.fetches}})</td>
+                <td>
+                    <div ng-repeat="topScorer in map.topScorers">
+                        {{ topScorer.name }} ({{topScorer.scores}})
+                    </div>
+                </td>
+                <td>
+                    <div ng-repeat="topReturner in map.topReturners">
+                        {{ topReturner.name }} ({{topReturner.returns}})
+                    </div>
+                </td>
+                <td>
+                    <div ng-repeat="topCarrierFragger in map.topCarrierFraggers">
+                        {{ topCarrierFragger.name }} ({{topCarrierFragger.carrierFrags}})
+                    </div>
+                </td>
+                <td>
+                    <div ng-repeat="topFetcher in map.topFetchers">
+                        {{ topFetcher.name }} ({{topFetcher.fetches}})
+                    </div>
+                </td>
                 <td>{{ map.endReason }}</td>
              </tr>
              </tbody>
