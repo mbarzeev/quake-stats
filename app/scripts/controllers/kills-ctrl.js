@@ -48,4 +48,8 @@ angular.module('quakeStatsApp')
             $scope.hoveredColumn = null;
             $scope.hoveredRow = null;
         };
+
+        $scope.playersSortedByKills = _.sortBy($scope.players, function (player) {
+            return - player.kills.length;
+        });
 	}]);
