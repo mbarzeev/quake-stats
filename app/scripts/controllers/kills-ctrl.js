@@ -47,5 +47,5 @@ angular.module('quakeStatsApp')
         $scope.onLeaveTable = function () {
             $scope.hoveredColumn = null;
             $scope.hoveredRow = null;
-        }
+        };
 	}]);
