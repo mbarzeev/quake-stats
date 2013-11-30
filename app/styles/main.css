@@ -3,6 +3,10 @@ body {
     padding-top: 60px; 
 }
 
+.dashboard-panel {
+	height: 200px;
+}
+
 .table-hover {
-    background-color: #33CC33;
+    background-color: #d0bfbf;
 }
