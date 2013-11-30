@@ -2,3 +2,7 @@ body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     padding-top: 60px; 
 }
+
+.table-hover {
+    background-color: #33CC33;
+}
