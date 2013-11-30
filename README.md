@@ -50,4 +50,4 @@ In order to launch the tests first make sure that you're localhost server is up 
 	
 Contribution
 ------------
-Please see more details on contribution process on the ([Contribution Wiki page](https://github.com/mbarzeev/quake-stats/wiki/Contribution)).
+Please see more details on contribution process on the [Contribution Wiki page](https://github.com/mbarzeev/quake-stats/wiki/Contribution).
