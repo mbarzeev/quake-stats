@@ -1,0 +1,17 @@
+<div class="panel panel-{{collapsibleStyle}}">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <a href="" ng-click="toggleCollapse()" class="list-group-item">
+                {{player.name}}<span class="badge">{{player.count}}</span>
+            </a>
+        </h4>
+    </div>
+    <div class="panel-collapse" ng-show="collapsed">
+        <div class="panel-body">
+            <ul class="list-group"></ul>
+            <li class="list-group-item" ng-repeat="subPlayer in playersList | orderBy:'-count'">{{subPlayer.name}}<span
+                    class="badge">{{subPlayer.count}}</span></li>
+            </ul>
+        </div>
+    </div>
+</div>

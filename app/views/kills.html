@@ -4,100 +4,78 @@
         <h3>Maps</h3>
         <table class="table table-bordered table-striped">
             <thead>
-                <tr>
-                    <th>Map Name</th>
-                    <th>Top Killer</th>
-                    <th>Top Victim</th>
-                </tr>
+            <tr>
+                <th>Map Name</th>
+                <th>Top Killer</th>
+                <th>Top Victim</th>
+            </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="map in objectToArray(killsStats.maps)">
-                    <td>{{ map.name | MapNameFilter}}</td>
-                    <td>
-                        <div ng-repeat="topKiller in map.topKillers">
-                            {{ topKiller.name}} ({{topKiller.kills.length}})
-                        </div>
-                    </td>
-                    <td>
-                        <div ng-repeat="topVictim in map.topVictims">
-                            {{ topVictim.name}} ({{topVictim.deaths.length}})
-                        </div>
-                    </td>
-                </tr>
+            <tr ng-repeat="map in objectToArray(killsStats.maps)">
+                <td>{{ map.name | MapNameFilter}}</td>
+                <td>
+                    <div ng-repeat="topKiller in map.topKillers">
+                        {{ topKiller.name}} ({{topKiller.kills.length}})
+                    </div>
+                </td>
+                <td>
+                    <div ng-repeat="topVictim in map.topVictims">
+                        {{ topVictim.name}} ({{topVictim.deaths.length}})
+                    </div>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>
     <div class="col-md-3">
-        <h3>Humilators</h3>
-            <div class="panel-group" id="accordion" >
-                <div class="panel panel-success" ng-repeat="player in killsStats.humiliations | orderBy:'-count'">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseHumilators{{player.nameId}}" class="list-group-item">
-                            {{player.name}} <span class="badge">{{player.count}}</span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseHumilators{{player.nameId}}" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <ul class="list-group"></ul>
-                                <li class="list-group-item" ng-repeat="victim in player.victims | orderBy:'-count'">{{victim.name}}<span class="badge">{{victim.count}}</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-     </div>
+        <h3>
+            Humilators
+        </h3>
 
-     <div class="col-md-3">
-     <h3>Fifth Column</h3>
-            <div class="panel-group" id="accordion" >
-                <div class="panel panel-warning" ng-repeat="player in killsStats.teammatesKills | orderBy:'-count'">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFifthColumn{{player.nameId}}" class="list-group-item">
-                            {{player.name}}<span class="badge">{{player.count}}</span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseFifthColumn{{player.nameId}}" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <ul class="list-group"></ul>
-                                <li class="list-group-item" ng-repeat="victim in player.victims | orderBy:'-count'">{{victim.name}}<span class="badge">{{victim.count}}</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-     </div>
+        <div class="panel-group" id="accordion" >
+            <div ng-repeat="player in killsStats.humiliations | orderBy: '-count'" collapsible-player-data
+                 player="player" players-list="player.victims" collapsible-style="success"></div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <h3>
+            Fifth Column
+        </h3>
+
+        <div class="panel-group" id="accordion" >
+            <div ng-repeat="player in killsStats.teammatesKills | orderBy: '-count'" collapsible-player-data
+                 player="player" players-list="player.victims" collapsible-style="warning"></div>
+        </div>
+    </div>
 </div>
 
 <h3>Killer/Victim</h3>
 <div class="row">
     <div class="col-md-12">
-         <table class="table table-bordered">
-             <colgroup></colgroup>
-             <colgroup ng-repeat="killer in playersSortedByKills" ng-class="{'table-hover': hoveredColumn == $index}"></colgroup>
-             <colgroup></colgroup>
-             <tbody ng-mouseout="onLeaveTable()">
-             	<tr>
-                    <td>Killer/Victim</td>
-	            	<td ng-repeat="player in playersSortedByKills"><a href="/#/players/{{player.name}}">{{player.name}}</a></td>
-	            	<td><b>Total Kills</b></td>
-             	</tr>
-            	<tr ng-repeat="killer in playersSortedByKills"
-                    ng-class="{'table-hover': hoveredRow == $index}">
-	            	<td><b><a href="/#/players/{{killer.name}}">{{killer.name}}</a></b></td>
-	            	<td ng-repeat="victim in playersSortedByKills" style="text-align:center;" ng-class="{danger: killer.name==victim.name}"
-                        ng-mouseover="onTableHover($parent.$index, $index)">{{getTotalKillsByPlayers(killer.name, victim.name)}}</td>
-	            	<td style="text-align:center;"><b>{{getTotalKills(killer.name)}}</b></td>
-	            </tr>
-	            <tr>
-	            	<td><b>Total Deaths</b></td>
-	            	<td ng-repeat="player in playersSortedByKills" style="text-align:center;"><b>{{getTotalDeaths(player.name)}}</b></td>
-	            	<td></td>
-	            </tr>
-             </tbody>
-         </table>
+        <table class="table table-bordered">
+            <colgroup></colgroup>
+            <colgroup ng-repeat="killer in playersSortedByKills" ng-class="{'table-hover': hoveredColumn == $index}"></colgroup>
+            <colgroup></colgroup>
+            <tbody ng-mouseout="onLeaveTable()">
+            <tr>
+                <td>Killer/Victim</td>
+                <td ng-repeat="player in playersSortedByKills"><a href="/#/players/{{player.name}}">{{player.name}}</a></td>
+                <td><b>Total Kills</b></td>
+            </tr>
+            <tr ng-repeat="killer in playersSortedByKills"
+                ng-class="{'table-hover': hoveredRow == $index}">
+                <td><b><a href="/#/players/{{killer.name}}">{{killer.name}}</a></b></td>
+                <td ng-repeat="victim in playersSortedByKills" style="text-align:center;" ng-class="{danger: killer.name==victim.name}"
+                    ng-mouseover="onTableHover($parent.$index, $index)">{{getTotalKillsByPlayers(killer.name, victim.name)}}</td>
+                <td style="text-align:center;"><b>{{getTotalKills(killer.name)}}</b></td>
+            </tr>
+            <tr>
+                <td><b>Total Deaths</b></td>
+                <td ng-repeat="player in playersSortedByKills" style="text-align:center;"><b>{{getTotalDeaths(player.name)}}</b></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
