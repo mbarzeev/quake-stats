@@ -10,3 +10,7 @@ body {
 .table-hover {
     background-color: #d0bfbf;
 }
+
+.fetch-capture-ratio {
+	font-size: 10pt;
+}

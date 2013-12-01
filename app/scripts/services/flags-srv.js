@@ -274,9 +274,12 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
         me.stats.topOverallFetchers = me.getOverallTopPlayers('fetches', me.stats.maps);
         me.stats.topOverallRetuners = me.getOverallTopPlayers('returns', me.stats.maps);
         me.stats.topOverallCarrierFraggers = me.getOverallTopPlayers('carrierFrags', me.stats.maps);
-        var topOverallFetchToCaptureRatioPlayer = me.getOverallTopPlayers('fetchToScoreRatio', me.stats.maps);
-        topOverallFetchToCaptureRatioPlayer.value = topOverallFetchToCaptureRatioPlayer.value / mapCount;
-        me.stats.topOverallFetchToCaptureRatioPlayer = topOverallFetchToCaptureRatioPlayer;
+        // Calculate the over all fetchToCaptureRatio for each player
+        var topOverallFetchToCaptureRatioPlayers = me.getOverallTopPlayers('fetchToScoreRatio', me.stats.maps);
+        for (var index in topOverallFetchToCaptureRatioPlayers) {
+            topOverallFetchToCaptureRatioPlayers[index].value = me.getPlayerCaptureRatio(topOverallFetchToCaptureRatioPlayers[index]);
+        }
+        me.stats.topOverallFetchToCaptureRatioPlayers = topOverallFetchToCaptureRatioPlayers;
         return me.stats;
     };
 }]);
