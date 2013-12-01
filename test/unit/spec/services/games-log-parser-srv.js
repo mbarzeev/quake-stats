@@ -86,4 +86,35 @@ describe('GamesLogParserService: ', function () {
         expect(gamesLogParserService.getPlayerId(gamesLogMock[2466])).toEqual(5);
       });
   })
+
+  describe('Kill Parsing > ', function () {
+      it('"getKillObj()" should return a Kill Object', function () {
+        isMethodExist('getKillObj');
+        checkFailOnInvalidRecord('getKillObj');
+        var killObj = gamesLogParserService.getKillObj(gamesLogMock[16]);
+        expect(killObj).toBeDefined();
+        expect(killObj.killer).toBeDefined();
+        expect(killObj.killer).toEqual(0);
+        expect(killObj.victim).toBeDefined();
+        expect(killObj.victim).toEqual(0);
+        expect(killObj.mode).toBeDefined();
+        expect(killObj.mode).toEqual(20);
+        expect(killObj.killerName).toBeDefined();
+        expect(killObj.killerName).toEqual('Chuck');
+        expect(killObj.victimName).toBeDefined();
+        expect(killObj.victimName).toEqual('Chuck');
+        var killObj = gamesLogParserService.getKillObj(gamesLogMock[103]);
+        expect(killObj).toBeDefined();
+        expect(killObj.killer).toBeDefined();
+        expect(killObj.killer).toEqual(2);
+        expect(killObj.victim).toBeDefined();
+        expect(killObj.victim).toEqual(0);
+        expect(killObj.mode).toBeDefined();
+        expect(killObj.mode).toEqual(6);
+        expect(killObj.killerName).toBeDefined();
+        expect(killObj.killerName).toEqual('Pat');
+        expect(killObj.victimName).toBeDefined();
+        expect(killObj.victimName).toEqual('Chuck');
+      });
+  });
 });

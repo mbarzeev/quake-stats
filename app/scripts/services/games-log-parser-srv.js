@@ -51,4 +51,19 @@ angular.module('quakeStatsApp').service('GamesLogParserService', ['Constants', f
 			return parseInt(idStr, 10);
 		}
 	};
+
+	this.getKillObj = function(record) {
+		if (isValidRecord(record)) {
+			var killStr = record.slice(record.indexOf('Kill: ') + 'Kill: '.length, record.indexOf(':', record.indexOf('Kill: ') + 'Kill: '.length)),
+				idsArr = killStr.split(' ');
+			var killObj = {
+				killer : parseInt(idsArr[0], 10),
+				victim : parseInt(idsArr[1], 10),
+				mode : parseInt(idsArr[2], 10),
+				killerName : record.slice(record.indexOf(killStr + ': ') + (killStr + ': ').length, record.indexOf(' killed')),
+				victimName : record.slice(record.indexOf('killed ') + 'killed '.length, record.indexOf(' by'))
+			};
+			return killObj;
+		}
+	};
 }]);
