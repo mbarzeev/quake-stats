@@ -143,6 +143,18 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
         return wins;
     };
 
+    this.getPlayerOverallTotal = function(playerName, prop) {
+        var map,
+            result = 0;
+        for (var mapIndex in me.stats.maps) {
+            map = me.stats.maps[mapIndex];
+            if (map.players[playerName]) {
+                result += map.players[playerName][prop];
+            }
+        }
+        return result;
+    };
+
     this.getOverallTopPlayers = function(prop, maps) {
         var map,
             players = {},
