@@ -72,4 +72,10 @@ angular.module('quakeStatsApp').service('GamesLogParserService', ['Constants', f
 			return killObj;
 		}
 	};
+
+	this.isShutdown = function(record) {
+		if (isValidRecord(record)) {
+			return record.indexOf('ShutdownGame:') !== -1;
+		}
+	};
 }]);

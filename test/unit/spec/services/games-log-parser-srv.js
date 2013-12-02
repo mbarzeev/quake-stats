@@ -125,4 +125,15 @@ describe('GamesLogParserService: ', function () {
         expect(killObj.victimName).toEqual('Chuck');
       });
   });
+
+  describe('Shutdown Parsing > ', function () {
+      it('"isShutdown()" should return a boolean if the map is over record or not', function () {
+        isMethodExist('isShutdown');
+        checkFailOnInvalidRecord('isShutdown');
+        expect(gamesLogParserService.isShutdown(gamesLogMock[16])).toBeFalsy();
+        expect(gamesLogParserService.isShutdown(gamesLogMock[654])).toBeFalsy();
+        expect(gamesLogParserService.isShutdown(gamesLogMock[256])).toBeFalsy();
+        expect(gamesLogParserService.isShutdown(gamesLogMock[1223])).toBeTruthy();
+      });
+  });
 });

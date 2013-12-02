@@ -130,7 +130,7 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
                 }
             }
             // Exit
-            if (record.indexOf('ShutdownGame:') !== -1) {
+            if (GamesLogParserService.isShutdown(record)) {
                 map.topKillers = me.getTopPlayers('kills', map.players);
                 map.topVictims = me.getTopPlayers('deaths', map.players);
             }
