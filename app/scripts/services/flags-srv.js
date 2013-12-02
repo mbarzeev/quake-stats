@@ -158,8 +158,6 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
             }
         }
 
-        debugger
-
         for (playerName in players) {
             if (topPlayers.length > 0) {
                 if (players[playerName] > topPlayers[0].value) {
