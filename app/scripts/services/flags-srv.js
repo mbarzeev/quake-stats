@@ -158,6 +158,8 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
             }
         }
 
+        debugger
+
         for (playerName in players) {
             if (topPlayers.length > 0) {
                 if (players[playerName] > topPlayers[0].value) {
@@ -232,7 +234,8 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
                             fetches:0,
                             carrierFrags:0,
                             returns:0,
-                            rebounds:0
+                            rebounds:0,
+                            fetchToScoreRatio:0
                         };
                     }
                     //
