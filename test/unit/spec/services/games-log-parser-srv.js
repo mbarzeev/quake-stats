@@ -88,6 +88,14 @@ describe('GamesLogParserService: ', function () {
   })
 
   describe('Kill Parsing > ', function () {
+      it('"isKill()" should return a boolean if the record is a kill record or not', function () {
+        isMethodExist('isKill');
+        checkFailOnInvalidRecord('isKill');
+        expect(gamesLogParserService.isKill(gamesLogMock[16])).toBeTruthy();
+        expect(gamesLogParserService.isKill(gamesLogMock[654])).toBeTruthy();
+        expect(gamesLogParserService.isKill(gamesLogMock[256])).toBeFalsy();
+      });
+
       it('"getKillObj()" should return a Kill Object', function () {
         isMethodExist('getKillObj');
         checkFailOnInvalidRecord('getKillObj');

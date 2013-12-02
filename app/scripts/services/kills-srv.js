@@ -123,7 +123,7 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
                 me.registerStatsPlayer(player);
             }
             // Kill
-            if (record.indexOf('Kill: ') !== -1) {
+            if (GamesLogParserService.isKill(record)) {
                 kill = GamesLogParserService.getKillObj(record);
                 if (kill.victim !== kill.killer) {
                     me.registerKill(kill, map);
