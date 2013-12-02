@@ -56,7 +56,7 @@ angular.module('quakeStatsApp').service('GamesLogParserService', ['Constants', f
 		if (isValidRecord(record)) {
 			return record.indexOf('Kill: ') !== -1;
 		}
-	}
+	};
 
 	this.getKillObj = function(record) {
 		if (isValidRecord(record)) {
