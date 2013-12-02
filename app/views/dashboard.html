@@ -27,7 +27,7 @@
             </div>
             <div class="panel-footer">
                 <h1>
-                    <strong><a href="/#/players">{{playersCount}}</a></strong>
+                    <strong><a href="/players">{{playersCount}}</a></strong>
                 </h1>
             </div>
         </div>
@@ -42,7 +42,7 @@
             </div>
             <div class="panel-footer">
                 <h1 ng-repeat="player in flagsStats.topOverallFetchToCaptureRatioPlayers">
-                    <strong><a href="/#/players/{{player.name}}">{{player.name}}</a> ({{player.value | number:2}})</strong>
+                    <strong><a href="/players/{{player.name}}">{{player.name}}</a> ({{player.value | number:2}})</strong>
                     <br>
                     <div class="fetch-capture-ratio">1 capture per {{1 / player.value | number:2}} fetches</div>
                 </h1>

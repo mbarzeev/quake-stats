@@ -1,10 +1,12 @@
 'use strict';
 
 angular.module('quakeStatsApp', ['ngResource', 'ngAnimate', 'ngRoute', 'googlechart'])
-    .config(['$routeProvider', function ($routeProvider) {
+    .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+        $locationProvider.html5Mode(true);
+
         $routeProvider
             .when('/flags', {
-                templateUrl: 'views/flags.html',
+                templateUrl: '/views/flags.html',
                 controller: 'FlagsCtrl',
                 resolve: {
                     qconsoleLog: ['$q', 'QConsoleLogService', function($q, QConsoleLogService) {
@@ -26,7 +28,7 @@ angular.module('quakeStatsApp', ['ngResource', 'ngAnimate', 'ngRoute', 'googlech
                 }
             })
             .when('/maps/:flagsmapindex', {
-                templateUrl: 'views/maps.html',
+                templateUrl: '/views/maps.html',
                 controller: 'MapsCtrl',
                 resolve: {
                     qconsoleLog: ['$q', 'QConsoleLogService', function($q, QConsoleLogService) {
@@ -48,7 +50,7 @@ angular.module('quakeStatsApp', ['ngResource', 'ngAnimate', 'ngRoute', 'googlech
                 }
             })
             .when('/kills', {
-                templateUrl: 'views/kills.html',
+                templateUrl: '/views/kills.html',
                 controller: 'KillsCtrl',
                 resolve: {
                     gamesLog: ['$q', 'GamesLogService', function($q, GamesLogService) {
@@ -70,7 +72,7 @@ angular.module('quakeStatsApp', ['ngResource', 'ngAnimate', 'ngRoute', 'googlech
                 }
             })
             .when('/players', {
-                templateUrl: 'views/players.html',
+                templateUrl: '/views/players.html',
                 controller: 'PlayersCtrl',
                 resolve: {
                     gamesLog: ['$q', 'GamesLogService', function($q, GamesLogService) {
@@ -92,7 +94,7 @@ angular.module('quakeStatsApp', ['ngResource', 'ngAnimate', 'ngRoute', 'googlech
                 }
             })
             .when('/players/:id', {
-                templateUrl: 'views/player.html',
+                templateUrl: '/views/player.html',
                 controller: 'PlayerCtrl',
                 resolve: {
                     gamesLog: ['$q', 'GamesLogService', function($q, GamesLogService) {
@@ -130,7 +132,7 @@ angular.module('quakeStatsApp', ['ngResource', 'ngAnimate', 'ngRoute', 'googlech
                 }
             })
             .when('/dashboard', {
-                templateUrl: 'views/dashboard.html',
+                templateUrl: '/views/dashboard.html',
                 controller: 'DashboardCtrl',
                 resolve: {
                     gamesLog: ['$q', 'GamesLogService', function($q, GamesLogService) {

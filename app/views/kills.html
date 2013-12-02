@@ -34,7 +34,7 @@
 
         <div class="panel-group" id="accordion" >
             <div ng-repeat="player in killsStats.humiliations | orderBy: '-count'" collapsible-player-data
-                 player="player" players-list="player.victims" collapsible-style="success"></div>
+                 player="player" players-list="player.victims" collapsible-style="success" collapsible-id-prefix="'humiliation'"></div>
         </div>
     </div>
 
@@ -45,7 +45,7 @@
 
         <div class="panel-group" id="accordion" >
             <div ng-repeat="player in killsStats.teammatesKills | orderBy: '-count'" collapsible-player-data
-                 player="player" players-list="player.victims" collapsible-style="warning"></div>
+                 player="player" players-list="player.victims" collapsible-style="warning" collapsible-id-prefix="'fifthColumn'"></div>
         </div>
     </div>
 </div>
@@ -60,12 +60,12 @@
             <tbody ng-mouseout="onLeaveTable()">
             <tr>
                 <td>Killer/Victim</td>
-                <td ng-repeat="player in playersSortedByKills"><a href="/#/players/{{player.name}}">{{player.name}}</a></td>
+                <td ng-repeat="player in playersSortedByKills"><a href="/players/{{player.name}}">{{player.name}}</a></td>
                 <td><b>Total Kills</b></td>
             </tr>
             <tr ng-repeat="killer in playersSortedByKills"
                 ng-class="{'table-hover': hoveredRow == $index}">
-                <td><b><a href="/#/players/{{killer.name}}">{{killer.name}}</a></b></td>
+                <td><b><a href="/players/{{killer.name}}">{{killer.name}}</a></b></td>
                 <td ng-repeat="victim in playersSortedByKills" style="text-align:center;" ng-class="{danger: killer.name==victim.name}"
                     ng-mouseover="onTableHover($parent.$index, $index)">{{getTotalKillsByPlayers(killer.name, victim.name)}}</td>
                 <td style="text-align:center;"><b>{{getTotalKills(killer.name)}}</b></td>
