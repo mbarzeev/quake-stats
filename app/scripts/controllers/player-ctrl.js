@@ -232,7 +232,8 @@ angular.module('quakeStatsApp')
             'options': {
                 'title': 'Kills by Weapon',
                 'is3D':true,
-                'displayExactValues': true
+                'displayExactValues': true,
+                'height': 500
             },
             'formatters': {}
         };
@@ -248,7 +249,8 @@ angular.module('quakeStatsApp')
             'options': {
                 'title': 'Deaths by Weapon',
                 'is3D':true,
-                'displayExactValues': true
+                'displayExactValues': true,
+                'height': 500
             },
             'formatters': {}
         };
@@ -256,14 +258,14 @@ angular.module('quakeStatsApp')
         $scope.deathsKillsOverMapsChart = {
             'type': 'LineChart',
             'displayed': true,
-            'cssStyle': 'height:300px; width:100%;',
             'data': {
                 'cols': me.getDeathsKillsOverMapsCols(),
                 'rows': me.getDeathsKillsOverMapsRows($scope.killsStats)
             },
             'options': {
                 'title': 'Kills & Deaths across maps',
-                'displayExactValues': true
+                'displayExactValues': true,
+                'height': 200
             },
             'formatters': {}
         };
@@ -271,14 +273,14 @@ angular.module('quakeStatsApp')
         $scope.flagsOverMapsChart = {
             'type': 'ColumnChart',
             'displayed': true,
-            'cssStyle': 'height:300px; width:100%;',
             'data': {
                 'cols': me.getFlagsOverMapsCols(),
                 'rows': me.getFlagsOverMapsRows($scope.flagsStats)
             },
             'options': {
                 'title': 'Flags across maps',
-                'displayExactValues': true
+                'displayExactValues': true,
+                'height': 200
             },
             'formatters': {}
         };
