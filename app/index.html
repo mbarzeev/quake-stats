@@ -4,6 +4,7 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" ng-app="quakeStatsApp"> <!--<![endif]-->
   <head>
+    <base href="/">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title></title>
@@ -27,7 +28,7 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div ng-include="'views/navigation.html'"></div>
+    <div ng-include="'/views/navigation.html'"></div>
 
     <div class="container" ng-view=""></div>
 
@@ -52,6 +53,8 @@
         <!-- endbuild -->
 
         <!-- build:js scripts/modules.js -->
+        <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.js"></script>
         <script src="bower_components/angular-resource/angular-resource.js"></script>
         <script src="bower_components/angular-cookies/angular-cookies.js"></script>
         <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
@@ -68,6 +71,8 @@
         <script src="scripts/controllers/player-ctrl.js"></script>
         <script src="scripts/controllers/dashboard-ctrl.js"></script>
         <script src="scripts/controllers/navigation-ctrl.js"></script>
+        <script src="scripts/directives/collapsible-player-data-drtv.js"></script>
+        <script src="scripts/directives/dashboard-item-drtv.js"></script>
         <script src="scripts/services/log-srv.js"></script>
         <script src="scripts/services/games-log-parser-srv.js"></script>
         <script src="scripts/services/qconsole-srv.js"></script>

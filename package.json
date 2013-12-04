@@ -37,7 +37,8 @@
     "grunt-shell": "~0.4.0",
     "grunt-karma":"latest",
     "karma-coverage": "~0.1.0",
-    "protractor":"latest"
+    "protractor":"latest",
+    "connect-modrewrite": "0.5.11"
   },
   "engines": {
     "node": ">=0.8.0"

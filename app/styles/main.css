@@ -14,3 +14,24 @@ body {
 .fetch-capture-ratio {
 	font-size: 10pt;
 }
+
+.animate-show {
+    overflow-y: hidden;
+    max-height: 500px;
+
+    transition-property: all;
+    transition-duration: .5s;
+    transition-timing-function: cubic-bezier(0.5, 1, 0.5, 1);
+}
+
+.animate-show.ng-hide-add,
+.animate-show.ng-hide-remove,
+.animate-show.ng-show-add,
+.animate-show.ng-show-remove {
+    display:block!important;
+}
+
+.animate-show.ng-hide,
+.animate-show.ng-show {
+    max-height: 0;
+}
