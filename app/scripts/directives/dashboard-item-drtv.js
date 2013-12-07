@@ -10,7 +10,7 @@ angular.module('quakeStatsApp')
                 itemTitle: '@',
                 iconName: '@?'
             },
-            templateUrl: 'templates/dashboard-item-tmpl.html',
+            templateUrl: '/templates/dashboard-item-tmpl.html',
             link: function(scope) {
                 scope.getValue = function (object) {
                     if (scope.itemProperty) {
@@ -23,6 +23,8 @@ angular.module('quakeStatsApp')
                         return object;
                     }
                 };
+
+                scope.routeParams = scope.$root.routeParams;
             }
         };
     }]);

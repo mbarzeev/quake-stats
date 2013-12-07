@@ -14,12 +14,12 @@
 angular.module('quakeStatsApp').service('GamesLogService', ['$http', '$q', function ($http, $q) {
     var me = this;
     this.gamesLog = null;
-    this.loadLog = function () {
+    this.loadLog = function (game) {
         var deferred = $q.defer();
         if (me.gamesLog) {
             deferred.resolve(me.gamesLog);
         } else {
-            $http.get('/rest/games/log')
+            $http.get('/rest/games/log/' + game)
             .success(function (data) {
                 me.gamesLog = data.split('\n');
                 deferred.resolve(me.gamesLog);

@@ -1,17 +1,19 @@
 'use strict';
 
-angular.module('quakeStatsApp').service('QConsoleLogService', ['$http', '$q', function ($http, $q) {
-    var me = this;
-    this.qconsoleLog = null;
-    this.loadLog = function () {
+angular.module('quakeStatsApp').service('QConsoleLogService', ['$http', '$q', '$cacheFactory', function ($http, $q, $cacheFactory) {
+    var qconsoleLogCache = $cacheFactory('qconsole');
+
+    this.loadLog = function (game) {
         var deferred = $q.defer();
-        if (me.qconsoleLog) {
-            deferred.resolve(me.qconsoleLog);
+        var logData = qconsoleLogCache.get(game);
+        if (logData) {
+            deferred.resolve(logData);
         } else {
-            $http.get('/rest/games/qconsole')
+            $http.get('/rest/games/qconsole/' + game)
             .success(function (data) {
-                me.qconsoleLog = data.split('\n');
-                deferred.resolve(me.qconsoleLog);
+                logData = data.split('\n');
+                qconsoleLogCache.put(game, logData);
+                deferred.resolve(logData);
             }).
             error(function(data) {
                 deferred.reject(data);

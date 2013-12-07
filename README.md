@@ -7,16 +7,18 @@ prerequisites
 -------------
 1. NodeJS installed on your machine ([here](http://nodejs.org/))
 2. Grunt installed on your machine ([here](http://gruntjs.com/getting-started))
+3. MongoDB installed ([here](http://www.mongodb.org/)
 
 Installing
 ----------
 1. First of all - clone the repo.
-2. open CMD, go to the root directory of the project and run `npm install`
-3. Drop your Quake III Arena games.log file in the root directory of the project.
-4. If you want to have Flags statistics as well, you need to drop your Quake III arena qconsole.log file in the rot directory of the project. If you don't know how to get it, please read the QConsole Log section below.
-5. Run `grunt server` from the root directory of the project.
+2. open CMD, go to the root directory of the project and run `npm install`.
+3. Create logs folder in root project.
+4. In logs folder, create a new folder. The name of the folder will be the label of the game (you can put several games).
+5. Paste your Quake III Arena games.log and qconsole.log in the folder you created. If you can't find qconsole.log, see the QConsole section below.
+6. Run `grunt server` from the root directory of the project.
 
-Your browser shoud open with the application launched.
+Your browser should open with the application launched.
 
 QConsole Log
 ------------
@@ -32,7 +34,7 @@ Either you do that, or add to the Quake shortcut path the following parameter:
 	+set logfile 1
 
 This will dump a qconsole.log file to the baseq3 directory.
-When you have this file, simply drop it into this projects root directory as you did for the games.log file.
+When you have this file, see the install section above about how to use it.
 
 Running Unit Testing
 --------------------
