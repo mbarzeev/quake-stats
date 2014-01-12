@@ -114,7 +114,6 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
 
                 for (var name in map.players) {
                     if (map.players[name] && map.players[name].name === player.name) {
-                        player = angular.copy(map.players[name]);
                         delete map.players[name];
                         break;
                     }
