@@ -38,6 +38,7 @@
     "express":"latest",
     "grunt-express": "latest",
     "grunt-connect-proxy":"latest",
+    "karma": "~0.12.0",
     "grunt-shell": "~0.4.0",
     "grunt-karma":"latest",
     "karma-coverage": "~0.1.0",
