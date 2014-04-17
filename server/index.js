@@ -1,15 +1,17 @@
 var express = require('express');
 var fs = require('fs')
 var app = express();
+var logger = require('morgan');
+var bodyParser = require('body-parser');
  
-app.configure(function () {
-    app.use(express.logger('dev'));     /* 'default', 'short', 'tiny', 'dev' */
-    app.use(express.bodyParser());
+// app.configure(function () {
+    app.use(logger('dev'));     /* 'default', 'short', 'tiny', 'dev' */
+    app.use(bodyParser());
     app.use(function(err, req, res, next){
     	console.log(err);
 		res.send(500, err);
 	});
-});
+// });
 
 app.get('/rest/games/log', function(req, res){
 	fs.readFile('./games.log', 'utf8', function (err,data) {
