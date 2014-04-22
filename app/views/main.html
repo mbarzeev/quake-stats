@@ -38,7 +38,7 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="game in games">
-					<td width="120"><a href="/games/{{$index}}">{{game.name}}</a></td>
+					<td width="120"><a ng-href="{{'/' + routeParams.gameId + '/games/' + $index">{{game.name}}</a></td>
 					<td width="120">{{game.score.1}}</td>
 					<td width="120">{{game.score.2}}</td>
 					<td width="120">{{game.bestScorer.name}} ({{game.bestScorer.scoredFlags}})</td>

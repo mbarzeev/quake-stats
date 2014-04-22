@@ -11,6 +11,6 @@ angular.module('quakeStatsApp')
                 collapsibleIdPrefix: '=',
                 collapsibleStyle: '@'
             },
-            templateUrl: 'templates/collapsible-player-data-tmpl.html'
+            templateUrl: '/templates/collapsible-player-data-tmpl.html'
         };
     }]);
