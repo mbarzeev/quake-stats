@@ -47,8 +47,7 @@
     "protractor":"~0.21.0",
     "connect-modrewrite": "0.5.11",
     "mongoose": "~3.8.8",
-    "q": "~1.0.1",
-    "rimraf": "~2.2.6"
+    "q": "~1.0.1"
   },
   "engines": {
     "node": ">=0.8.0"

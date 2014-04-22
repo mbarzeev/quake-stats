@@ -7,18 +7,16 @@ prerequisites
 -------------
 1. NodeJS installed on your machine ([here](http://nodejs.org/))
 2. Grunt installed on your machine ([here](http://gruntjs.com/getting-started))
-3. MongoDB installed ([here](http://www.mongodb.org/)
+3. MongoDB installed on your machine and running ([here](http://www.mongodb.org/))
 
 Installing
 ----------
 1. First of all - clone the repo.
 2. open CMD, go to the root directory of the project and run `npm install`.
-3. Create logs folder in root project.
-4. In logs folder, create a new folder. The name of the folder will be the label of the game (you can put several games).
-5. Paste your Quake III Arena games.log and qconsole.log in the folder you created. If you can't find qconsole.log, see the QConsole section below.
-6. Run `grunt server` from the root directory of the project.
-
-Your browser should open with the application launched.
+3. Run `grunt server` from the root directory of the project.
+4. Your browser should open with the application launched.
+5. Navigate to localhost:8000/admin.
+6. Upload games.log and qconsole.log in the appropriate file inputs, give your game a name. If you can't find qconsole.log, see the QConsole section below.
 
 QConsole Log
 ------------
