@@ -89,6 +89,10 @@ angular.module('quakeStatsApp', ['ngResource', 'ngAnimate', 'ngRoute', 'googlech
                     qconsoleLog: loadQConsoleLogResolve
                 }
             })
+            .when('/admin', {
+                templateUrl: '/views/admin.html',
+                controller: 'AdminCtrl'
+            })
             .otherwise({
                 resolve: ['$location', 'GamesListService', function ($location, GamesListService) {
                     GamesListService.loadGamesList().then(function (gamesList) {
@@ -101,4 +105,8 @@ angular.module('quakeStatsApp', ['ngResource', 'ngAnimate', 'ngRoute', 'googlech
     }])
     .run(['$routeParams', '$rootScope', function ($routeParams, $rootScope) {
         $rootScope.routeParams = $routeParams;
+
+        $rootScope.$watch('routeParams.gameId', function (val) {
+            $rootScope.routeParams.gameId = val || 0;
+        });
     }]);
