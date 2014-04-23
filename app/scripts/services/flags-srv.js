@@ -1,8 +1,9 @@
 'use strict';
 
-angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(Constants) {
-    this.stats = null;
+angular.module('quakeStatsApp').service('FlagsService', ['Constants', '$cacheFactory', function(Constants, $cacheFactory) {
+    var currentStats;
     var me = this;
+    var statsCache = $cacheFactory('flagsStats');
 
     this.initMap = function(record, startIndex, index) {
         var map = {};
@@ -59,10 +60,10 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
         if (playerName) {
             if (record.indexOf('RED') !== -1) {
                 map.score[Constants.BLUE] += 1;
-                me.stats.capturedFlags[Constants.BLUE] += 1;
+                currentStats.capturedFlags[Constants.BLUE] += 1;
             } else if (record.indexOf('BLUE') !== -1) {
                 map.score[Constants.RED] += 1;
-                me.stats.capturedFlags[Constants.RED] += 1;
+                currentStats.capturedFlags[Constants.RED] += 1;
             }
             map.players[playerName].scores += 1;
             map.players[playerName].fetchToScoreRatio = getFetchToCaptureRatio(map.players[playerName]);
@@ -146,8 +147,8 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
     this.getPlayerOverallTotal = function(playerName, prop) {
         var map,
             result = 0;
-        for (var mapIndex in me.stats.maps) {
-            map = me.stats.maps[mapIndex];
+        for (var mapIndex in currentStats.maps) {
+            map = currentStats.maps[mapIndex];
             if (map.players[playerName]) {
                 result += map.players[playerName][prop];
             }
@@ -190,8 +191,8 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
             mapPlayer,
             totalRatio = 0,
             result = 0;
-        for (var mapIndex in me.stats.maps) {
-            map = me.stats.maps[mapIndex];
+        for (var mapIndex in currentStats.maps) {
+            map = currentStats.maps[mapIndex];
             mapPlayer = map.players[player.name];
             if (mapPlayer) {
                 participatingmMapCount++;
@@ -207,27 +208,29 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
         return result;
     };
 
-    this.getFlagsStats = function(log) {
-        if (me.stats) {
-            return me.stats;
+    this.getFlagsStats = function(log, gameId) {
+        var statsFromCache = statsCache.get(gameId);
+        if (statsFromCache) {
+            currentStats = statsFromCache;
+            return statsFromCache;
         }
         var i,
             record,
             map,
             playerName,
             mapCount = 0;
-        me.stats = {};
-        me.stats.capturedFlags = {
+        currentStats = {};
+        currentStats.capturedFlags = {
             '1':0,
             '2':0
         };
-        me.stats.maps = {};
+        currentStats.maps = {};
 
         for (i = 0; i < log.length; i++) {
             record = log[i];
             if (record.indexOf('InitGame:') !== -1) {
                 map = me.initMap(record, i, mapCount++);
-                me.stats.maps[i] = map;
+                currentStats.maps[i] = map;
             }
 
             // Flag Records
@@ -282,17 +285,19 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
             }
         }
 
-        me.stats.wins = me.getWins(me.stats.maps);
-        me.stats.topOverallScorers = me.getOverallTopPlayers('scores', me.stats.maps);
-        me.stats.topOverallFetchers = me.getOverallTopPlayers('fetches', me.stats.maps);
-        me.stats.topOverallRetuners = me.getOverallTopPlayers('returns', me.stats.maps);
-        me.stats.topOverallCarrierFraggers = me.getOverallTopPlayers('carrierFrags', me.stats.maps);
+        currentStats.wins = me.getWins(currentStats.maps);
+        currentStats.topOverallScorers = me.getOverallTopPlayers('scores', currentStats.maps);
+        currentStats.topOverallFetchers = me.getOverallTopPlayers('fetches', currentStats.maps);
+        currentStats.topOverallRetuners = me.getOverallTopPlayers('returns', currentStats.maps);
+        currentStats.topOverallCarrierFraggers = me.getOverallTopPlayers('carrierFrags', currentStats.maps);
         // Calculate the over all fetchToCaptureRatio for each player
-        var topOverallFetchToCaptureRatioPlayers = me.getOverallTopPlayers('fetchToScoreRatio', me.stats.maps);
+        var topOverallFetchToCaptureRatioPlayers = me.getOverallTopPlayers('fetchToScoreRatio', currentStats.maps);
         for (var index in topOverallFetchToCaptureRatioPlayers) {
             topOverallFetchToCaptureRatioPlayers[index].value = me.getPlayerCaptureRatio(topOverallFetchToCaptureRatioPlayers[index]);
         }
-        me.stats.topOverallFetchToCaptureRatioPlayers = topOverallFetchToCaptureRatioPlayers;
-        return me.stats;
+        currentStats.topOverallFetchToCaptureRatioPlayers = topOverallFetchToCaptureRatioPlayers;
+
+        statsCache.put(gameId, currentStats);
+        return currentStats;
     };
 }]);
