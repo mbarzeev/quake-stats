@@ -159,19 +159,15 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
                 killMode = player.kills[kill].mode;
                 if (modes[killMode] === undefined) {
                     modes[killMode] = {id:killMode, kills:0, deaths:0};
-                    continue;
-                } else {
-                    modes[killMode].kills += 1;
                 }
+                modes[killMode].kills += 1;
             }
             for (var death in player.deaths) {
                 deathMode = player.deaths[death].mode;
                 if (modes[deathMode] === undefined) {
                     modes[deathMode] = {id:deathMode, kills:0, deaths:0};
-                    continue;
-                } else {
-                    modes[deathMode].deaths += 1;
                 }
+                modes[deathMode].deaths += 1;
             }
 
             for (var mode in modes) {
