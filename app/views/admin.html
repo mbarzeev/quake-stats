@@ -1,0 +1,13 @@
+<div class="alert alert-info" ng-show="response">{{response}}</div>
+
+<p>
+    Game name: <input ng-model="game.label">
+</p>
+<p>
+    game.log: <div file-input on-file-read-end="onGameLogRead(file)" method="readAsText"></div>
+</p>
+    qconsole.log: <div file-input on-file-read-end="onQconsoleLogRead(file)" method="readAsText"></div>
+<p>
+    <br>
+    <button class="btn btn-primary" ng-click="onSend()">Upload</button>
+</p>

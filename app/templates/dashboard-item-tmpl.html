@@ -1,0 +1,20 @@
+<div class="col-md-4 dashboard-panel">
+    <div class="panel panel-primary">
+        <div class="panel-body">
+            <img ng-if="iconName" ng-src="/resources/images/{{iconName}}.png" height="20"/>&nbsp;&nbsp;
+            <strong>
+                {{ itemTitle }}
+            </strong>
+        </div>
+        <div class="panel-footer">
+            <p ng-repeat="player in playersList" ng-style="{'font-size': (32 / playersList.length) + 'px'}">
+                <strong>
+                    <a ng-href="{{'/' + routeParams.gameId + '/players/' + player.name}}">
+                        {{player.name}}
+                    </a>
+                    ({{getValue(player)}})
+                </strong>
+            </p>
+        </div>
+    </div>
+</div>
