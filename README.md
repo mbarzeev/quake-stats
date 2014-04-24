@@ -47,3 +47,7 @@ Currently there aren't a lot of them, but the infrastructure is laid down for th
 In order to launch the tests first make sure that you're localhost server is up and running and then open CMD on the project’s root directory and run this command:
 
 	node node_modules\protractor\bin\protractor test\automation\conf.js
+	
+Contribution
+------------
+Please see more details on contribution process on the [Contribution Wiki page](https://github.com/mbarzeev/quake-stats/wiki/Contribution).

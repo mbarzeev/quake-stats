@@ -130,12 +130,12 @@ angular.module('quakeStatsApp')
                 },
                 {
                     'id': 'kills',
-                    'label': 'Kills',
+                    'label': 'Kills (' + $scope.killsStats.players[playerID].kills.length + ')',
                     'type': 'number'
                 },
                 {
                     'id': 'deaths',
-                    'label': 'Deaths',
+                    'label': 'Deaths (' + $scope.killsStats.players[playerID].deaths.length + ')',
                     'type': 'number'
                 }
             ];
@@ -172,22 +172,22 @@ angular.module('quakeStatsApp')
                 },
                 {
                     'id': 'scores',
-                    'label': 'Scores',
+                    'label': 'Scores (' + FlagsService.getPlayerOverallTotal(playerID, 'scores') + ')',
                     'type': 'number'
                 },
                 {
                     'id': 'fetches',
-                    'label': 'Fetches',
+                    'label': 'Fetches (' + FlagsService.getPlayerOverallTotal(playerID, 'fetches') + ')',
                     'type': 'number'
                 },
                 {
                     'id': 'returns',
-                    'label': 'Returns',
+                    'label': 'Returns (' + FlagsService.getPlayerOverallTotal(playerID, 'returns') + ')',
                     'type': 'number'
                 },
                 {
                     'id': 'carrierFrags',
-                    'label': 'Carrier Frags',
+                    'label': 'Carrier Frags (' + FlagsService.getPlayerOverallTotal(playerID, 'carrierFrags') + ')',
                     'type': 'number'
                 }
             ];

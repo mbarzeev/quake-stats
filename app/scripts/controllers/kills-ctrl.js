@@ -38,4 +38,18 @@ angular.module('quakeStatsApp')
 		    });
 		    return result;
 		};
+
+        $scope.onTableHover = function (row, col) {
+            $scope.hoveredColumn = col;
+            $scope.hoveredRow = row;
+        };
+
+        $scope.onLeaveTable = function () {
+            $scope.hoveredColumn = null;
+            $scope.hoveredRow = null;
+        };
+
+        $scope.playersSortedByKills = _.sortBy($scope.players, function (player) {
+            return - player.kills.length;
+        });
 	}]);

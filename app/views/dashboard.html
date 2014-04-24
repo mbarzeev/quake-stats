@@ -18,8 +18,8 @@
 				<img src="/resources/images/medal_frags.png" height="20"/>&nbsp;&nbsp;<strong>Top Killer</strong>
 			</div>
 			<div class="panel-footer">
-				<h1>
-					<strong><a href="/#/players/{{killsStats.topKiller.name}}">{{killsStats.topKiller.name}}</a> ({{killsStats.topKiller.kills.length}})</strong>
+				<h1 ng-repeat="topKiller in killsStats.topKillers">
+					<strong><a href="/#/players/{{topKiller.name}}">{{topKiller.name}}</a> ({{topKiller.kills.length}})</strong>
 				</h1>
 			</div>
 		</div>
@@ -31,8 +31,8 @@
 				<strong>Top Scorer</strong>
 			</div>
 			<div class="panel-footer">
-				<h1>
-					<strong><a href="/#/players/{{flagsStats.topOverallScorer.name}}">{{flagsStats.topOverallScorer.name}}</a> ({{flagsStats.topOverallScorer.value}})</strong>
+				<h1 ng-repeat="topOverallScorer in flagsStats.topOverallScorers">
+					<strong><a href="/#/players/{{topOverallScorer.name}}">{{topOverallScorer.name}}</a> ({{topOverallScorer.value}})</strong>
 				</h1>
 			</div>
 		</div>
@@ -44,8 +44,8 @@
 				<strong>Top Victim</strong>
 			</div>
 			<div class="panel-footer">
-				<h1>
-					<strong><a href="/#/players/{{killsStats.topVictim.name}}">{{killsStats.topVictim.name}}</a> ({{killsStats.topVictim.deaths.length}})</strong>
+				<h1 ng-repeat="topVictim in killsStats.topVictims">
+					<strong><a href="/#/players/{{topVictim.name}}">{{topVictim.name}}</a> ({{topVictim.deaths.length}})</strong>
 				</h1>
 			</div>
 		</div>
@@ -57,8 +57,8 @@
 				<img src="/resources/images/gauntlet.png" height="20"/>&nbsp;&nbsp;<strong>Top Humiliator</strong>
 			</div>
 			<div class="panel-footer">
-				<h1>
-					<strong><a href="/#/players/{{killsStats.topHumilator.name}}">{{killsStats.topHumilator.name}}</a> ({{killsStats.topHumilator.humiliations.length}})</strong>
+				<h1 ng-repeat="topHumilator in killsStats.topHumilators">
+					<strong><a href="/#/players/{{topHumilator.name}}">{{topHumilator.name}}</a> ({{topHumilator.humiliations.length}})</strong>
 				</h1>
 			</div>
 		</div>
@@ -83,8 +83,23 @@
 				<strong>Top Fifth Column</strong>
 			</div>
 			<div class="panel-footer">
-				<h1>
-					<strong><a href="/#/players/{{killsStats.topFifthColumn.name}}">{{killsStats.topFifthColumn.name}}</a> ({{killsStats.topFifthColumn.teammatesKills.length}})</strong>
+				<h1 ng-repeat="topFifthColumn in killsStats.topFifthColumns">
+					<strong><a href="/#/players/{{topFifthColumn.name}}">{{topFifthColumn.name}}</a> ({{topFifthColumn.teammatesKills.length}})</strong>
+				</h1>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-4 dashboard-panel">
+		<div class="panel panel-primary">
+			<div class="panel-body">
+				<strong>Top Fetch To Capture Ratio</strong>
+			</div>
+			<div class="panel-footer">
+				<h1 ng-repeat="player in flagsStats.topOverallFetchToCaptureRatioPlayers">
+					<strong><a href="/#/players/{{player.name}}">{{player.name}}</a> ({{player.value | number:2}})</strong>
+					<br>
+					<div class="fetch-capture-ratio">1 capture per {{1 / player.value | number:2}} fetches</div>
 				</h1>
 			</div>
 		</div>

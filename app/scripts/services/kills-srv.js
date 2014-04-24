@@ -1,28 +1,22 @@
 'use strict';
 
-angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService', 'Constants', function(GamesLogParserService, Constants) {
+angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService', function(GamesLogParserService) {
 	this.stats = null;
     this.alainKills = 0;
 	var me = this;
 
     this.initMap = function(record, startIndex) {
         var map = {};
-        map.name = me.getMapKey(record);
+        map.name = GamesLogParserService.getMapId(record);
         map.startIndex = startIndex;
         map.players = {};
         return map;
     };
 
-    this.getMapKey = function(record) {
-        var startIndex = record.indexOf(Constants.MAP_NAME_KEY) + Constants.MAP_NAME_KEY.length,
-            endIndex = record.indexOf(Constants.BACKSLASH_KEY, startIndex);
-        return record.slice(startIndex, endIndex);
-    };
-
     this.getPlayer = function (record) {
         var player = {};
 
-        player.id = me.getPlayerID(record);
+        player.id = GamesLogParserService.getPlayerId(record);
         player.name = GamesLogParserService.getPlayerName(record);
         player.nameId = player.name.replace(' ', '').toLowerCase();
         player.team = GamesLogParserService.getPlayerTeam(record);
@@ -32,42 +26,23 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
         player.teammatesKills = [];
         return player;
     };
-
-    this.getPlayerID = function(record) {
-        var idStr = record.slice(record.indexOf(Constants.PLAYER_INFO_KEY) + Constants.PLAYER_INFO_KEY.length, record.indexOf(Constants.PLAYER_NAME_KEY));
-        return parseInt(idStr, 10);
-    };
-
-    this.getKill = function(record) {
-        var killStr = record.slice(record.indexOf('Kill: ') + 'Kill: '.length, record.indexOf(':', record.indexOf('Kill: ') + 'Kill: '.length)),
-            idsArr = killStr.split(' '),
-            killerID = parseInt(idsArr[0], 10),
-            victimID = parseInt(idsArr[1], 10),
-            killModeID = parseInt(idsArr[2], 10),
-            killerName = record.slice(record.indexOf(killStr + ': ') + (killStr + ': ').length, record.indexOf(' killed')),
-            victimName = record.slice(record.indexOf('killed ') + 'killed '.length, record.indexOf(' by'));
-        return {killer: killerID,
-            killerName:killerName,
-            victim: victimID,
-            victimName: victimName,
-            mode: killModeID
-        };
-    };
-
-    this.getTopPlayer = function(prop, players) {
-        var topPlayer = null,
+    
+    this.getTopPlayers = function (prop, players) {
+        var topPlayers = [],
             player = null;
         for (var playerName in players) {
             player = players[playerName];
-            if (topPlayer) {
-                if (player[prop].length > topPlayer[prop].length) {
-                    topPlayer = player;
+            if (topPlayers.length > 0) {
+                if (player[prop].length > topPlayers[0][prop].length) {
+                    topPlayers = [player];
+                } else if (player[prop].length === topPlayers[0][prop].length) {
+                    topPlayers.push(player);
                 }
             } else {
-                topPlayer = player;
+                topPlayers = [player];
             }
         }
-        return topPlayer;
+        return topPlayers;
     };
 
     this.registerKill = function(kill, map) {
@@ -104,7 +79,7 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
 
     this.registerStatsPlayer = function(player) {
         if (!me.stats.players[player.name]) {
-            me.stats.players[player.name] = player;
+            me.stats.players[player.name] = angular.copy(player);
         }
         if (me.stats.players[player.name].team !== player.team) {
             me.stats.players[player.name].team = player.team;
@@ -148,22 +123,22 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
                 me.registerStatsPlayer(player);
             }
             // Kill
-            if (record.indexOf('Kill: ') !== -1) {
-                kill = me.getKill(record);
+            if (GamesLogParserService.isKill(record)) {
+                kill = GamesLogParserService.getKillObj(record);
                 if (kill.victim !== kill.killer) {
                     me.registerKill(kill, map);
                 }
             }
             // Exit
-            if (record.indexOf('ShutdownGame:') !== -1) {
-                map.topKiller = me.getTopPlayer('kills', map.players);
-                map.topVictim = me.getTopPlayer('deaths', map.players);
+            if (GamesLogParserService.isShutdown(record)) {
+                map.topKillers = me.getTopPlayers('kills', map.players);
+                map.topVictims = me.getTopPlayers('deaths', map.players);
             }
         }
-        me.stats.topKiller = me.getTopPlayer('kills', me.stats.players);
-        me.stats.topVictim = me.getTopPlayer('deaths', me.stats.players);
-        me.stats.topHumilator = me.getTopPlayer('humiliations', me.stats.players);
-        me.stats.topFifthColumn = me.getTopPlayer('teammatesKills', me.stats.players);
+        me.stats.topKillers = me.getTopPlayers('kills', me.stats.players);
+        me.stats.topVictims = me.getTopPlayers('deaths', me.stats.players);
+        me.stats.topHumilators = me.getTopPlayers('humiliations', me.stats.players);
+        me.stats.topFifthColumns = me.getTopPlayers('teammatesKills', me.stats.players);
         me.stats.humiliations = getAggragatedArraysByProp('humiliations', me.stats.players);
         me.stats.teammatesKills = getAggragatedArraysByProp('teammatesKills', me.stats.players);
         return me.stats;

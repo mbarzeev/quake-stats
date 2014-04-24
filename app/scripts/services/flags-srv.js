@@ -28,9 +28,9 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
             '2':0
         };
         map.players = {};
-        map.topScorer = null;
-        map.topReturner = null;
-        map.topCarrierFragger = null;
+        map.topScorers = null;
+        map.topReturners = null;
+        map.topCarrierFraggers = null;
         map.endReason = null;
         return map;
     };
@@ -108,20 +108,22 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
         return null;
     };
 
-    this.getTopPlayer = function(prop, map) {
-        var topPlayer = null,
+    this.getTopPlayers = function(prop, map) {
+        var topPlayers = [],
             player = null;
         for (var playerName in map.players) {
             player = map.players[playerName];
-            if (topPlayer) {
-                if (player[prop] > topPlayer[prop]) {
-                    topPlayer = player;
+            if (topPlayers.length > 0) {
+                if (player[prop] > topPlayers[0][prop]) {
+                    topPlayers = [player];
+                } else if (player[prop] === topPlayers[0][prop]) {
+                    topPlayers.push(player);
                 }
             } else {
-                topPlayer = player;
+                topPlayers = [player];
             }
         }
-        return topPlayer;
+        return topPlayers;
     };
 
     this.getWins = function(maps) {
@@ -141,28 +143,45 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
         return wins;
     };
 
-    this.getOverallTopPlayer = function(prop, maps) {
+    this.getPlayerOverallTotal = function(playerName, prop) {
+        var map,
+            result = 0;
+        for (var mapIndex in me.stats.maps) {
+            map = me.stats.maps[mapIndex];
+            if (map.players[playerName]) {
+                result += map.players[playerName][prop];
+            }
+        }
+        return result;
+    };
+
+    this.getOverallTopPlayers = function(prop, maps) {
         var map,
             players = {},
-            topPlayer;
+            topPlayers = [],
+            playerName;
         for (var mapIndex in maps) {
             map = maps[mapIndex];
-            for (var playerName in map.players) {
+            for (playerName in map.players) {
                 if (players[playerName] === undefined) {
                     players[playerName] = 0;
                 }
                 players[playerName] += map.players[playerName][prop];
-                
-                if (topPlayer) {
-                    if (players[playerName] > topPlayer.value) {
-                        topPlayer = {name:playerName, value:players[playerName]};
-                    }
-                } else {
-                    topPlayer = {name:playerName, value:players[playerName]};
-                }
             }
         }
-        return topPlayer;
+
+        for (playerName in players) {
+            if (topPlayers.length > 0) {
+                if (players[playerName] > topPlayers[0].value) {
+                    topPlayers = [{name:playerName, value:players[playerName]}];
+                } else if (players[playerName] === topPlayers[0].value) {
+                    topPlayers.push({name:playerName, value:players[playerName]});
+                }
+            } else {
+                topPlayers = [{name:playerName, value:players[playerName]}];
+            }
+        }
+        return topPlayers;
     };
 
     this.getPlayerCaptureRatio = function(player) {
@@ -225,7 +244,8 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
                             fetches:0,
                             carrierFrags:0,
                             returns:0,
-                            rebounds:0
+                            rebounds:0,
+                            fetchToScoreRatio:0
                         };
                     }
                     //
@@ -255,21 +275,24 @@ angular.module('quakeStatsApp').service('FlagsService', ['Constants', function(C
 
             // Map end
             if (map && record.indexOf('ShutdownGame:') !== -1) {
-                map.topScorer = me.getTopPlayer('scores', map);
-                map.topReturner = me.getTopPlayer('returns', map);
-                map.topCarrierFragger = me.getTopPlayer('carrierFrags', map);
-                map.topFetcher = me.getTopPlayer('fetches', map);
+                map.topScorers = me.getTopPlayers('scores', map);
+                map.topReturners = me.getTopPlayers('returns', map);
+                map.topCarrierFraggers = me.getTopPlayers('carrierFrags', map);
+                map.topFetchers = me.getTopPlayers('fetches', map);
             }
         }
 
         me.stats.wins = me.getWins(me.stats.maps);
-        me.stats.topOverallScorer = me.getOverallTopPlayer('scores', me.stats.maps);
-        me.stats.topOverallFetcher = me.getOverallTopPlayer('fetches', me.stats.maps);
-        me.stats.topOverallRetuner = me.getOverallTopPlayer('returns', me.stats.maps);
-        me.stats.topOverallCarrierFragger = me.getOverallTopPlayer('carrierFrags', me.stats.maps);
-        var topOverallFetchToCaptureRatioPlayer = me.getOverallTopPlayer('fetchToScoreRatio', me.stats.maps);
-        topOverallFetchToCaptureRatioPlayer.value = topOverallFetchToCaptureRatioPlayer.value / mapCount;
-        me.stats.topOverallFetchToCaptureRatioPlayer = topOverallFetchToCaptureRatioPlayer;
+        me.stats.topOverallScorers = me.getOverallTopPlayers('scores', me.stats.maps);
+        me.stats.topOverallFetchers = me.getOverallTopPlayers('fetches', me.stats.maps);
+        me.stats.topOverallRetuners = me.getOverallTopPlayers('returns', me.stats.maps);
+        me.stats.topOverallCarrierFraggers = me.getOverallTopPlayers('carrierFrags', me.stats.maps);
+        // Calculate the over all fetchToCaptureRatio for each player
+        var topOverallFetchToCaptureRatioPlayers = me.getOverallTopPlayers('fetchToScoreRatio', me.stats.maps);
+        for (var index in topOverallFetchToCaptureRatioPlayers) {
+            topOverallFetchToCaptureRatioPlayers[index].value = me.getPlayerCaptureRatio(topOverallFetchToCaptureRatioPlayers[index]);
+        }
+        me.stats.topOverallFetchToCaptureRatioPlayers = topOverallFetchToCaptureRatioPlayers;
         return me.stats;
     };
 }]);
