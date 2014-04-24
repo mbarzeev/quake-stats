@@ -48,7 +48,7 @@ app.get('/rest/games/qconsole/:id', function(req, res, next){
 });
 
 app.get('/rest/games/list', function(req, res, next) {
-    Game.find({}, 'gameId label', {sort: {gameId: -1}}, function (err, games) {
+    Game.find({}, 'gameId label', function (err, games) {
         if (err) {
             return next(err);
         }
