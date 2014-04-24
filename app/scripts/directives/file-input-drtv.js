@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('quakeStatsApp').directive('fileInput', ['$window', '$parse', function ($window, $parse) {
+angular.module('quakeStatsApp').directive('fileInput', ['$window', function ($window) {
     return {
         scope: {
             onFileReadEnd: '&'
