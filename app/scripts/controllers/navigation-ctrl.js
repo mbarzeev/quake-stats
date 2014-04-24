@@ -9,6 +9,7 @@ angular.module('quakeStatsApp')
                 return $routeParams.gameId;
             }, function (gameId) {
                 if (gameId) {
+                    $scope.gameId = $routeParams.gameId;
                     GamesLogService.loadLog(gameId).then(
                         function (result) {
                             me.onGamesLogLoaded(result);
@@ -21,7 +22,7 @@ angular.module('quakeStatsApp')
             });
 
             this.onGamesLogLoaded = function(log) {
-				$scope.killsStats = KillsService.getKillsStats(log);
+				$scope.killsStats = KillsService.getKillsStats(log, $scope.gameId);
 				$scope.players = $scope.killsStats.players;
 			};
 
