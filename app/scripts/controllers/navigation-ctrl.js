@@ -31,7 +31,8 @@ angular.module('quakeStatsApp')
                 {label:'Dashboard', data:'dashboard'},
                 {label:'Flags', data:'flags'},
                 {label:'Kills', data:'kills'},
-                {label:'Teams', data:'teams'}
+                // The 'teams' feature is not ready yet so it's hidden
+                //{label:'Teams', data:'teams'}
             ];
             $scope.menu = menu;
             $scope.menu.selectedMenuItemIndex = -1;
