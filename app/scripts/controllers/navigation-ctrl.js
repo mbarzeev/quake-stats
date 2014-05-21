@@ -1,20 +1,28 @@
 'use strict';
 
 angular.module('quakeStatsApp')
-	.controller('NavigationCtrl', ['$scope', 'GamesLogService', 'KillsService',
-		function ($scope, GamesLogService, KillsService) {
-			var me = this;
-			GamesLogService.loadLog().then(
-				function(result) {
-					me.onGamesLogLoaded(result);
-				},
-				function(error) {
-					console.error(error);
-					return;
-				});
+    .controller('NavigationCtrl', ['$scope', '$routeParams', 'GamesLogService', 'KillsService', 'GamesListService',
+        function ($scope, $routeParams, GamesLogService, KillsService, GamesListService) {
+            var me = this;
 
-			this.onGamesLogLoaded = function(log) {
-				$scope.killsStats = KillsService.getKillsStats(log);
+            $scope.$watch(function () {
+                return $routeParams.gameId;
+            }, function (gameId) {
+                if (gameId) {
+                    $scope.gameId = $routeParams.gameId;
+                    GamesLogService.loadLog(gameId).then(
+                        function (result) {
+                            me.onGamesLogLoaded(result);
+                        },
+                        function (error) {
+                            console.error(error);
+                            return;
+                        });
+                }
+            });
+
+            this.onGamesLogLoaded = function(log) {
+				$scope.killsStats = KillsService.getKillsStats(log, $scope.gameId);
 				$scope.players = $scope.killsStats.players;
 			};
 
@@ -33,4 +41,8 @@ angular.module('quakeStatsApp')
                     $scope.menu.selectedMenuItemIndex = index;
                 }
             };
+
+            GamesListService.loadGamesList().then(function (games) {
+                $scope.games = games;
+            });
 		}]);

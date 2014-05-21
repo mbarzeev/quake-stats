@@ -91,7 +91,7 @@
              </thead>
              <tbody>
              <tr ng-repeat="map in objectToArray(stats.maps)">
-                <td><a href="/maps/{{map.logStartIndex}}">{{ map.name | MapNameFilter}}</a></td>
+                <td><a ng-href="/{{gameId}}/maps/{{map.logStartIndex}}">{{ map.name | MapNameFilter}}</a></td>
                 <td>{{ map.score.1 }}</td>
                 <td>{{ map.score.2 }}</td>
                 <td>

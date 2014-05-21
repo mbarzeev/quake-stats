@@ -1,9 +1,11 @@
 'use strict';
 
-angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService', function(GamesLogParserService) {
-	this.stats = null;
-    this.alainKills = 0;
+angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService', '$cacheFactory', function(GamesLogParserService, $cacheFactory) {
 	var me = this;
+	var currentStats = null;
+    var statsCache = $cacheFactory('killsStats');
+
+    this.alainKills = 0;
 
     this.initMap = function(record, startIndex) {
         var map = {};
@@ -53,11 +55,11 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
                 victimPlayer.deaths.push(kill);
             }
             if (killerPlayer.team === victimPlayer.team) {
-                me.stats.players[kill.killerName].teammatesKills.push(kill);
+                currentStats.players[kill.killerName].teammatesKills.push(kill);
             } else {
                 killerPlayer.kills.push(kill);
                 if (kill.mode === 2) {
-                    me.stats.players[kill.killerName].humiliations.push(kill);
+                    currentStats.players[kill.killerName].humiliations.push(kill);
                 }
             }
             calculatePlayerToPlayerKills(kill);
@@ -65,8 +67,8 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
     };
 
     function calculatePlayerToPlayerKills(kill) {
-        var killerPlayer = me.stats.players[kill.killerName],
-            victimPlayer = me.stats.players[kill.victimName];
+        var killerPlayer = currentStats.players[kill.killerName],
+            victimPlayer = currentStats.players[kill.victimName];
         if (killerPlayer && victimPlayer) {
             if (kill.killerName !== kill.victimName) {
                 victimPlayer.deaths.push(kill);
@@ -78,26 +80,28 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
     }
 
     this.registerStatsPlayer = function(player) {
-        if (!me.stats.players[player.name]) {
-            me.stats.players[player.name] = angular.copy(player);
+        if (!currentStats.players[player.name]) {
+            currentStats.players[player.name] = angular.copy(player);
         }
-        if (me.stats.players[player.name].team !== player.team) {
-            me.stats.players[player.name].team = player.team;
+        if (currentStats.players[player.name].team !== player.team) {
+            currentStats.players[player.name].team = player.team;
         }
     };
 
-	this.getKillsStats = function(log) {
-		if (me.stats) {
-            return me.stats;
+	this.getKillsStats = function(log, gameId) {
+        var statsFromCache = statsCache.get(gameId);
+		if (statsFromCache) {
+            currentStats = statsFromCache;
+            return statsFromCache;
         }
         var i,
             record,
             map,
             kill,
             player;
-        me.stats = {};
-        me.stats.maps = {};
-        me.stats.players = {};
+        currentStats = {};
+        currentStats.maps = {};
+        currentStats.players = {};
 
         for (i = 0; i < log.length; i++) {
             record = log[i];
@@ -106,7 +110,7 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
             }
             if (GamesLogParserService.isMapStart(record)) {
                 map = me.initMap(record, i);
-                me.stats.maps[i] = map;
+                currentStats.maps[i] = map;
             }
             // Player
             if (GamesLogParserService.isClientUserinfoChanged(record)) {
@@ -134,13 +138,15 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
                 map.topVictims = me.getTopPlayers('deaths', map.players);
             }
         }
-        me.stats.topKillers = me.getTopPlayers('kills', me.stats.players);
-        me.stats.topVictims = me.getTopPlayers('deaths', me.stats.players);
-        me.stats.topHumilators = me.getTopPlayers('humiliations', me.stats.players);
-        me.stats.topFifthColumns = me.getTopPlayers('teammatesKills', me.stats.players);
-        me.stats.humiliations = getAggragatedArraysByProp('humiliations', me.stats.players);
-        me.stats.teammatesKills = getAggragatedArraysByProp('teammatesKills', me.stats.players);
-        return me.stats;
+        currentStats.topKillers = me.getTopPlayers('kills', currentStats.players);
+        currentStats.topVictims = me.getTopPlayers('deaths', currentStats.players);
+        currentStats.topHumilators = me.getTopPlayers('humiliations', currentStats.players);
+        currentStats.topFifthColumns = me.getTopPlayers('teammatesKills', currentStats.players);
+        currentStats.humiliations = getAggragatedArraysByProp('humiliations', currentStats.players);
+        currentStats.teammatesKills = getAggragatedArraysByProp('teammatesKills', currentStats.players);
+
+        statsCache.put(gameId, currentStats);
+        return currentStats;
 	};
 
     this.getPlayerWeaponsStats = function(player) {
@@ -153,19 +159,15 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
                 killMode = player.kills[kill].mode;
                 if (modes[killMode] === undefined) {
                     modes[killMode] = {id:killMode, kills:0, deaths:0};
-                    continue;
-                } else {
-                    modes[killMode].kills += 1;
                 }
+                modes[killMode].kills += 1;
             }
             for (var death in player.deaths) {
                 deathMode = player.deaths[death].mode;
                 if (modes[deathMode] === undefined) {
                     modes[deathMode] = {id:deathMode, kills:0, deaths:0};
-                    continue;
-                } else {
-                    modes[deathMode].deaths += 1;
                 }
+                modes[deathMode].deaths += 1;
             }
 
             for (var mode in modes) {

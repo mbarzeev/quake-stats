@@ -7,14 +7,14 @@
             </strong>
         </div>
         <div class="panel-footer">
-            <h1 ng-repeat="player in playersList">
+            <p ng-repeat="player in playersList" ng-style="{'font-size': (32 / playersList.length) + 'px'}">
                 <strong>
-                    <a href="/#/players/{{player.name}}">
+                    <a ng-href="{{'/' + routeParams.gameId + '/players/' + player.name}}">
                         {{player.name}}
                     </a>
                     ({{getValue(player)}})
                 </strong>
-            </h1>
+            </p>
         </div>
     </div>
 </div>
