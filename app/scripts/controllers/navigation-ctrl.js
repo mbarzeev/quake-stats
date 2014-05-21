@@ -22,7 +22,8 @@ angular.module('quakeStatsApp')
             menu.items = [
                 {label:'Dashboard', data:'dashboard'},
                 {label:'Flags', data:'flags'},
-                {label:'Kills', data:'kills'}
+                {label:'Kills', data:'kills'},
+                {label:'Teams', data:'teams'}
             ];
             $scope.menu = menu;
             $scope.menu.selectedMenuItemIndex = -1;

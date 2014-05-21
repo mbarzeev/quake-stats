@@ -1,0 +1,28 @@
+<div class="col-md-4">
+<table class="table table-bordered">
+	<thead>
+    <tr>
+        <th>Player</th>
+        <th>Kills</th>
+        <th>Captures</th>
+        <th>Returns</th>
+        <th>Rails</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="player in players">
+        <td>{{player.name}}</td>
+        <td>{{player.kills}}</td>
+        <td>{{player.scores}}</td>
+        <td>{{player.returns}}</td>
+        <td>{{player.rails}}</td>
+    </tr>
+    </tbody>
+</table>
+</div>
+<div class="col-md-4 container">
+	RED
+</div>
+<div class="col-md-4 container">
+	BLUE
+</div>
