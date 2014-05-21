@@ -1,175 +1,112 @@
 'use strict';
 
-angular.module('quakeStatsApp', ['ngResource', 'googlechart'])
-    .config(['$routeProvider', function ($routeProvider) {
+angular.module('quakeStatsApp', ['ngResource', 'ngAnimate', 'ngRoute', 'googlechart'])
+    .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+        $locationProvider.html5Mode(true);
+
+        var loadQConsoleLogResolve = ['$q', '$route', 'QConsoleLogService', function ($q, $route, QConsoleLogService) {
+            var dfd = $q.defer();
+
+            var game = $route.current.params.gameId;
+            QConsoleLogService.loadLog(game).then(
+                function (result) {
+                    dfd.resolve({
+                        success: true,
+                        result: result
+                    });
+                }, function (error) {
+                    dfd.resolve({
+                        success: false,
+                        reason: error
+                    });
+                });
+
+            return dfd.promise;
+        }];
+
+        var loadGamesLogResolve = ['$q', '$route', 'GamesLogService', function ($q, $route, GamesLogService) {
+            var dfd = $q.defer();
+
+            var game = $route.current.params.gameId;
+            GamesLogService.loadLog(game).then(
+                function (result) {
+                    dfd.resolve({
+                        success: true,
+                        result: result
+                    });
+                }, function (error) {
+                    dfd.resolve({
+                        success: false,
+                        reason: error
+                    });
+                });
+
+            return dfd.promise;
+        }];
+
         $routeProvider
-            .when('/flags', {
-                templateUrl: 'views/flags.html',
+            .when('/:gameId/flags', {
+                templateUrl: '/views/flags.html',
                 controller: 'FlagsCtrl',
                 resolve: {
-                    qconsoleLog: ['$q', 'QConsoleLogService', function($q, QConsoleLogService) {
-                        var dfd = $q.defer();
-                        QConsoleLogService.loadLog().then(
-                            function(result) {
-                                dfd.resolve({
-                                    success: true,
-                                    result : result
-                                });
-                            }, function(error) {
-                                dfd.resolve({
-                                    success : false,
-                                    reason : error
-                                });
-                            });
-                        return dfd.promise;
-                    }]
+                    qconsoleLog: loadQConsoleLogResolve
                 }
             })
-            .when('/maps/:flagsmapindex', {
-                templateUrl: 'views/maps.html',
+            .when('/:gameId/maps/:flagsmapindex', {
+                templateUrl: '/views/maps.html',
                 controller: 'MapsCtrl',
                 resolve: {
-                    qconsoleLog: ['$q', 'QConsoleLogService', function($q, QConsoleLogService) {
-                        var dfd = $q.defer();
-                        QConsoleLogService.loadLog().then(
-                            function(result) {
-                                dfd.resolve({
-                                    success: true,
-                                    result : result
-                                });
-                            }, function(error) {
-                                dfd.resolve({
-                                    success : false,
-                                    reason : error
-                                });
-                            });
-                        return dfd.promise;
-                    }]
+                    qconsoleLog: loadQConsoleLogResolve
                 }
             })
-            .when('/kills', {
-                templateUrl: 'views/kills.html',
+            .when('/:gameId/kills', {
+                templateUrl: '/views/kills.html',
                 controller: 'KillsCtrl',
                 resolve: {
-                    gamesLog: ['$q', 'GamesLogService', function($q, GamesLogService) {
-                        var dfd = $q.defer();
-                        GamesLogService.loadLog().then(
-                            function(result) {
-                                dfd.resolve({
-                                    success: true,
-                                    result : result
-                                });
-                            }, function(error) {
-                                dfd.resolve({
-                                    success : false,
-                                    reason : error
-                                });
-                            });
-                        return dfd.promise;
-                    }]
+                    gamesLog: loadGamesLogResolve
                 }
             })
-            .when('/players', {
-                templateUrl: 'views/players.html',
+            .when('/:gameId/players', {
+                templateUrl: '/views/players.html',
                 controller: 'PlayersCtrl',
                 resolve: {
-                    gamesLog: ['$q', 'GamesLogService', function($q, GamesLogService) {
-                        var dfd = $q.defer();
-                        GamesLogService.loadLog().then(
-                            function(result) {
-                                dfd.resolve({
-                                    success: true,
-                                    result : result
-                                });
-                            }, function(error) {
-                                dfd.resolve({
-                                    success : false,
-                                    reason : error
-                                });
-                            });
-                        return dfd.promise;
-                    }]
+                    gamesLog: loadGamesLogResolve
                 }
             })
-            .when('/players/:id', {
-                templateUrl: 'views/player.html',
+            .when('/:gameId/players/:id', {
+                templateUrl: '/views/player.html',
                 controller: 'PlayerCtrl',
                 resolve: {
-                    gamesLog: ['$q', 'GamesLogService', function($q, GamesLogService) {
-                        var dfd = $q.defer();
-                        GamesLogService.loadLog().then(
-                            function(result) {
-                                dfd.resolve({
-                                    success: true,
-                                    result : result
-                                });
-                            }, function(error) {
-                                dfd.resolve({
-                                    success : false,
-                                    reason : error
-                                });
-                            });
-                        return dfd.promise;
-                    }],
-                    qconsoleLog: ['$q', 'QConsoleLogService', function($q, QConsoleLogService) {
-                        var dfd = $q.defer();
-                        QConsoleLogService.loadLog().then(
-                            function(result) {
-                                dfd.resolve({
-                                    success: true,
-                                    result : result
-                                });
-                            }, function(error) {
-                                dfd.resolve({
-                                    success : false,
-                                    reason : error
-                                });
-                            });
-                        return dfd.promise;
-                    }]
+                    gamesLog: loadGamesLogResolve,
+                    qconsoleLog: loadQConsoleLogResolve
                 }
             })
-            .when('/dashboard', {
-                templateUrl: 'views/dashboard.html',
+            .when('/:gameId/dashboard', {
+                templateUrl: '/views/dashboard.html',
                 controller: 'DashboardCtrl',
                 resolve: {
-                    gamesLog: ['$q', 'GamesLogService', function($q, GamesLogService) {
-                        var dfd = $q.defer();
-                        GamesLogService.loadLog().then(
-                            function(result) {
-                                dfd.resolve({
-                                    success: true,
-                                    result : result
-                                });
-                            }, function(error) {
-                                dfd.resolve({
-                                    success : false,
-                                    reason : error
-                                });
-                            });
-                        return dfd.promise;
-                    }],
-                    qconsoleLog: ['$q', 'QConsoleLogService', function($q, QConsoleLogService) {
-                        var dfd = $q.defer();
-                        QConsoleLogService.loadLog().then(
-                            function(result) {
-                                dfd.resolve({
-                                    success: true,
-                                    result : result
-                                });
-                            }, function(error) {
-                                dfd.resolve({
-                                    success : false,
-                                    reason : error
-                                });
-                            });
-                        return dfd.promise;
-                    }]
+                    gamesLog: loadGamesLogResolve,
+                    qconsoleLog: loadQConsoleLogResolve
                 }
             })
+            .when('/admin', {
+                templateUrl: '/views/admin.html',
+                controller: 'AdminCtrl'
+            })
             .otherwise({
-                redirectTo: '/dashboard'
+                resolve: ['$location', 'GamesListService', function ($location, GamesListService) {
+                    GamesListService.loadGamesList().then(function (gamesList) {
+                        $location.url('/' + gamesList[gamesList.length - 1].gameId + '/dashboard');
+                    });
+                }]
             });
 
         // TODO: resolve error handling
+    }])
+    .run(['$routeParams', '$rootScope', function ($routeParams, $rootScope) {
+        $rootScope.routeParams = $routeParams;
+
+        $rootScope.$watch('routeParams.gameId', function (val) {
+            $rootScope.routeParams.gameId = val || 0;
+        });
     }]);

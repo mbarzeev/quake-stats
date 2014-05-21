@@ -1,6 +1,7 @@
 // Generated on 2013-08-27 using generator-angular 0.4.0
 'use strict';
 var path = require('path');
+var modRewrite = require('connect-modrewrite');
 var LIVERELOAD_PORT = 35729;
 var lrSnippet = require('connect-livereload')({ port: LIVERELOAD_PORT });
 var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
@@ -86,6 +87,9 @@ module.exports = function (grunt) {
                 options: {
                     middleware: function (connect) {
                         return [
+                            modRewrite([
+                                '!\\.html|\\.js|\\.css|\\.png$|\\/rest/.*$  /index.html [L]'
+                            ]),
                             lrSnippet,
                             proxySnippet,
                             mountFolder(connect, '.tmp'),

@@ -4,8 +4,6 @@ selenium
 coverage
 .tmp
 .sass-cache
-games.log
-qconsole.log
 npm-debug.log
 app/bower_components
 .idea/

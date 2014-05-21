@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('quakeStatsApp')
-    .controller('KillsCtrl', ['$scope', 'gamesLog', 'KillsService',
-		function ($scope, gamesLog, KillsService) {
+    .controller('KillsCtrl', ['$scope', '$routeParams', 'gamesLog', 'KillsService',
+		function ($scope, $routeParams, gamesLog, KillsService) {
+        $scope.gameId = $routeParams.gameId;
 		$scope.killStats = {};
 
 		if (gamesLog.success === false) {
@@ -10,7 +11,7 @@ angular.module('quakeStatsApp')
 			return;
 		}
 
-		$scope.killsStats = KillsService.getKillsStats(gamesLog.result);
+		$scope.killsStats = KillsService.getKillsStats(gamesLog.result, $scope.gameId);
 		$scope.players = $scope.killsStats.players;
 
 		var killByVictimFilter = function(element) {

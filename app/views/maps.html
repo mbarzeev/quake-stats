@@ -13,7 +13,7 @@
              </tr>
              </thead>
              <tbody>
-             <tr ng-repeat="record in flagsMapStats.timeline">
+             <tr ng-repeat="record in flagsMapStats.timeline track by $index">
                 <td width="20">{{$index}}</td>
                 <td>{{record}}</td>
              </tr>
