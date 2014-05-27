@@ -10,6 +10,7 @@ angular.module('quakeStatsApp')
         'TEAM_NUM_KEY': 't\\',
         'BACKSLASH_KEY': '\\',
         'PLAYER_INFO_KEY': 'ClientUserinfoChanged:',
+        'SCORE': 'score: ',
         'FLAG_STATUS_IN_BASE': 'inBase',
         'FLAG_STATUS_FETCHED': 'fetched',
         'RED_SCORE_KEY': 'red:',

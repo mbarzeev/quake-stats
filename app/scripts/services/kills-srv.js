@@ -26,6 +26,7 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
         player.deaths = [];
         player.humiliations = [];
         player.teammatesKills = [];
+        player.qscore = 0;
         return player;
     };
     
@@ -132,6 +133,14 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
                     me.registerKill(kill, map);
                 }
             }
+            // Score
+            if (GamesLogParserService.isScore(record)) {
+                // TODO: get the player from the record
+                var playerName = GamesLogParserService.getPlayerName(record);
+                // TODO: Find his object on the map and if none exist create one for him
+                map.players[playerName].qscore = GamesLogParserService.getScore(record);
+            }
+
             // Exit
             if (GamesLogParserService.isShutdown(record)) {
                 map.topKillers = me.getTopPlayers('kills', map.players);
