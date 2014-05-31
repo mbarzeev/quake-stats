@@ -49,6 +49,12 @@ angular.module('quakeStatsApp')
                 icon: 'gauntlet'
             },
             {
+                playersList: $scope.killsStats.topImmortal,
+                title: 'Top Immortal',
+                property: 'killsDeathDiff',
+                description: '/templates/description-dashboard-item-immortal-tmpl.html'
+            },
+            {
                 playersList: $scope.killsStats.topFifthColumns,
                 title: 'Top Fifth Column',
                 property: 'teammatesKills.length'
