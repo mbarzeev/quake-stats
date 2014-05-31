@@ -4,7 +4,6 @@ angular.module('quakeStatsApp')
     .controller('TeamsCtrl', ['$scope', 'gamesLog', 'qconsoleLog', 'KillsService', 'FlagsService',
         function ($scope, gamesLog, qconsoleLog, KillsService, FlagsService) {
 
-        $scope.killStats = {};
         $scope.flagsStats = {};
         $scope.players = [];
 
