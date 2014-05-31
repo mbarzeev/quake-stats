@@ -7,14 +7,24 @@
             </strong>
         </div>
         <div class="panel-footer">
-            <p ng-repeat="player in playersList" ng-style="{'font-size': (32 / playersList.length) + 'px'}">
+            <div ng-if="template"
+                 ng-include="template">
+            </div>
+            <div ng-if="!template"
+               ng-repeat="player in playersList"
+               ng-style="{'font-size': (32 / playersList.length) + 'px'}">
                 <strong>
                     <a ng-href="{{'/' + routeParams.gameId + '/players/' + player.name}}">
                         {{player.name}}
                     </a>
-                    ({{getValue(player)}})
+                    ({{getValue(player) | toFixed:2}})
                 </strong>
-            </p>
+                <br>
+                <div ng-if="description"
+                     ng-include="description"
+                     class="dashboard-item-description">
+                </div>
+            </div>
         </div>
     </div>
 </div>
