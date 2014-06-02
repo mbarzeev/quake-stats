@@ -36,10 +36,18 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
         for (var playerName in players) {
             player = players[playerName];
             if (topPlayers.length > 0) {
-                if (player[prop].length > topPlayers[0][prop].length) {
-                    topPlayers = [player];
-                } else if (player[prop].length === topPlayers[0][prop].length) {
-                    topPlayers.push(player);
+                if (angular.isArray(player[prop])) {
+                    if (player[prop].length > topPlayers[0][prop].length) {
+                        topPlayers = [player];
+                    } else if (player[prop].length === topPlayers[0][prop].length) {
+                        topPlayers.push(player);
+                    }
+                } else {
+                    if (player[prop] > topPlayers[0][prop]) {
+                        topPlayers = [player];
+                    } else if (player[prop] === topPlayers[0][prop]) {
+                        topPlayers.push(player);
+                    }
                 }
             } else {
                 topPlayers = [player];
@@ -147,9 +155,12 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
                 map.topVictims = me.getTopPlayers('deaths', map.players);
             }
         }
+        calculateAdditionalProperties(currentStats);
+
         currentStats.topKillers = me.getTopPlayers('kills', currentStats.players);
         currentStats.topVictims = me.getTopPlayers('deaths', currentStats.players);
         currentStats.topHumilators = me.getTopPlayers('humiliations', currentStats.players);
+        currentStats.topImmortal = me.getTopPlayers('killsDeathDiff', currentStats.players);
         currentStats.topFifthColumns = me.getTopPlayers('teammatesKills', currentStats.players);
         currentStats.humiliations = getAggragatedArraysByProp('humiliations', currentStats.players);
         currentStats.teammatesKills = getAggragatedArraysByProp('teammatesKills', currentStats.players);
@@ -157,6 +168,13 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
         statsCache.put(gameId, currentStats);
         return currentStats;
 	};
+
+    function calculateAdditionalProperties(stats) {
+        // Calculate Kills and deaths diff
+        _.each(stats.players, function(player) {
+            player.killsDeathDiff = player.kills.length - player.deaths.length;
+        });
+    }
 
     this.getPlayerWeaponsStats = function(player) {
         var modes=  {},
