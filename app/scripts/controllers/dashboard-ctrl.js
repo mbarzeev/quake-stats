@@ -59,6 +59,12 @@ angular.module('quakeStatsApp')
                 title: 'Top Fifth Column',
                 property: 'teammatesKills.length'
             },
+			{
+                playersList: $scope.killsStats.topQScorer,
+                title: 'Top Quake Scorer',
+                property: 'qscore',
+				description: '/templates/custom-dashboard-item-qscore-tmpl.html'
+            },
             {
                 playersList: $scope.flagsStats.topOverallFetchToCaptureRatioPlayers,
                 title: 'Top Fetch To Capture Ratio',

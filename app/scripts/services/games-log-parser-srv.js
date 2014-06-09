@@ -95,7 +95,7 @@ angular.module('quakeStatsApp').service('GamesLogParserService', ['Constants', f
 	this.getScore = function(record) {
 		if (isValidRecord(record)) {
 			var start = record.indexOf(' ', record.lastIndexOf(Constants.SCORE) + 2) + 1;
-			var end = record.indexOf('  ');
+			var end = record.indexOf('ping:');
 			return parseInt(record.slice(start, end), 10);
 		}
 	};

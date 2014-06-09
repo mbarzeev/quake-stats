@@ -137,11 +137,6 @@ angular.module('quakeStatsApp')
                     'id': 'deaths',
                     'label': 'Deaths (' + $scope.killsStats.players[playerID].deaths.length + ')',
                     'type': 'number'
-                },
-                {
-                    'id': 'score',
-                    'label': 'Q-Score',
-                    'type': 'number'
                 }
             ];
         };
@@ -161,9 +156,6 @@ angular.module('quakeStatsApp')
                         },
                         {
                             'v': map.players[playerID] ? map.players[playerID].deaths.length : 0
-                        },
-                        {
-                            'v': map.players[playerID] ? map.players[playerID].qscore : 0
                         }
                     ]
                 });
@@ -271,7 +263,7 @@ angular.module('quakeStatsApp')
                 'rows': me.getDeathsKillsOverMapsRows($scope.killsStats)
             },
             'options': {
-                'title': 'Kills, Deaths & Quake-Scores across maps',
+                'title': 'Kills & Deaths across maps',
                 'displayExactValues': true,
                 'height': 200
             },
