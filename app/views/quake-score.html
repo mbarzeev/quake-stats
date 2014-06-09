@@ -1,0 +1,20 @@
+
+ <div class="row-fluid">
+<h3>Top Quake Score</h3>	
+    <div class="col-md-6">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Player</th>
+                <th>Quake Score</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="player in objectToArray(players) | orderBy:'-qscore'">
+                <td>{{ player.name }}</td>
+                <td>{{ player.qscore }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
