@@ -18,5 +18,7 @@ angular.module('quakeStatsApp')
         'ump3ctf4': 'Frozen Colors',
         'ump3ctf5': 'Railfest 2: 7Zark7 Island',
         'ump3ctf6': 'Like spinning plates',
-        'ump3ctf7': 'The Strong Jaeger'
+        'ump3ctf7': 'The Strong Jaeger',
+		'q3wcp16':	'Coral CTF',
+		'q3tourney6_ctf':	'Across Space'
     });

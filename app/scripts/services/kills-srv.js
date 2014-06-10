@@ -73,9 +73,10 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
         }
     };
 	
-	this.registerScore = function(player, score) {
+	this.registerScore = function(map, player, score) {
 		if (currentStats.players[player].qscore < score) {
 			currentStats.players[player].qscore = score;
+			currentStats.players[player].qscoreMap = map;
 		}
 	};
 	
@@ -151,7 +152,7 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
                 var playerName = GamesLogParserService.getPlayerName(record);
                 // TODO: Find his object on the map and if none exist create one for him
                 //map.players[playerName].qscore = GamesLogParserService.getScore(record);
-				me.registerScore(playerName, GamesLogParserService.getScore(record));
+				me.registerScore(map, playerName, GamesLogParserService.getScore(record));
             }
 
             // Exit

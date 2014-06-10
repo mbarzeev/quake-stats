@@ -61,7 +61,7 @@ angular.module('quakeStatsApp')
             },
 			{
                 playersList: $scope.killsStats.topQScorer,
-                title: 'Top Quake Scorer',
+                title: 'Best Quake Scorer',
                 property: 'qscore',
 				description: '/templates/custom-dashboard-item-qscore-tmpl.html'
             },
