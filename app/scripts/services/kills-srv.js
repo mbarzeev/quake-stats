@@ -5,8 +5,6 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
 	var currentStats = null;
     var statsCache = $cacheFactory('killsStats');
 
-    this.alainKills = 0;
-
     this.initMap = function(record, startIndex) {
         var map = {};
         map.name = GamesLogParserService.getMapId(record);
@@ -74,7 +72,14 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
             calculatePlayerToPlayerKills(kill);
         }
     };
-
+	
+	this.registerScore = function(map, player, score) {
+		if (currentStats.players[player].qscore < score) {
+			currentStats.players[player].qscore = score;
+			currentStats.players[player].qscoreMap = map;
+		}
+	};
+	
     function calculatePlayerToPlayerKills(kill) {
         var killerPlayer = currentStats.players[kill.killerName],
             victimPlayer = currentStats.players[kill.victimName];
@@ -146,7 +151,8 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
                 // TODO: get the player from the record
                 var playerName = GamesLogParserService.getPlayerName(record);
                 // TODO: Find his object on the map and if none exist create one for him
-                map.players[playerName].qscore = GamesLogParserService.getScore(record);
+                //map.players[playerName].qscore = GamesLogParserService.getScore(record);
+				me.registerScore(map, playerName, GamesLogParserService.getScore(record));
             }
 
             // Exit
@@ -164,6 +170,7 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
         currentStats.topFifthColumns = me.getTopPlayers('teammatesKills', currentStats.players);
         currentStats.humiliations = getAggragatedArraysByProp('humiliations', currentStats.players);
         currentStats.teammatesKills = getAggragatedArraysByProp('teammatesKills', currentStats.players);
+		currentStats.topQScorer = me.getTopPlayers('qscore', currentStats.players);
 
         statsCache.put(gameId, currentStats);
         return currentStats;
