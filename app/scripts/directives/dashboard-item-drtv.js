@@ -13,7 +13,8 @@ angular.module('quakeStatsApp')
                 scope.description = $parse(attrs.itemDescription)(scope);
                 scope.iconName = $interpolate(attrs.iconName)(scope);
                 scope.type = $parse(attrs.itemType)(scope);
-                if (scope.type === 'custom') {
+                scope.isCustom = $parse(attrs.itemIsCustom)(scope);
+                if (scope.isCustom) {
                     scope.template = $parse(attrs.itemTemplate)(scope);
                 }
 

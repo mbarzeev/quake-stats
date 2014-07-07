@@ -28,8 +28,9 @@ angular.module('quakeStatsApp')
             },
             {
                 title: 'Wins',
-                type: 'custom',
-                template: '/templates/custom-dashboard-item-wins-tmpl.html'
+                isCustom: true,
+                template: '/templates/custom-dashboard-item-wins-tmpl.html',
+                type: 'neutral'
             },
             {
                 playersList: $scope.flagsStats.topOverallScorers,
@@ -40,7 +41,8 @@ angular.module('quakeStatsApp')
             {
                 playersList: $scope.killsStats.topVictims,
                 title: 'Top Victim',
-                property: 'deaths.length'
+                property: 'deaths.length',
+                type: 'bad'
             },
             {
                 playersList: $scope.killsStats.topHumilators,
@@ -57,7 +59,8 @@ angular.module('quakeStatsApp')
             {
                 playersList: $scope.killsStats.topFifthColumns,
                 title: 'Top Fifth Column',
-                property: 'teammatesKills.length'
+                property: 'teammatesKills.length',
+                type: 'bad'
             },
 			{
                 playersList: $scope.killsStats.topQScorer,
@@ -73,8 +76,9 @@ angular.module('quakeStatsApp')
             },
             {
                 title: 'Total Players',
-                type: 'custom',
-                template: '/templates/custom-dashboard-item-players-count-tmpl.html'
+                isCustom: true,
+                template: '/templates/custom-dashboard-item-players-count-tmpl.html',
+                type: 'neutral'
             }
         ];
 	}]);
