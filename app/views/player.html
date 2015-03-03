@@ -1,27 +1,25 @@
-<h1>{{playerName}}</h1>
+
+
 <div class="row">
-    <div class="col-md-3">
-        <div class="panel panel-primary">
-            <div class="panel-body">
-                Fetch to Capture Ratio
-            </div>
-            <div class="panel-footer">
-                <strong>{{getPlayerCaptureRatio({name: 'SHAFFUN'}) | number:2}}</strong>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-	<div class="col-md-12">
-		<div google-chart chart="flagsOverMapsChart"></div>
+	<div class="col-md-2">
+		<h1>{{playerName}}</h1>
+		Fetch to Capture Ratio:
+		<strong>{{getPlayerCaptureRatio() | number:2}}</strong>
 	</div>
-	<div class="col-md-12">
-		<div google-chart chart="deathsKillsOverMapsChart"></div>
-	</div>
-	<div class="col-md-6">
-		<div google-chart chart="killsChart"></div>
-	</div>
-	<div class="col-md-6">
-		<div google-chart chart="deathsChart"></div>
+	<div class="col-md-10">
+		<div class="row">
+			<div class="col-md-12">
+				<div google-chart chart="flagsOverMapsChart"></div>
+			</div>
+			<div class="col-md-12">
+				<div google-chart chart="deathsKillsOverMapsChart"></div>
+			</div>
+			<div class="col-md-6">
+				<div google-chart chart="killsChart"></div>
+			</div>
+			<div class="col-md-6">
+				<div google-chart chart="deathsChart"></div>
+			</div>
+		</div>
 	</div>
 </div>

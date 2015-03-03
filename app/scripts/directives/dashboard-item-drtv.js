@@ -1,17 +1,23 @@
 'use strict';
 
 angular.module('quakeStatsApp')
-    .directive('dashboardItem', [function () {
+    .directive('dashboardItem', ['$parse', '$interpolate', function ($parse, $interpolate) {
         return {
             restrict: 'A',
-            scope: {
-                playersList: '=',
-                itemProperty: '@',
-                itemTitle: '@',
-                iconName: '@?'
-            },
+            scope: true,
             templateUrl: '/templates/dashboard-item-tmpl.html',
-            link: function(scope) {
+            link: function(scope, element, attrs) {
+                scope.playersList = $parse(attrs.playersList)(scope);
+                scope.itemProperty = $interpolate(attrs.itemProperty)(scope);
+                scope.itemTitle = $interpolate(attrs.itemTitle)(scope);
+                scope.description = $parse(attrs.itemDescription)(scope);
+                scope.iconName = $interpolate(attrs.iconName)(scope);
+                scope.type = $parse(attrs.itemType)(scope);
+                scope.isCustom = $parse(attrs.itemIsCustom)(scope);
+                if (scope.isCustom) {
+                    scope.template = $parse(attrs.itemTemplate)(scope);
+                }
+
                 scope.getValue = function (object) {
                     if (scope.itemProperty) {
                         var properties = scope.itemProperty.split('.');

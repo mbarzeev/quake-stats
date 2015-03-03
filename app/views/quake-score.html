@@ -1,0 +1,22 @@
+
+ <div class="row-fluid">
+<h3>Best Quake Score</h3>	
+    <div class="col-md-6">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Player</th>
+                <th>Top Quake Score</th>
+                <th>Map</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="player in objectToArray(players) | orderBy:'-qscore'">
+                <td>{{ player.name }}</td>
+                <td>{{ player.qscore }}</td>
+                <td>{{ player.qscoreMap.name | MapNameFilter }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -71,12 +71,17 @@ describe('GamesLogParserService: ', function () {
       });
 
       it('"getPlayerName()" should return a player name', function () {
+        var mockRecord
         isMethodExist('getPlayerName');
         checkFailOnInvalidRecord('getPlayerName');
         expect(gamesLogParserService.getPlayerName(gamesLogMock[1228])).toEqual('Chuck');
         expect(gamesLogParserService.getPlayerName(gamesLogMock[2466])).toEqual('Ninja');
-        var mockRecord = '2:21 ClientUserinfoChanged: 4 n\\...\\t\\3\\model\\major/blue\\hmodel\\major/blue\\g_redteam\\\\g_blueteam\\\\c1\\2\\c2\\5\\hc\\100\\w\\0\\l\\0\\tt\\0\\tl\\0'
+        mockRecord = '2:21 ClientUserinfoChanged: 4 n\\...\\t\\3\\model\\major/blue\\hmodel\\major/blue\\g_redteam\\\\g_blueteam\\\\c1\\2\\c2\\5\\hc\\100\\w\\0\\l\\0\\tt\\0\\tl\\0'
         expect(gamesLogParserService.getPlayerName(mockRecord)).toEqual('...');
+        mockRecord = '54:27 score: 46  ping: 0  client: 2 Alain Delon'
+        expect(gamesLogParserService.getPlayerName(mockRecord)).toEqual('Alain Delon');
+        mockRecord = '8:00 score: 0  ping: 5  client: 4 Neo'
+        expect(gamesLogParserService.getPlayerName(mockRecord)).toEqual('Neo');
       });
 
       it('"getPlayerId()" should return a player ID', function () {

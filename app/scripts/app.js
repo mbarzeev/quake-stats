@@ -81,9 +81,24 @@ angular.module('quakeStatsApp', ['ngResource', 'ngAnimate', 'ngRoute', 'googlech
                     qconsoleLog: loadQConsoleLogResolve
                 }
             })
+			.when('/:gameId/qscore', {
+                templateUrl: '/views/quake-score.html',
+                controller: 'KillsCtrl',
+                resolve: {
+                    gamesLog: loadGamesLogResolve,
+                }
+            })
             .when('/:gameId/dashboard', {
                 templateUrl: '/views/dashboard.html',
                 controller: 'DashboardCtrl',
+                resolve: {
+                    gamesLog: loadGamesLogResolve,
+                    qconsoleLog: loadQConsoleLogResolve
+                }
+            })
+            .when('/:gameId/teams', {
+                templateUrl: '/views/teams.html',
+                controller: 'TeamsCtrl',
                 resolve: {
                     gamesLog: loadGamesLogResolve,
                     qconsoleLog: loadQConsoleLogResolve

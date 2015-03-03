@@ -41,7 +41,14 @@ angular.module('quakeStatsApp').service('GamesLogParserService', ['Constants', f
 
 	this.getPlayerName = function(record) {
 		if (isValidRecord(record)) {
-			return record.slice(record.indexOf(Constants.PLAYER_NAME_KEY) + Constants.PLAYER_NAME_KEY.length, record.indexOf(Constants.BACKSLASH_KEY, record.indexOf(Constants.PLAYER_NAME_KEY) + Constants.PLAYER_NAME_KEY.length));
+			if (record.indexOf(Constants.PLAYER_NAME_KEY) !== -1) {
+				return record.slice(record.indexOf(Constants.PLAYER_NAME_KEY) + Constants.PLAYER_NAME_KEY.length, record.indexOf(Constants.BACKSLASH_KEY, record.indexOf(Constants.PLAYER_NAME_KEY) + Constants.PLAYER_NAME_KEY.length));
+			}
+			if (record.indexOf(Constants.SCORE) !== -1) {
+				// Yes, regex is more elegant, I know...
+				var start = record.indexOf(' ', record.lastIndexOf(':') + 2) + 1;
+				return record.slice(start, record.length);
+			}
 		}
 	};
 
@@ -76,6 +83,20 @@ angular.module('quakeStatsApp').service('GamesLogParserService', ['Constants', f
 	this.isShutdown = function(record) {
 		if (isValidRecord(record)) {
 			return record.indexOf('ShutdownGame:') !== -1;
+		}
+	};
+
+	this.isScore = function(record) {
+		if (isValidRecord(record)) {
+			return record.indexOf(Constants.SCORE) !== -1;
+		}
+	};
+
+	this.getScore = function(record) {
+		if (isValidRecord(record)) {
+			var start = record.indexOf(' ', record.lastIndexOf(Constants.SCORE) + 2) + 1;
+			var end = record.indexOf('ping:');
+			return parseInt(record.slice(start, end), 10);
 		}
 	};
 }]);

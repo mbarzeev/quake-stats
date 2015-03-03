@@ -5,8 +5,6 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
 	var currentStats = null;
     var statsCache = $cacheFactory('killsStats');
 
-    this.alainKills = 0;
-
     this.initMap = function(record, startIndex) {
         var map = {};
         map.name = GamesLogParserService.getMapId(record);
@@ -26,6 +24,7 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
         player.deaths = [];
         player.humiliations = [];
         player.teammatesKills = [];
+        player.qscore = 0;
         return player;
     };
     
@@ -35,10 +34,18 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
         for (var playerName in players) {
             player = players[playerName];
             if (topPlayers.length > 0) {
-                if (player[prop].length > topPlayers[0][prop].length) {
-                    topPlayers = [player];
-                } else if (player[prop].length === topPlayers[0][prop].length) {
-                    topPlayers.push(player);
+                if (angular.isArray(player[prop])) {
+                    if (player[prop].length > topPlayers[0][prop].length) {
+                        topPlayers = [player];
+                    } else if (player[prop].length === topPlayers[0][prop].length) {
+                        topPlayers.push(player);
+                    }
+                } else {
+                    if (player[prop] > topPlayers[0][prop]) {
+                        topPlayers = [player];
+                    } else if (player[prop] === topPlayers[0][prop]) {
+                        topPlayers.push(player);
+                    }
                 }
             } else {
                 topPlayers = [player];
@@ -65,7 +72,14 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
             calculatePlayerToPlayerKills(kill);
         }
     };
-
+	
+	this.registerScore = function(map, player, score) {
+		if (currentStats.players[player].qscore < score) {
+			currentStats.players[player].qscore = score;
+			currentStats.players[player].qscoreMap = map;
+		}
+	};
+	
     function calculatePlayerToPlayerKills(kill) {
         var killerPlayer = currentStats.players[kill.killerName],
             victimPlayer = currentStats.players[kill.victimName];
@@ -132,22 +146,42 @@ angular.module('quakeStatsApp').service('KillsService', ['GamesLogParserService'
                     me.registerKill(kill, map);
                 }
             }
+            // Score
+            if (GamesLogParserService.isScore(record)) {
+                // TODO: get the player from the record
+                var playerName = GamesLogParserService.getPlayerName(record);
+                // TODO: Find his object on the map and if none exist create one for him
+                //map.players[playerName].qscore = GamesLogParserService.getScore(record);
+				me.registerScore(map, playerName, GamesLogParserService.getScore(record));
+            }
+
             // Exit
             if (GamesLogParserService.isShutdown(record)) {
                 map.topKillers = me.getTopPlayers('kills', map.players);
                 map.topVictims = me.getTopPlayers('deaths', map.players);
             }
         }
+        calculateAdditionalProperties(currentStats);
+
         currentStats.topKillers = me.getTopPlayers('kills', currentStats.players);
         currentStats.topVictims = me.getTopPlayers('deaths', currentStats.players);
         currentStats.topHumilators = me.getTopPlayers('humiliations', currentStats.players);
+        currentStats.topImmortal = me.getTopPlayers('killsDeathDiff', currentStats.players);
         currentStats.topFifthColumns = me.getTopPlayers('teammatesKills', currentStats.players);
         currentStats.humiliations = getAggragatedArraysByProp('humiliations', currentStats.players);
         currentStats.teammatesKills = getAggragatedArraysByProp('teammatesKills', currentStats.players);
+		currentStats.topQScorer = me.getTopPlayers('qscore', currentStats.players);
 
         statsCache.put(gameId, currentStats);
         return currentStats;
 	};
+
+    function calculateAdditionalProperties(stats) {
+        // Calculate Kills and deaths diff
+        _.each(stats.players, function(player) {
+            player.killsDeathDiff = player.kills.length - player.deaths.length;
+        });
+    }
 
     this.getPlayerWeaponsStats = function(player) {
         var modes=  {},

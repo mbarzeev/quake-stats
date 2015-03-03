@@ -5,7 +5,6 @@ angular.module('quakeStatsApp')
         function ($scope, gamesLog, qconsoleLog, KillsService, FlagsService, $routeParams, $filter) {
         var playerID = $routeParams.id,
             me = this;
-        $scope.killStats = {};
         $scope.flagsStats = {};
         $scope.gameId = $routeParams.gameId;
 

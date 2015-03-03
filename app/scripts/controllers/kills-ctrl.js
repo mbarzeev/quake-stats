@@ -13,6 +13,7 @@ angular.module('quakeStatsApp')
 
 		$scope.killsStats = KillsService.getKillsStats(gamesLog.result, $scope.gameId);
 		$scope.players = $scope.killsStats.players;
+		$scope.topQScorer = $scope.killsStats.topQScorer;
 
 		var killByVictimFilter = function(element) {
 			return element.victimName === this.victimName;
