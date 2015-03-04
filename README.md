@@ -5,20 +5,20 @@ Quake III Arena statistics which include flag!
 
 prerequisites
 -------------
-1. NodeJS installed on your machine ([here](http://nodejs.org/))
-2. Grunt installed on your machine ([here](http://gruntjs.com/getting-started))
-3. MongoDB installed on your machine and running ([here](http://www.mongodb.org/))
+1. NodeJS installed on your machine ([here](http://nodejs.org/)). Check that you have "npm" installed as well.
+2. Install Grunt on your machine by running "npm install grunt-cli -g" ([here](http://gruntjs.com/getting-started)) 
+3. MongoDB installed on your machine ([here](http://www.mongodb.org/))
 
 Installing
 ----------
 1. First of all - clone the repo.
-2. Under the root directory of the project create a /data/db directory for mongo to use
+2. Run 'npm install'
+2. Under the root directory of the project create a /data/db directory for mongo to use.
 3. open CMD and launch MongoDB with a dbpath directing to the directory you've just created in the previous step
-4. open CMD, go to the root directory of the project and run `npm install`.
-5. Run `grunt server` from the root directory of the project.
-6. Your browser should open with the application launched.
-7. Navigate to localhost:8000/admin.
-8. Upload games.log and qconsole.log in the appropriate file inputs, give your game a name. If you can't find qconsole.log, see the QConsole section below.
+4. Run `grunt server` from the root directory of the project.
+5. Your browser should open with the application launched.
+6. Navigate to localhost:8000/admin.
+7. Upload games.log and qconsole.log in the appropriate file inputs, give your game a name. If you can't find qconsole.log, see the QConsole section below.
 
 QConsole Log
 ------------

@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "grunt": "~0.4.1",
-    "bower": "~1.2.6",
+    "bower": "latest",
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-coffee": "~0.7.0",
