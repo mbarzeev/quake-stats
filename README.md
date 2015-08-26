@@ -13,12 +13,13 @@ Installing
 ----------
 1. First of all - clone the repo.
 2. Run 'npm install'
-2. Under the root directory of the project create a /data/db directory for mongo to use.
-3. open CMD and launch MongoDB with a dbpath directing to the directory you've just created in the previous step
-4. Run `grunt server` from the root directory of the project.
-5. Your browser should open with the application launched.
-6. Navigate to localhost:8000/admin.
-7. Upload games.log and qconsole.log in the appropriate file inputs, give your game a name. If you can't find qconsole.log, see the QConsole section below.
+3. Run 'bower install'
+4. Under the root directory of the project create a /data/db directory for mongo to use.
+5. open CMD and launch MongoDB with a dbpath directing to the directory you've just created in the previous step
+6. Run `grunt server` from the root directory of the project.
+7. Your browser should open with the application launched.
+8. Navigate to localhost:8000/admin.
+9. Upload games.log and qconsole.log in the appropriate file inputs, give your game a name. If you can't find qconsole.log, see the QConsole section below.
 
 QConsole Log
 ------------
